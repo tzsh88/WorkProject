@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="WorkStatistics" Class="WorkDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost;Initial Catalog=WorkStatistics;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="WorkStatisticsConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.[Function]" Member="Function">
+    <Type Name="Function">
+      <Column Name="FunctionID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FunctionName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ParentNode" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UpdateDateUser" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="LineN" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Show" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="User">
+    <Type Name="User">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="WorkSiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="UserPassword" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CreateTime" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="LineN" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AdminCheck" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="WorkSite_User" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Payment" Member="Payment">
+    <Type Name="Payment">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WorkSiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
+      <Column Name="RecordTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WagePaymentDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="WageAmount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WageCard" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
+      <Column Name="PaymentType" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Company" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CompanyBoss" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="Worker_Payment" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
+      <Association Name="WorkSite_Payment" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CheckWork" Member="CheckWork">
+    <Type Name="CheckWork">
+      <Column Name="CheckDate" Type="System.DateTime" DbType="Date NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RecordTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="WorkName" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="WorkSiteName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CheckResult" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Attendance" Member="Attendance">
+    <Type Name="Attendance">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RecordTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WorkSiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
+      <Column Name="WorkDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="WorkTime" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WorkMore" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WorkQuality" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="Weather" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="Worker_Attendance" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
+      <Association Name="WorkSite_Attendance" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Worker" Member="Worker">
+    <Type Name="Worker">
+      <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="WorkName" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Sex" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
+      <Column Name="WorkType" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="WorkType1" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CCBPayCard" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="JSPayCard" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="AccidentInsurance" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InsuranceDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="Worker_Payment" Member="Payment" ThisKey="WorkId" OtherKey="WorkId" Type="Payment" />
+      <Association Name="Worker_Attendance" Member="Attendance" ThisKey="WorkId" OtherKey="WorkId" Type="Attendance" />
+      <Association Name="Worker_PredictionWages" Member="PredictionWages" ThisKey="WorkId" OtherKey="WorkerId" Type="PredictionWages" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WorkSite" Member="WorkSite">
+    <Type Name="WorkSite">
+      <Column Name="Company" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CompanyBoss" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="WorkSiteId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="WorkSiteName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="WorkManage" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="WorkSiteStart" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="WorkSiteEnd" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="WorkSiteFinished" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="WorkSite_User" Member="User" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="User" />
+      <Association Name="WorkSite_Payment" Member="Payment" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="Payment" />
+      <Association Name="WorkSite_Attendance" Member="Attendance" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="Attendance" />
+      <Association Name="WorkSite_PredictionWages" Member="PredictionWages" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="PredictionWages" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PredictionWages" Member="PredictionWages">
+    <Type Name="PredictionWages">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WorkYear" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+      <Column Name="WorkMon" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
+      <Column Name="WorkerId" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
+      <Column Name="WorkSiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WorkTimeMon" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WorkMoreMon" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WholePart" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PredictionTotalWages" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="Worker_PredictionWages" Member="Worker" ThisKey="WorkerId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
+      <Association Name="WorkSite_PredictionWages" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

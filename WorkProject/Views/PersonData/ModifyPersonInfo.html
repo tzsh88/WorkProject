@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="../../../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../../Content/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="../../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../../../Scripts/bootstrap.min.js"></script>
+    <script src="../../../Scripts/bootstrap-select.min.js"></script>
+    <title>个人信息核实</title>
+    <style>
+        .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+            width: 4em;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="container-fluid" style="width:100%;float:left;">
+
+        <script src="../GetChangingHeight.js"></script>
+        <div class="row " style="margin:0  auto;height:90%; width:95%">
+
+            <div clase="col-lg-6 col-ms-6 col-xs-6" style="margin:5% auto;height:50%;font-size:1.45em;font-weight:600;line-height:3em; text-align:center;margin-bottom:1em">
+                <div id="name">姓名：</div>
+                <div id="sex">性别：</div>
+                <div id="wokeType">工种：</div>
+                <div id="phone">手机：</div>
+                <div id="card">建行卡号：</div>
+                <div> <span style="color:red">请补充相应信息，事关未来劳务公司打款请大家务必重视！！！</span></div>
+                <div> 上述信息如有误，或者不全请将对应信息以短信形式告知工地负责人，请在下方补充修改，并提交</div>
+
+                <form  action="/api/ModifyPersonInfo/PostSessionUserName" method="post" style="font-size:1em;font-weight:500;line-height:1.5em; ">
+                    <div class="form-inline" style="margin:0 auto; text-align:center">
+                        <input type="text" class="form-control" name="name" placeholder="姓名">
+                        <span style="font-size:1em;">性别：</span>
+                        <select class="selectpicker" name="sex">
+                            <option value="1"> 男</option>
+                            <option value="0"> 女</option>
+                        </select>
+                        <input type="text" class="form-control" onblur="check(this)" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" name="phone" placeholder="手机号码">
+                        <input type="text" class="form-control" onblur="check(this)" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" name="card" placeholder="建行卡号">
+                        <span style="font-size:1em;">工种：</span>
+                        <select class="selectpicker" name="workType">
+                            <option value="大工"> 大工</option>
+                            <option value="小工"> 小工</option>
+                            <option value="临时"> 临时</option>
+                            <option value="管理"> 管理</option>
+                            <option value="分包"> 分包</option>
+                        </select>
+
+                    </div>
+                    <br>
+                    <div style="margin:0 auto; text-align:center">
+                        <button type="submit" class="btn-primary" onclick="workerUpdate()">修改信息提交</button>
+                    </div>
+                </form>
+            </div>
+
+
+           
+        </div>
+
+
+
+    </div>
+    <script>
+          //验证文本框只能输入数字和小数点
+        function check(e) {
+            let re = /^\d+(?=\{0,1}\d+$|$)/
+            if (e.value != "") {
+                if (!re.test(e.value)) {
+                    alert("请输入正确的数字");
+                    e.value = "";
+                    e.focus();
+                }
+            }
+        }
+        $.ajax({
+            url: '/api/ModifyPersonInfo/Get', //所需要的列表接口地址
+            type: "get",
+            dataType: "json",
+            success: function (sdata) {
+
+                $('#name').append("   " + sdata[0]['WorkName']);
+                if (sdata[0]['Sex'] == 1) {
+                     $("#sex").append("   "+ '   男   ');
+                }
+                else {
+                     $("#sex").append("   "+ '   女   ');
+                }
+                  $("#phone").append("   "+ sdata[0]['Phone']);
+                  $('#wokeType').append("   "+ sdata[0]['WorkType']);
+                  $("#card").append("   "+ sdata[0]['CCBPayCard']);
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        });
+
+        function workerUpdate() {
+            let name = $('#name').html();
+            if (name == "姓名：") {
+               
+                if (confirm("未登录，请先登录") == true) {
+                    
+                    window.open('https://localhost:44349');
+                    top.window.close();
+                     
+                  }else {
+                   window.open('https://localhost:44349');
+                   top.window.close();
+                  }
+              
+            } else {
+                alert('已提交，请勿重复提交！！！等待系统管理员审核');
+        }
+            }
+           
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        if (window != top)
+            top.location.href = location.href = "https://localhost:44349";
+    </script>
+    <meta charset="utf-8" />
+    <title> 工程统计 | Login in</title>
+    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="../Content/ionicons.min.css" rel="stylesheet" />
+    <link href="../Content/AdminLTE.min.css" rel="stylesheet" />
+    <link href="../Content/blue.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            登陆
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign in to start your work</p>
+            <form action="../api/UserLogin/PostSessionUserName" method="post">
+                <div class="form-group has-feedback">
+                    <input type="text" name="name" class="form-control" placeholder="用户名">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <br>
+                <div class="form-group has-feedback">
+                    <input type="password" name="pw" class="form-control" placeholder="密码">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <br>
+                <div class="row" >
+                    <!-- /.col -->
+                    <div class="col-xs-4" style="margin :0 30%" >
+                        <button type="submit" class="btn btn-primary btn-block btn-flat" >Login in</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+
+        </div>
+    <!-- /.login-box-body -->
+        </div>
+    <!-- /.login-box -->
+
+
+   
+</body>
+</html>

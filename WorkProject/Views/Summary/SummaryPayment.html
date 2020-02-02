@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="../../../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../Content/bootstrap-table.min.css" rel="stylesheet" />
+    <link href="../../../Content/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="../../../Scripts/jquery-3.4.1.min.js"></script>
+    <link href="../../Content/datetimepicker.css" rel="stylesheet" />
+    <script src="../../../Scripts/bootstrap.min.js"></script>
+    <script src="../../Scripts/bootstrap-table.min.js"></script>
+    <script src="../../../Scripts/bootstrap-select.min.js"></script>
+    <script src="../../Scripts/datetimepicker/moment.js"></script>
+    <script src="../../Scripts/datetimepicker/bootstrap-datetimepicker.js"></script>
+    <title>工资支付信息</title>
+    <style>
+        .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+            width: 6em;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="container-fluid" style="width:100%;float:left;">
+
+        <script src="../GetChangingHeight.js"></script>
+
+
+        <div class="row" style="height:95%;margin:1% 0%">
+
+
+            <div class="col-lg-10 col-md-10 col-xs-12" style="height:100%;margin-bottom:2%">
+                <div style="margin:2% 1%;font-size:1.45em;font-weight:500;line-height:1.9em;">
+                    <span style="font-size:1em;">工地：</span>
+                    <select class="selectpicker" id="selectWorkSite">
+                        <option value="all">全部数据</option>
+                    </select>&nbsp; &nbsp;
+                    <span style="font-size:1em;">年份：</span>
+                    <select class="selectpicker" id="selectYear">
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>&nbsp; &nbsp;
+                    <span style="font-size:1em;">月份：</span>
+                    <select class="selectpicker" id="selectMon">
+                        <option value="all">全部数据</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>&nbsp; &nbsp;
+                    <span style="font-size:1em;">日期：</span>
+                    <select class="selectpicker" id="selectDay">
+                        <option value="all">全部数据</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+
+                    </select>&nbsp; &nbsp;
+                    <span style="font-size:1em;">人员：</span>
+                    <select class="selectpicker" id="selectName">
+                        <option value="all">全部数据</option>
+
+                    </select>&nbsp; &nbsp;
+                    <button type="button" class="btn btn-default" onclick="workerInfo()">信息查询</button>&nbsp; &nbsp;
+                    <button type="button" class="btn btn-primary" onclick="excelExport()">Excel导出</button>&nbsp; &nbsp;
+                </div>
+
+                <div class="table-responsive">
+                    <table id="table" class="table text-nowrap">
+                    </table>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <br>
+
+
+    </div>
+    <script>
+        const optoinUrl = '/api/ImPort/GetBasicInfo';
+        //工地
+        function loadWork() {
+            $.ajax({
+                url: optoinUrl, //所需要的列表接口地址
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+
+                    let listNames = "";
+                    for (let i = 0; i < data[0].length; i++) {
+                        listNames += "<option value='" + data[0][i] + "'>" + data[0][i] + "</option>";
+
+                    }
+                    $("#selectName").append(listNames);//append 添加进去并展示
+
+                    //不能删下面俩行不然在ie下有问题
+                    $('#selectName').selectpicker('refresh');
+                    $('#selectName').selectpicker('render');
+
+                    let listWorkSites = "";
+                    for (let i = 0; i < data[1].length; i++) {
+                        listWorkSites += "<option value='" + data[1][i] + "'>" + data[1][i] + "</option>";
+
+                    }
+                    $("#selectWorkSite").append(listWorkSites);
+                    $('#selectWorkSite').selectpicker('refresh');
+                    $('#selectWorkSite').selectpicker('render');
+                },
+                error: function (e) {
+                    console.log(e.responseText);
+                }
+            });
+        }
+        loadWork();
+    </script>
+
+
+    <script src="SummaryPayment.js"></script>
+
+
+
+</body>
+
+</html>

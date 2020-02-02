@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="../../../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../../Content/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="../../../Scripts/jquery-3.4.1.min.js"></script>
+    <link href="../../Content/datetimepicker.css" rel="stylesheet" />
+    <script src="../../../Scripts/bootstrap.min.js"></script>
+    <script src="../../../Scripts/bootstrap-select.min.js"></script>
+    <script src="../../Scripts/datetimepicker/moment.js"></script>
+    <script src="../../Scripts/datetimepicker/bootstrap-datetimepicker.js"></script>
+    <title>基础数据导入</title>
+    <style>
+        .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+            width: 15em;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="container-fluid" style="width:100%;float:left;">
+
+        <script src="../GetChangingHeight.js"></script>
+
+     
+        <div class="row" style="height:95%;margin:5% 0%">
+            <div class="col-lg-6 col-md-6 col-xs-12" style="height:100%;">
+
+                <div class="form-group" style="margin:0 20%; ">
+                    <div style="text-align:left;margin:2% 10%">
+                        <span style="font-size:1.5em;font-weight:600">工人基础信息录入</span>
+                    </div>
+
+                    <div class="form-inline" style="margin:0 2%">
+                        <span style="font-size:1em;">姓&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
+                        <input type="text" id="workName" class="form-control" style="width:15em;" placeholder="务必正确（分包也可以导入）">&nbsp; &nbsp;
+                    </div>
+                    <div class="form-inline" style="margin:2% 2%">
+                        <span style="font-size:1em;">性&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
+                        <select class="selectpicker" id="sex">
+                            <option value="1"> 男</option>
+                            <option value="0"> 女</option>
+                        </select>
+                    </div>
+                    <div class="form-inline" style="margin:2% 2%">
+                        <span style="font-size:1em;">工&nbsp;&nbsp;&nbsp;&nbsp;种：</span>
+                        <select class="selectpicker" id="workType">
+                            <option value="大工"> 大工</option>
+                            <option value="小工"> 小工</option>
+                            <option value="临时"> 临时</option>
+                            <option value="管理"> 管理</option>
+                            <option value="分包"> 分包</option>
+
+                        </select>
+                    </div>
+                    <div class="form-inline" style="margin:2% 2%">
+                        <span style="font-size:1em;">身份证：</span>
+                        <input type="text" id="cardId" class="form-control" style="width: 15em;" onblur="check(this)" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" placeholder="不可空,务必正确">&nbsp; &nbsp;
+                    </div>
+                    <div class="form-inline" style="margin:2% 2%">
+                        <span style="font-size:1em;">手&nbsp;&nbsp;&nbsp;&nbsp;机：</span>
+                        <input type="text" id="phone" class="form-control" style="width: 15em;" onblur="check(this)" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" placeholder="不可空,务必正确">&nbsp; &nbsp;
+                    </div>
+                    <div class="form-inline" style="margin:2% 2%">
+                        <span style="font-size:1em;">建&nbsp;&nbsp;&nbsp;&nbsp;行：</span>
+                        <input type="text" id="ccb" class="form-control" style="width: 15em;" onblur="check(this)" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" placeholder="不可空,务必正确">&nbsp; &nbsp;
+                    </div>
+                    <div class="form-inline" style="margin:2% 2%">
+                        <span style="font-size:1em;">江&nbsp;&nbsp;&nbsp;&nbsp;苏：</span>
+                        <input type="text" id="js" class="form-control" style="width: 15em;" onblur="check(this)" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" placeholder="江苏银行,务必正确">&nbsp; &nbsp;
+                    </div>
+                    <div class="form-inline" style="margin:2% 15%">
+                        <button type="button"  class="btn " onclick="workerInsert()">数据提交</button>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div  class="col-lg-6 col-md-6 col-xs-12" style="height:100%;">
+
+                <div class="form-group" style="margin:0 10%; ">
+                    <div style="text-align:left;margin:2% 10%">
+                        <span style="font-size:1.5em;font-weight:600">工地信息录入</span>
+                    </div>
+
+                    <div class="form-inline" style="margin:0 2%">
+                        <span style="font-size:1em;">工地编号：</span>
+                        <input type="text" id="workSiteId" class="form-control" style="width:15em;" onblur="check(this)" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" placeholder="务必正确">&nbsp; &nbsp;
+                    </div>
+                    <div class="form-inline" style="margin:2% 2%">
+                        <span style="font-size:1em;">工地名称：</span>
+                        <input type="text" id="workSiteName" class="form-control" style="width:15em;" placeholder="务必正确">&nbsp; &nbsp;
+                    </div>
+
+                    <div class="form-inline" style="margin:2% 2%">
+                        <span style="font-size:1em;">工地管理：</span>
+                        <input type="text" id="workManage" class="form-control" style="width: 15em;" placeholder="不可空,务必正确">&nbsp;&nbsp;
+                    </div>
+                    <div class="form-inline" style="margin:2% 2%">
+                        <span style="font-size:1em;">归属公司：</span>
+                        <input type="text" id="com" class="form-control" style="width: 15em;" placeholder="不可空,务必正确">&nbsp;&nbsp;
+                    </div>
+                    <div class="form-inline" style="margin:2% 2%">
+                        <span style="font-size:1em;">公司老板：</span>
+                        <input type="text" id="comBoss" class="form-control" style="width: 15em;" placeholder="不可空,务必正确">&nbsp;&nbsp;
+                    </div>
+                    <div class="form-inline" style="margin:2% 2%">
+                        <span style="font-size:1em;">工地备注：</span>
+                        <input type="text" id="remark" class="form-control" style="width:15em;" placeholder="可空">&nbsp; &nbsp;
+                    </div>
+                    <div class="form-inline" style="margin:2% 15%">
+                        <button type="button"  class="btn " onclick="workSiteInsert()">数据提交</button>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+      
+        const workerUrl = '/api/ImPort/InsertWorker';
+        const workSiteUrl = '/api/ImPort/InsertWorkSite';
+        //验证文本框只能输入数字和小数点
+        function check(e) {
+            let re = /^\d+(?=\{0,1}\d+$|$)/
+            if (e.value != "") {
+                if (!re.test(e.value)) {
+                    alert("请输入正确的数字");
+                    e.value = "";
+                    e.focus();
+                }
+            }
+        }
+
+     
+        //新增工人信息
+        function workerInsert() {
+            let workName = $('#workName').val();
+            let sex = $('#sex').val();
+            let workType = $('#workType').val();
+            let cardId = $('#cardId').val();
+            let phone = $('#phone').val();
+            let ccb = $('#ccb').val();let js = $('#js').val();
+            $.ajax({
+                url: workerUrl, //所需要的列表接口地址
+                type: "get",
+                data: {
+                    'workName': workName, 'sex': sex, 'workType': workType,'cardId': cardId,
+                    'phone': phone, 'ccb': ccb, 'js': js
+                },//发送到服务器的数据，key/value形式
+                dataType: "json",
+                success: function (data) {
+
+                    if (data == 'ok') {
+                        alert('数据已经导入');
+                        //删除Select选中value
+                        //$("#selectName option[value="+selectName+"]").remove();
+                    } else if (data == 'error') {
+                        alert('请勿重复导入，请检查数据');
+                    }
+
+                },
+                error: function (e) {
+                    console.log(e.responseText);
+                }
+            });
+        }
+
+        //新增工地信息
+        function workSiteInsert() {
+            let workSiteId = $('#workSiteId').val();
+            let workSiteName = $('#workSiteName').val();
+            let com = $('#com').val();
+            let comBoss = $('#comBoss').val();
+            let workManage = $('#workManage').val();
+            let remark = $('#remark').val();
+            $.ajax({
+                url: workSiteUrl, //所需要的列表接口地址
+                type: "get",
+                data: {
+                    'workSiteId': workSiteId, 'workSiteName': workSiteName, 'com': com,
+                    'comBoss': comBoss, 'workManage': workManage, 'remark': remark
+                },//发送到服务器的数据，key/value形式
+                dataType: "json",
+                success: function (data) {
+
+                    if (data == 'ok') {
+                        alert('数据已经导入');
+                        //删除Select选中value
+                        //$("#selectName option[value="+selectName+"]").remove();
+                    } else if (data == 'error') {
+                        alert('请勿重复导入,请跟换编号ID');
+                    }
+
+                },
+                error: function (e) {
+                    console.log(e.responseText);
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
