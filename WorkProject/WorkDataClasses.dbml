@@ -39,8 +39,8 @@
       <Column Name="Company" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="CompanyBoss" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
       <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
-      <Association Name="Worker_Payment" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
       <Association Name="WorkSite_Payment" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
+      <Association Name="Worker_Payment" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CheckWork" Member="CheckWork">
@@ -65,26 +65,8 @@
       <Column Name="WorkQuality" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
       <Column Name="Weather" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
-      <Association Name="Worker_Attendance" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
       <Association Name="WorkSite_Attendance" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Worker" Member="Worker">
-    <Type Name="Worker">
-      <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="WorkName" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="Sex" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Phone" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
-      <Column Name="WorkType" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="WorkType1" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="CCBPayCard" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="JSPayCard" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="AccidentInsurance" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="InsuranceDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
-      <Association Name="Worker_Payment" Member="Payment" ThisKey="WorkId" OtherKey="WorkId" Type="Payment" />
-      <Association Name="Worker_Attendance" Member="Attendance" ThisKey="WorkId" OtherKey="WorkId" Type="Attendance" />
-      <Association Name="Worker_PredictionWages" Member="PredictionWages" ThisKey="WorkId" OtherKey="WorkerId" Type="PredictionWages" />
+      <Association Name="Worker_Attendance" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.WorkSite" Member="WorkSite">
@@ -116,8 +98,29 @@
       <Column Name="WholePart" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="PredictionTotalWages" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
-      <Association Name="Worker_PredictionWages" Member="Worker" ThisKey="WorkerId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
       <Association Name="WorkSite_PredictionWages" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
+      <Association Name="Worker_PredictionWages" Member="Worker" ThisKey="WorkerId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Worker" Member="Worker">
+    <Type Name="Worker">
+      <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="WorkName" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="IC" Type="System.String" DbType="VarChar(18)" CanBeNull="true" />
+      <Column Name="Sex" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
+      <Column Name="WorkType" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="WorkType1" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Affiliation" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="CCBPayCard" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="JSPayCard" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="AccidentInsurance" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="InsuranceDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="Worker_Payment" Member="Payment" ThisKey="WorkId" OtherKey="WorkId" Type="Payment" />
+      <Association Name="Worker_Attendance" Member="Attendance" ThisKey="WorkId" OtherKey="WorkId" Type="Attendance" />
+      <Association Name="Worker_PredictionWages" Member="PredictionWages" ThisKey="WorkId" OtherKey="WorkerId" Type="PredictionWages" />
     </Type>
   </Table>
 </Database>

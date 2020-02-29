@@ -46,7 +46,8 @@
                 <button type="button" class="addOn"></button>
             </div>
             <script>
-                if ($(".iDate.date").length > 0) {
+               /*
+			   if ($(".iDate.date").length > 0) {
                     $(".iDate.date").datetimepicker({
                         locale: "zh-cn",
                         format: "YYYY-MM-DD",
@@ -67,7 +68,15 @@
                     day = '0' + day;
                 }
                 yesday = yesday.getFullYear() + '-' + month + '-' + day;
-                $("#date").val(yesday);
+                $("#date").val(yesday); 
+				*/
+				 if ($(".iDate.date").length > 0) {
+                    $(".iDate.date").datetimepicker({
+                        locale: "zh-cn",
+                        format: "YYYY-MM-DD",
+                        dayViewHeaderFormat: "YYYY年 MMDD"
+                    });
+                };
             </script>
             &nbsp; &nbsp;
 

@@ -65,6 +65,7 @@
                 <div style="margin-right:20%; text-align: center;margin-bottom:2% ">
                     <span style="font-size:1em;color:red;">尤其注意修改某天某人工日情况时，</span>
                     <span style="font-size:1em;color:red;">通过“菜单-数据管理-录入数据稽核”核实，对修改人某天所有工日进行核实（1天1人仅能改1次）。</span>
+                    <span style="font-size:1em;color:red;">不是直接更新，只是记录到Remark不是工作记录代表的WorkQuality。</span>
                 </div>
                 <div style="margin-right:20%; text-align: center ">
                     <span style="font-size:2em;font-weight:600;">考勤修改</span>
@@ -85,7 +86,7 @@
                 </div>
             </div>
             <br>
-     
+
 
         </div>
 
@@ -94,7 +95,7 @@
     <script>
 
         const optoinUrl = '/api/ImPort/GetBasicInfo';
-        const dataUrl = '/api/ImPort/GetUpdateWork';      
+        const dataUrl = '/api/ImPort/GetUpdateWork';
         //验证文本框只能输入数字和小数点
         function check(e) {
             let re = /^\d+(?=\.{0,1}\d+$|$)/
@@ -145,22 +146,22 @@
             let selectWorkSite = $('#selectWorkSite').val();
             let work = $('#work').val();
             let workMore = $('#workMore').val();
-            let remark =$('#remark').val();
+            let remark = $('#remark').val();
             $.ajax({
                 url: dataUrl, //所需要的列表接口地址
                 type: "get",
                 data: {
                     'name': selectName, 'date': date, 'selectWorkSite': selectWorkSite,
-                    'work': work, 'workMore': workMore,'remark': remark
+                    'work': work, 'workMore': workMore, 'remark': remark
                 },//发送到服务器的数据，key/value形式
                 dataType: "json",
                 success: function (data) {
 
                     if (data == 'ok') {
                         alert('数据已经更新');
-                         //删除Select选中value
+                        //删除Select选中value
                         //$("#selectName option[value="+selectName+"]").remove();
-                    } else if (data== 'error') {
+                    } else if (data == 'error') {
                         alert('该工人当天在此工地没有已记录数据');
                     }
 
@@ -171,8 +172,20 @@
             });
         }
 
-     
+
+        let unid = "00a1";
+        let url = 'BasicInfo/Stop/StopDetailedAttributes.html';
+        let title = '站点属性详情';
+
+        let param = [];
+        param.push(params.name);
+        //在iframe中调用父页面中定义的变量
+        //alert(parent.value);
+        //在iframe中调用父页面中定义的方法
+        parent.addTabWithParams(unid, title, url, param);
+
     </script>
+
 
 </body>
 

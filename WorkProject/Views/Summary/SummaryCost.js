@@ -36,18 +36,25 @@ let TableInit = function () {
             cardView: false,//是否显示详细视图
             detailView: false,//是否显示父子表
             columns: [
+			   {
+					title : '序号',									
+					formatter:function (value, row, index) {
+					   //获取每页显示的数量
+						let pageSize=$('#table').bootstrapTable('getOptions').pageSize; 
+						//获取当前是第几页
+						let pageNumber=$('#table').bootstrapTable('getOptions').pageNumber;
+						//返回序号，注意index是从0开始的，所以要加上1
+						let res=pageSize *(pageNumber - 1) + index + 1;
+						return res;
+					}
+			    },
                 {
                     field: 'WorkSiteName',
                     title: '工地',
                     sortable: true,
 
                 },
-                {
-                    field: 'WorkManage',
-                    title: '管理员',
-                    sortable: true,
-
-                },
+               
                 {
                     field: 'WorkName',
                     title: '姓名',
@@ -109,6 +116,12 @@ let TableInit = function () {
                     title: '工作日志',
                     sortable: true,
 
+                },
+				{
+                    field: 'WorkManage',
+                    title: '管理员',
+                    sortable: true,
+
                 }
                 
             ]
@@ -130,7 +143,7 @@ function operateFormatter(value, row, index) {
 //得到查询的参数
 function queryParams(params) {
 
-    let worker = $("#selectWorkSite").val()
+    let worker = $("#selectName").val();
     let workSite = $("#selectWorkSite").val();
     let year = $("#selectYear").val();
     let mon = $("#selectMon").val(); let day = $("#selectDay").val();   

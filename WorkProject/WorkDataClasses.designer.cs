@@ -45,15 +45,15 @@ namespace WorkProject
     partial void InsertAttendance(Attendance instance);
     partial void UpdateAttendance(Attendance instance);
     partial void DeleteAttendance(Attendance instance);
-    partial void InsertWorker(Worker instance);
-    partial void UpdateWorker(Worker instance);
-    partial void DeleteWorker(Worker instance);
     partial void InsertWorkSite(WorkSite instance);
     partial void UpdateWorkSite(WorkSite instance);
     partial void DeleteWorkSite(WorkSite instance);
     partial void InsertPredictionWages(PredictionWages instance);
     partial void UpdatePredictionWages(PredictionWages instance);
     partial void DeletePredictionWages(PredictionWages instance);
+    partial void InsertWorker(Worker instance);
+    partial void UpdateWorker(Worker instance);
+    partial void DeleteWorker(Worker instance);
     #endregion
 		
 		public WorkDataClassesDataContext() : 
@@ -126,14 +126,6 @@ namespace WorkProject
 			}
 		}
 		
-		public System.Data.Linq.Table<Worker> Worker
-		{
-			get
-			{
-				return this.GetTable<Worker>();
-			}
-		}
-		
 		public System.Data.Linq.Table<WorkSite> WorkSite
 		{
 			get
@@ -147,6 +139,14 @@ namespace WorkProject
 			get
 			{
 				return this.GetTable<PredictionWages>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Worker> Worker
+		{
+			get
+			{
+				return this.GetTable<Worker>();
 			}
 		}
 	}
@@ -704,9 +704,9 @@ namespace WorkProject
 		
 		private string _Remark;
 		
-		private EntityRef<Worker> _Worker;
-		
 		private EntityRef<WorkSite> _WorkSite;
+		
+		private EntityRef<Worker> _Worker;
 		
     #region 可扩展性方法定义
     partial void OnLoaded();
@@ -738,8 +738,8 @@ namespace WorkProject
 		
 		public Payment()
 		{
-			this._Worker = default(EntityRef<Worker>);
 			this._WorkSite = default(EntityRef<WorkSite>);
+			this._Worker = default(EntityRef<Worker>);
 			OnCreated();
 		}
 		
@@ -971,40 +971,6 @@ namespace WorkProject
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Payment", Storage="_Worker", ThisKey="WorkId", OtherKey="WorkId", IsForeignKey=true)]
-		public Worker Worker
-		{
-			get
-			{
-				return this._Worker.Entity;
-			}
-			set
-			{
-				Worker previousValue = this._Worker.Entity;
-				if (((previousValue != value) 
-							|| (this._Worker.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Worker.Entity = null;
-						previousValue.Payment.Remove(this);
-					}
-					this._Worker.Entity = value;
-					if ((value != null))
-					{
-						value.Payment.Add(this);
-						this._WorkId = value.WorkId;
-					}
-					else
-					{
-						this._WorkId = default(string);
-					}
-					this.SendPropertyChanged("Worker");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WorkSite_Payment", Storage="_WorkSite", ThisKey="WorkSiteId", OtherKey="WorkSiteId", IsForeignKey=true)]
 		public WorkSite WorkSite
 		{
@@ -1035,6 +1001,40 @@ namespace WorkProject
 						this._WorkSiteId = default(int);
 					}
 					this.SendPropertyChanged("WorkSite");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Payment", Storage="_Worker", ThisKey="WorkId", OtherKey="WorkId", IsForeignKey=true)]
+		public Worker Worker
+		{
+			get
+			{
+				return this._Worker.Entity;
+			}
+			set
+			{
+				Worker previousValue = this._Worker.Entity;
+				if (((previousValue != value) 
+							|| (this._Worker.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Worker.Entity = null;
+						previousValue.Payment.Remove(this);
+					}
+					this._Worker.Entity = value;
+					if ((value != null))
+					{
+						value.Payment.Add(this);
+						this._WorkId = value.WorkId;
+					}
+					else
+					{
+						this._WorkId = default(string);
+					}
+					this.SendPropertyChanged("Worker");
 				}
 			}
 		}
@@ -1268,9 +1268,9 @@ namespace WorkProject
 		
 		private string _Remark;
 		
-		private EntityRef<Worker> _Worker;
-		
 		private EntityRef<WorkSite> _WorkSite;
+		
+		private EntityRef<Worker> _Worker;
 		
     #region 可扩展性方法定义
     partial void OnLoaded();
@@ -1300,8 +1300,8 @@ namespace WorkProject
 		
 		public Attendance()
 		{
-			this._Worker = default(EntityRef<Worker>);
 			this._WorkSite = default(EntityRef<WorkSite>);
+			this._Worker = default(EntityRef<Worker>);
 			OnCreated();
 		}
 		
@@ -1513,40 +1513,6 @@ namespace WorkProject
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Attendance", Storage="_Worker", ThisKey="WorkId", OtherKey="WorkId", IsForeignKey=true)]
-		public Worker Worker
-		{
-			get
-			{
-				return this._Worker.Entity;
-			}
-			set
-			{
-				Worker previousValue = this._Worker.Entity;
-				if (((previousValue != value) 
-							|| (this._Worker.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Worker.Entity = null;
-						previousValue.Attendance.Remove(this);
-					}
-					this._Worker.Entity = value;
-					if ((value != null))
-					{
-						value.Attendance.Add(this);
-						this._WorkId = value.WorkId;
-					}
-					else
-					{
-						this._WorkId = default(string);
-					}
-					this.SendPropertyChanged("Worker");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WorkSite_Attendance", Storage="_WorkSite", ThisKey="WorkSiteId", OtherKey="WorkSiteId", IsForeignKey=true)]
 		public WorkSite WorkSite
 		{
@@ -1581,353 +1547,37 @@ namespace WorkProject
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Worker")]
-	public partial class Worker : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _WorkId;
-		
-		private string _WorkName;
-		
-		private System.Nullable<int> _Sex;
-		
-		private string _Phone;
-		
-		private string _WorkType;
-		
-		private string _WorkType1;
-		
-		private string _CCBPayCard;
-		
-		private string _JSPayCard;
-		
-		private System.Nullable<int> _AccidentInsurance;
-		
-		private System.Nullable<System.DateTime> _InsuranceDate;
-		
-		private string _Remark;
-		
-		private EntitySet<Payment> _Payment;
-		
-		private EntitySet<Attendance> _Attendance;
-		
-		private EntitySet<PredictionWages> _PredictionWages;
-		
-    #region 可扩展性方法定义
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnWorkIdChanging(string value);
-    partial void OnWorkIdChanged();
-    partial void OnWorkNameChanging(string value);
-    partial void OnWorkNameChanged();
-    partial void OnSexChanging(System.Nullable<int> value);
-    partial void OnSexChanged();
-    partial void OnPhoneChanging(string value);
-    partial void OnPhoneChanged();
-    partial void OnWorkTypeChanging(string value);
-    partial void OnWorkTypeChanged();
-    partial void OnWorkType1Changing(string value);
-    partial void OnWorkType1Changed();
-    partial void OnCCBPayCardChanging(string value);
-    partial void OnCCBPayCardChanged();
-    partial void OnJSPayCardChanging(string value);
-    partial void OnJSPayCardChanged();
-    partial void OnAccidentInsuranceChanging(System.Nullable<int> value);
-    partial void OnAccidentInsuranceChanged();
-    partial void OnInsuranceDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnInsuranceDateChanged();
-    partial void OnRemarkChanging(string value);
-    partial void OnRemarkChanged();
-    #endregion
-		
-		public Worker()
-		{
-			this._Payment = new EntitySet<Payment>(new Action<Payment>(this.attach_Payment), new Action<Payment>(this.detach_Payment));
-			this._Attendance = new EntitySet<Attendance>(new Action<Attendance>(this.attach_Attendance), new Action<Attendance>(this.detach_Attendance));
-			this._PredictionWages = new EntitySet<PredictionWages>(new Action<PredictionWages>(this.attach_PredictionWages), new Action<PredictionWages>(this.detach_PredictionWages));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkId", DbType="VarChar(18) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string WorkId
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Attendance", Storage="_Worker", ThisKey="WorkId", OtherKey="WorkId", IsForeignKey=true)]
+		public Worker Worker
 		{
 			get
 			{
-				return this._WorkId;
+				return this._Worker.Entity;
 			}
 			set
 			{
-				if ((this._WorkId != value))
+				Worker previousValue = this._Worker.Entity;
+				if (((previousValue != value) 
+							|| (this._Worker.HasLoadedOrAssignedValue == false)))
 				{
-					this.OnWorkIdChanging(value);
 					this.SendPropertyChanging();
-					this._WorkId = value;
-					this.SendPropertyChanged("WorkId");
-					this.OnWorkIdChanged();
+					if ((previousValue != null))
+					{
+						this._Worker.Entity = null;
+						previousValue.Attendance.Remove(this);
+					}
+					this._Worker.Entity = value;
+					if ((value != null))
+					{
+						value.Attendance.Add(this);
+						this._WorkId = value.WorkId;
+					}
+					else
+					{
+						this._WorkId = default(string);
+					}
+					this.SendPropertyChanged("Worker");
 				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkName", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
-		public string WorkName
-		{
-			get
-			{
-				return this._WorkName;
-			}
-			set
-			{
-				if ((this._WorkName != value))
-				{
-					this.OnWorkNameChanging(value);
-					this.SendPropertyChanging();
-					this._WorkName = value;
-					this.SendPropertyChanged("WorkName");
-					this.OnWorkNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sex", DbType="Int")]
-		public System.Nullable<int> Sex
-		{
-			get
-			{
-				return this._Sex;
-			}
-			set
-			{
-				if ((this._Sex != value))
-				{
-					this.OnSexChanging(value);
-					this.SendPropertyChanging();
-					this._Sex = value;
-					this.SendPropertyChanged("Sex");
-					this.OnSexChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone", DbType="VarChar(11)")]
-		public string Phone
-		{
-			get
-			{
-				return this._Phone;
-			}
-			set
-			{
-				if ((this._Phone != value))
-				{
-					this.OnPhoneChanging(value);
-					this.SendPropertyChanging();
-					this._Phone = value;
-					this.SendPropertyChanged("Phone");
-					this.OnPhoneChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkType", DbType="VarChar(20)")]
-		public string WorkType
-		{
-			get
-			{
-				return this._WorkType;
-			}
-			set
-			{
-				if ((this._WorkType != value))
-				{
-					this.OnWorkTypeChanging(value);
-					this.SendPropertyChanging();
-					this._WorkType = value;
-					this.SendPropertyChanged("WorkType");
-					this.OnWorkTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkType1", DbType="VarChar(20)")]
-		public string WorkType1
-		{
-			get
-			{
-				return this._WorkType1;
-			}
-			set
-			{
-				if ((this._WorkType1 != value))
-				{
-					this.OnWorkType1Changing(value);
-					this.SendPropertyChanging();
-					this._WorkType1 = value;
-					this.SendPropertyChanged("WorkType1");
-					this.OnWorkType1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CCBPayCard", DbType="VarChar(20)")]
-		public string CCBPayCard
-		{
-			get
-			{
-				return this._CCBPayCard;
-			}
-			set
-			{
-				if ((this._CCBPayCard != value))
-				{
-					this.OnCCBPayCardChanging(value);
-					this.SendPropertyChanging();
-					this._CCBPayCard = value;
-					this.SendPropertyChanged("CCBPayCard");
-					this.OnCCBPayCardChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JSPayCard", DbType="VarChar(20)")]
-		public string JSPayCard
-		{
-			get
-			{
-				return this._JSPayCard;
-			}
-			set
-			{
-				if ((this._JSPayCard != value))
-				{
-					this.OnJSPayCardChanging(value);
-					this.SendPropertyChanging();
-					this._JSPayCard = value;
-					this.SendPropertyChanged("JSPayCard");
-					this.OnJSPayCardChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccidentInsurance", DbType="Int")]
-		public System.Nullable<int> AccidentInsurance
-		{
-			get
-			{
-				return this._AccidentInsurance;
-			}
-			set
-			{
-				if ((this._AccidentInsurance != value))
-				{
-					this.OnAccidentInsuranceChanging(value);
-					this.SendPropertyChanging();
-					this._AccidentInsurance = value;
-					this.SendPropertyChanged("AccidentInsurance");
-					this.OnAccidentInsuranceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsuranceDate", DbType="Date")]
-		public System.Nullable<System.DateTime> InsuranceDate
-		{
-			get
-			{
-				return this._InsuranceDate;
-			}
-			set
-			{
-				if ((this._InsuranceDate != value))
-				{
-					this.OnInsuranceDateChanging(value);
-					this.SendPropertyChanging();
-					this._InsuranceDate = value;
-					this.SendPropertyChanged("InsuranceDate");
-					this.OnInsuranceDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(128)")]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this.OnRemarkChanging(value);
-					this.SendPropertyChanging();
-					this._Remark = value;
-					this.SendPropertyChanged("Remark");
-					this.OnRemarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Payment", Storage="_Payment", ThisKey="WorkId", OtherKey="WorkId")]
-		public EntitySet<Payment> Payment
-		{
-			get
-			{
-				return this._Payment;
-			}
-			set
-			{
-				this._Payment.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Attendance", Storage="_Attendance", ThisKey="WorkId", OtherKey="WorkId")]
-		public EntitySet<Attendance> Attendance
-		{
-			get
-			{
-				return this._Attendance;
-			}
-			set
-			{
-				this._Attendance.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_PredictionWages", Storage="_PredictionWages", ThisKey="WorkId", OtherKey="WorkerId")]
-		public EntitySet<PredictionWages> PredictionWages
-		{
-			get
-			{
-				return this._PredictionWages;
-			}
-			set
-			{
-				this._PredictionWages.Assign(value);
 			}
 		}
 		
@@ -1949,42 +1599,6 @@ namespace WorkProject
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Payment(Payment entity)
-		{
-			this.SendPropertyChanging();
-			entity.Worker = this;
-		}
-		
-		private void detach_Payment(Payment entity)
-		{
-			this.SendPropertyChanging();
-			entity.Worker = null;
-		}
-		
-		private void attach_Attendance(Attendance entity)
-		{
-			this.SendPropertyChanging();
-			entity.Worker = this;
-		}
-		
-		private void detach_Attendance(Attendance entity)
-		{
-			this.SendPropertyChanging();
-			entity.Worker = null;
-		}
-		
-		private void attach_PredictionWages(PredictionWages entity)
-		{
-			this.SendPropertyChanging();
-			entity.Worker = this;
-		}
-		
-		private void detach_PredictionWages(PredictionWages entity)
-		{
-			this.SendPropertyChanging();
-			entity.Worker = null;
 		}
 	}
 	
@@ -2380,9 +1994,9 @@ namespace WorkProject
 		
 		private string _Remark;
 		
-		private EntityRef<Worker> _Worker;
-		
 		private EntityRef<WorkSite> _WorkSite;
+		
+		private EntityRef<Worker> _Worker;
 		
     #region 可扩展性方法定义
     partial void OnLoaded();
@@ -2412,8 +2026,8 @@ namespace WorkProject
 		
 		public PredictionWages()
 		{
-			this._Worker = default(EntityRef<Worker>);
 			this._WorkSite = default(EntityRef<WorkSite>);
+			this._Worker = default(EntityRef<Worker>);
 			OnCreated();
 		}
 		
@@ -2625,40 +2239,6 @@ namespace WorkProject
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_PredictionWages", Storage="_Worker", ThisKey="WorkerId", OtherKey="WorkId", IsForeignKey=true)]
-		public Worker Worker
-		{
-			get
-			{
-				return this._Worker.Entity;
-			}
-			set
-			{
-				Worker previousValue = this._Worker.Entity;
-				if (((previousValue != value) 
-							|| (this._Worker.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Worker.Entity = null;
-						previousValue.PredictionWages.Remove(this);
-					}
-					this._Worker.Entity = value;
-					if ((value != null))
-					{
-						value.PredictionWages.Add(this);
-						this._WorkerId = value.WorkId;
-					}
-					else
-					{
-						this._WorkerId = default(string);
-					}
-					this.SendPropertyChanged("Worker");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WorkSite_PredictionWages", Storage="_WorkSite", ThisKey="WorkSiteId", OtherKey="WorkSiteId", IsForeignKey=true)]
 		public WorkSite WorkSite
 		{
@@ -2693,6 +2273,40 @@ namespace WorkProject
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_PredictionWages", Storage="_Worker", ThisKey="WorkerId", OtherKey="WorkId", IsForeignKey=true)]
+		public Worker Worker
+		{
+			get
+			{
+				return this._Worker.Entity;
+			}
+			set
+			{
+				Worker previousValue = this._Worker.Entity;
+				if (((previousValue != value) 
+							|| (this._Worker.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Worker.Entity = null;
+						previousValue.PredictionWages.Remove(this);
+					}
+					this._Worker.Entity = value;
+					if ((value != null))
+					{
+						value.PredictionWages.Add(this);
+						this._WorkerId = value.WorkId;
+					}
+					else
+					{
+						this._WorkerId = default(string);
+					}
+					this.SendPropertyChanged("Worker");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2711,6 +2325,464 @@ namespace WorkProject
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Worker")]
+	public partial class Worker : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _WorkId;
+		
+		private string _WorkName;
+		
+		private string _IC;
+		
+		private System.Nullable<int> _Sex;
+		
+		private string _Phone;
+		
+		private string _WorkType;
+		
+		private string _WorkType1;
+		
+		private string _Affiliation;
+		
+		private string _CCBPayCard;
+		
+		private string _JSPayCard;
+		
+		private System.Nullable<int> _AccidentInsurance;
+		
+		private string _Address;
+		
+		private System.Nullable<System.DateTime> _InsuranceDate;
+		
+		private string _Remark;
+		
+		private EntitySet<Payment> _Payment;
+		
+		private EntitySet<Attendance> _Attendance;
+		
+		private EntitySet<PredictionWages> _PredictionWages;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnWorkIdChanging(string value);
+    partial void OnWorkIdChanged();
+    partial void OnWorkNameChanging(string value);
+    partial void OnWorkNameChanged();
+    partial void OnICChanging(string value);
+    partial void OnICChanged();
+    partial void OnSexChanging(System.Nullable<int> value);
+    partial void OnSexChanged();
+    partial void OnPhoneChanging(string value);
+    partial void OnPhoneChanged();
+    partial void OnWorkTypeChanging(string value);
+    partial void OnWorkTypeChanged();
+    partial void OnWorkType1Changing(string value);
+    partial void OnWorkType1Changed();
+    partial void OnAffiliationChanging(string value);
+    partial void OnAffiliationChanged();
+    partial void OnCCBPayCardChanging(string value);
+    partial void OnCCBPayCardChanged();
+    partial void OnJSPayCardChanging(string value);
+    partial void OnJSPayCardChanged();
+    partial void OnAccidentInsuranceChanging(System.Nullable<int> value);
+    partial void OnAccidentInsuranceChanged();
+    partial void OnAddressChanging(string value);
+    partial void OnAddressChanged();
+    partial void OnInsuranceDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnInsuranceDateChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    #endregion
+		
+		public Worker()
+		{
+			this._Payment = new EntitySet<Payment>(new Action<Payment>(this.attach_Payment), new Action<Payment>(this.detach_Payment));
+			this._Attendance = new EntitySet<Attendance>(new Action<Attendance>(this.attach_Attendance), new Action<Attendance>(this.detach_Attendance));
+			this._PredictionWages = new EntitySet<PredictionWages>(new Action<PredictionWages>(this.attach_PredictionWages), new Action<PredictionWages>(this.detach_PredictionWages));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkId", DbType="VarChar(18) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string WorkId
+		{
+			get
+			{
+				return this._WorkId;
+			}
+			set
+			{
+				if ((this._WorkId != value))
+				{
+					this.OnWorkIdChanging(value);
+					this.SendPropertyChanging();
+					this._WorkId = value;
+					this.SendPropertyChanged("WorkId");
+					this.OnWorkIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkName", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string WorkName
+		{
+			get
+			{
+				return this._WorkName;
+			}
+			set
+			{
+				if ((this._WorkName != value))
+				{
+					this.OnWorkNameChanging(value);
+					this.SendPropertyChanging();
+					this._WorkName = value;
+					this.SendPropertyChanged("WorkName");
+					this.OnWorkNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IC", DbType="VarChar(18)")]
+		public string IC
+		{
+			get
+			{
+				return this._IC;
+			}
+			set
+			{
+				if ((this._IC != value))
+				{
+					this.OnICChanging(value);
+					this.SendPropertyChanging();
+					this._IC = value;
+					this.SendPropertyChanged("IC");
+					this.OnICChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sex", DbType="Int")]
+		public System.Nullable<int> Sex
+		{
+			get
+			{
+				return this._Sex;
+			}
+			set
+			{
+				if ((this._Sex != value))
+				{
+					this.OnSexChanging(value);
+					this.SendPropertyChanging();
+					this._Sex = value;
+					this.SendPropertyChanged("Sex");
+					this.OnSexChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone", DbType="VarChar(11)")]
+		public string Phone
+		{
+			get
+			{
+				return this._Phone;
+			}
+			set
+			{
+				if ((this._Phone != value))
+				{
+					this.OnPhoneChanging(value);
+					this.SendPropertyChanging();
+					this._Phone = value;
+					this.SendPropertyChanged("Phone");
+					this.OnPhoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkType", DbType="VarChar(20)")]
+		public string WorkType
+		{
+			get
+			{
+				return this._WorkType;
+			}
+			set
+			{
+				if ((this._WorkType != value))
+				{
+					this.OnWorkTypeChanging(value);
+					this.SendPropertyChanging();
+					this._WorkType = value;
+					this.SendPropertyChanged("WorkType");
+					this.OnWorkTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkType1", DbType="VarChar(20)")]
+		public string WorkType1
+		{
+			get
+			{
+				return this._WorkType1;
+			}
+			set
+			{
+				if ((this._WorkType1 != value))
+				{
+					this.OnWorkType1Changing(value);
+					this.SendPropertyChanging();
+					this._WorkType1 = value;
+					this.SendPropertyChanged("WorkType1");
+					this.OnWorkType1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Affiliation", DbType="VarChar(20)")]
+		public string Affiliation
+		{
+			get
+			{
+				return this._Affiliation;
+			}
+			set
+			{
+				if ((this._Affiliation != value))
+				{
+					this.OnAffiliationChanging(value);
+					this.SendPropertyChanging();
+					this._Affiliation = value;
+					this.SendPropertyChanged("Affiliation");
+					this.OnAffiliationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CCBPayCard", DbType="VarChar(20)")]
+		public string CCBPayCard
+		{
+			get
+			{
+				return this._CCBPayCard;
+			}
+			set
+			{
+				if ((this._CCBPayCard != value))
+				{
+					this.OnCCBPayCardChanging(value);
+					this.SendPropertyChanging();
+					this._CCBPayCard = value;
+					this.SendPropertyChanged("CCBPayCard");
+					this.OnCCBPayCardChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JSPayCard", DbType="VarChar(20)")]
+		public string JSPayCard
+		{
+			get
+			{
+				return this._JSPayCard;
+			}
+			set
+			{
+				if ((this._JSPayCard != value))
+				{
+					this.OnJSPayCardChanging(value);
+					this.SendPropertyChanging();
+					this._JSPayCard = value;
+					this.SendPropertyChanged("JSPayCard");
+					this.OnJSPayCardChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccidentInsurance", DbType="Int")]
+		public System.Nullable<int> AccidentInsurance
+		{
+			get
+			{
+				return this._AccidentInsurance;
+			}
+			set
+			{
+				if ((this._AccidentInsurance != value))
+				{
+					this.OnAccidentInsuranceChanging(value);
+					this.SendPropertyChanging();
+					this._AccidentInsurance = value;
+					this.SendPropertyChanged("AccidentInsurance");
+					this.OnAccidentInsuranceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="VarChar(128)")]
+		public string Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InsuranceDate", DbType="Date")]
+		public System.Nullable<System.DateTime> InsuranceDate
+		{
+			get
+			{
+				return this._InsuranceDate;
+			}
+			set
+			{
+				if ((this._InsuranceDate != value))
+				{
+					this.OnInsuranceDateChanging(value);
+					this.SendPropertyChanging();
+					this._InsuranceDate = value;
+					this.SendPropertyChanged("InsuranceDate");
+					this.OnInsuranceDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(128)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Payment", Storage="_Payment", ThisKey="WorkId", OtherKey="WorkId")]
+		public EntitySet<Payment> Payment
+		{
+			get
+			{
+				return this._Payment;
+			}
+			set
+			{
+				this._Payment.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Attendance", Storage="_Attendance", ThisKey="WorkId", OtherKey="WorkId")]
+		public EntitySet<Attendance> Attendance
+		{
+			get
+			{
+				return this._Attendance;
+			}
+			set
+			{
+				this._Attendance.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_PredictionWages", Storage="_PredictionWages", ThisKey="WorkId", OtherKey="WorkerId")]
+		public EntitySet<PredictionWages> PredictionWages
+		{
+			get
+			{
+				return this._PredictionWages;
+			}
+			set
+			{
+				this._PredictionWages.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Payment(Payment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Worker = this;
+		}
+		
+		private void detach_Payment(Payment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Worker = null;
+		}
+		
+		private void attach_Attendance(Attendance entity)
+		{
+			this.SendPropertyChanging();
+			entity.Worker = this;
+		}
+		
+		private void detach_Attendance(Attendance entity)
+		{
+			this.SendPropertyChanging();
+			entity.Worker = null;
+		}
+		
+		private void attach_PredictionWages(PredictionWages entity)
+		{
+			this.SendPropertyChanging();
+			entity.Worker = this;
+		}
+		
+		private void detach_PredictionWages(PredictionWages entity)
+		{
+			this.SendPropertyChanging();
+			entity.Worker = null;
 		}
 	}
 }

@@ -237,12 +237,14 @@ namespace WorkProject.Controllers.SysInfo
                 };
                 Attendance modifyAtt = db.Attendance.Where(n => n.WorkDate == att.WorkDate
                                        && n.WorkId == att.WorkId && n.WorkSiteId == att.WorkSiteId).SingleOrDefault();
+               
                 string json;
                 if (modifyAtt != null)
                 {
-                    modifyAtt.WorkTime = att.WorkTime;
-                    modifyAtt.WorkMore = att.WorkMore;
-                    modifyAtt.Remark = att.RecordTime + "+" + att.Remark;
+                    //不能直接更新在原表里，放在remark 
+                    //modifyAtt.WorkTime = att.WorkTime;
+                    //modifyAtt.WorkMore = att.WorkMore;
+                    modifyAtt.Remark = att.RecordTime + "+"+ att.WorkTime + "+" + att.WorkMore + "+" + att.WorkQuality;
                     db.SubmitChanges();
                     json = "ok";
                 }

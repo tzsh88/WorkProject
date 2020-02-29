@@ -82,7 +82,7 @@ namespace WorkProject.Controllers.BasicInfo
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
                 var data = from s in db.WorkSite
-                           where s.WorkSiteId!=0 
+                           where s.WorkSiteId!=0 && s.WorkSiteId != 4
                            && (siteEffect || s.WorkSiteName == workSiteName)
                            select new
                            {

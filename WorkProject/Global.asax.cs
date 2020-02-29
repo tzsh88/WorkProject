@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.SessionState;
+using WorkProject.Models;
 
 namespace WorkProject
 {
@@ -14,6 +15,13 @@ namespace WorkProject
     {
         protected void Application_Start()
         {
+            //×¢²á log4net
+            log4net.Config.XmlConfigurator.Configure(
+               new System.IO.FileInfo(AppDomain.CurrentDomain.BaseDirectory + "\\Config\\log4net.config")
+            );
+           //log4net È«¾ÖÆôÓÃ
+            GlobalConfiguration.Configuration.Filters.Add(new WebApiTrackerAttribute());          
+           
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

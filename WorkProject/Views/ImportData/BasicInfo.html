@@ -24,7 +24,7 @@
 
         <script src="../GetChangingHeight.js"></script>
 
-        
+
         <div class="row" style="height:95%;margin:1% 0%">
 
 
@@ -32,7 +32,7 @@
                 <div style="margin:2% 1%;font-size:1.45em;font-weight:500;line-height:1.9em;">
                     <span style="font-size:1em;">工人基础信息：</span>
                     <select class="selectpicker" id="selectName">
-                        <option value="all">全部数据</option>                     
+                        <option value="all">全部数据</option>
                     </select>&nbsp; &nbsp;
                     <button type="button" class="btn btn-default" onclick="workerInfo()">信息查询</button>&nbsp; &nbsp;
                 </div>
@@ -48,7 +48,7 @@
                     <span style="font-size:1em;">工地基础信息：</span>
                     <select class="selectpicker" id="selectWorkSite">
                         <option value="all">全部数据</option>
-                        
+
                     </select>&nbsp; &nbsp;
                     <button type="button" class="btn btn-default" onclick="workSiteInfo()">信息查询</button>&nbsp; &nbsp;
                 </div>
@@ -68,8 +68,8 @@
 
     </div>
     <script>
-         const optoinUrl = '/api/ImPort/GetBasicInfo';
-         //加载人员和工地
+        const optoinUrl = '/api/ImPort/GetBasicInfo';
+        //加载人员和工地
         function loadWork() {
             $.ajax({
                 url: optoinUrl, //所需要的列表接口地址
@@ -90,8 +90,9 @@
 
                     let listWorkSites = "";
                     for (let i = 0; i < data[1].length; i++) {
-                        listWorkSites += "<option value='" + data[1][i] + "'>" + data[1][i] + "</option>";
-
+                       
+                            listWorkSites += "<option value='" + data[1][i] + "'>" + data[1][i] + "</option>";
+                       
                     }
                     $("#selectWorkSite").append(listWorkSites);
                     $('#selectWorkSite').selectpicker('refresh');

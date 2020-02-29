@@ -27,7 +27,7 @@ namespace WorkProject.Models
         {
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
-                return db.WorkSite.Where(n=>n.WorkSiteName!="系统"&& n.WorkSiteFinished==0).OrderBy(n => n.WorkSiteName).Select(n => n.WorkSiteName).ToList();
+                return db.WorkSite.Where(n=>n.WorkSiteName!="系统"&& n.WorkSiteName != "整体月度月度汇总" && n.WorkSiteFinished==0).OrderBy(n => n.WorkSiteName).Select(n => n.WorkSiteName).ToList();
             }
         }
         /// <summary>

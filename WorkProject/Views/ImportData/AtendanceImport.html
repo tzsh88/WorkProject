@@ -30,7 +30,8 @@
                 <button type="button" class="addOn"></button>
             </div>
             <script>
-                if ($(".iDate.date").length > 0) {
+               /*
+			   if ($(".iDate.date").length > 0) {
                     $(".iDate.date").datetimepicker({
                         locale: "zh-cn",
                         format: "YYYY-MM-DD",
@@ -51,7 +52,16 @@
                     day = '0' + day;
                 }
                 yesday = yesday.getFullYear() + '-' + month + '-' + day;
-                $("#date").val(yesday);
+                $("#date").val(yesday); 
+				*/
+				 if ($(".iDate.date").length > 0) {
+                    $(".iDate.date").datetimepicker({
+                        locale: "zh-cn",
+                        format: "YYYY-MM-DD",
+                        dayViewHeaderFormat: "YYYY年 MMDD"
+                    });
+                };
+				
             </script>
             &nbsp; &nbsp;
             <span style="font-size:1em;">天气：</span>
@@ -107,12 +117,14 @@
                     <select class="selectpicker" style="" id="payType">
                         <option value="转账"> 转账</option>
                         <option value="现金"> 现金</option>
+						<option value="微信"> 微信</option>
                     </select>&nbsp; &nbsp;
                     <span style="font-size:1em;">银行：</span>
                     <select class="selectpicker" style="" id="wageCard">
                         <option value="CCB"> 建设银行</option>
                         <option value="JS">  江苏银行</option>
                         <option value="Cas">现金选项</option>
+						
                     </select>&nbsp; &nbsp;
                     <span style="font-size:1em;">备注：</span>
                     <textarea type="text" id="payRemark" class="form-control" style="width: 20em;" placeholder="支付缘由（分包付款也可以导入,支付不考虑天气因素）" rows="3"></textarea>

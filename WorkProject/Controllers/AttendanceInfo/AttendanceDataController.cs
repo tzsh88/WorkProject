@@ -10,6 +10,7 @@ using WorkProject.Models;
 using Newtonsoft.Json;
 namespace WorkProject.Controllers.AttendanceInfo
 {
+   // [WebApiTracker]
     public class AttendanceDataController : ApiController
     {
         /// <summary>

@@ -166,7 +166,18 @@
     <!-- ./wrapper -->
 
     <script>
-
+        $(document).ready(function(){
+        //高度设置
+        var height = $(window).height();
+        $('#mainFrameTabs').height(height);
+    })
+    function changeFrameHeight(){
+        var ifm= document.getElementById("mainFrameTabs");
+        $('#mainFrameTabs').height($(window).height());
+    }
+    window.onresize=function(){
+        changeFrameHeight();
+    }
     </script>
 
 
