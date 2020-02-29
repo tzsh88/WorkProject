@@ -48,7 +48,7 @@ namespace WorkProject.Models
             MonLog.ExecuteEndTime = DateTime.Now;
             MonLog.ActionName = actionExecutedContext.ActionContext.ActionDescriptor.ActionName;
             MonLog.ControllerName = actionExecutedContext.ActionContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-            LogHelper.Monitor(MonLog.GetLoginfo());
+            LogHelper.Monitor(MonLog.GetLogDMLinfo());
             if (actionExecutedContext.Exception != null)
             {
                 string Msg = string.Format(@"

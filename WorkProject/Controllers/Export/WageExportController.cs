@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using WorkProject.Models;
 
 namespace WorkProject.Controllers.Export
 {
@@ -49,8 +50,9 @@ namespace WorkProject.Controllers.Export
             rowHeader.CreateCell(5).SetCellValue("金额");
             rowHeader.CreateCell(6).SetCellValue("银行");
             rowHeader.CreateCell(7).SetCellValue("支付方式");
-            rowHeader.CreateCell(8).SetCellValue("备注");
-           
+            rowHeader.CreateCell(8).SetCellValue("隶属");
+            rowHeader.CreateCell(9).SetCellValue("备注");
+
             bool siteEffect = false; bool workerEffect = false; bool monEffect = false; bool dayEffect = false;
             if (workSite == "all") siteEffect = true;
             if (worker == "all") workerEffect = true;
@@ -76,7 +78,7 @@ namespace WorkProject.Controllers.Export
                                payDate = Convert.ToString(s.WagePaymentDate.Value),
                                s.Worker.WorkType,s.WageAmount,
                                Card = (s.WageCard == "CCB" ? "建行" : s.WageCard),
-                               PayType = s.PaymentType, s.Remark
+                               PayType = s.PaymentType, s.Remark,s.Worker.Affiliation
                            };
 
                 int rowIndex = 1;
@@ -92,10 +94,12 @@ namespace WorkProject.Controllers.Export
                     r.CreateCell(5).SetCellValue((double)oo.WageAmount);
                     r.CreateCell(6).SetCellValue(oo.Card);
                     r.CreateCell(7).SetCellValue(oo.PayType);
-                    r.CreateCell(8).SetCellValue(oo.Remark);                 
+                    r.CreateCell(8).SetCellValue(oo.Affiliation);
+                    r.CreateCell(9).SetCellValue(oo.Remark);
                     rowIndex++;
                 }
 
+                LogHelper.Monitor("\r\n预测工资导出" + "\r\nIP:" + new WebApiMonitorLog().GetIP() + "\r\nControllerName:WageExportController");
 
                 MemoryStream file = new MemoryStream();
                 hssfworkbook.Write(file);

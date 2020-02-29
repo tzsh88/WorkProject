@@ -104,6 +104,12 @@ let TableInit = function () {
                     title: '人工费',
                     sortable: true,
 
+                }, 
+                {
+                    field: 'Affiliation',
+                    title: '工人归属',
+                    sortable: true,
+
                 }
                
                

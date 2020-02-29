@@ -76,7 +76,7 @@ namespace WorkProject.Controllers.SysInfo
 
         }
 
-
+        [WebApiTracker]
         /// <summary>
         /// 导入工人当天工作信息
         /// </summary>
@@ -117,7 +117,7 @@ namespace WorkProject.Controllers.SysInfo
 
         }
 
-
+        
         //数据导入并检查重复
         private string InsertAttendance(Attendance attendance)
         {
@@ -129,6 +129,10 @@ namespace WorkProject.Controllers.SysInfo
                 {
                     db.Attendance.InsertOnSubmit(attendance);
                     db.SubmitChanges();
+                    //数据库操作日记记录
+                    LogHelper.Monitor(attendance.Worker.WorkName + "+" + attendance.WorkTime+"+"+attendance.WorkMore+attendance.WorkSite.WorkSiteName
+                        +"+"+attendance.WorkQuality+"出勤数据导入");
+                    
                     return "ok";
                 }
                 else
@@ -139,6 +143,7 @@ namespace WorkProject.Controllers.SysInfo
             }
         }
 
+        [WebApiTracker]
         /// <summary>
         /// 导入工人工资支付情况
         /// </summary>
@@ -174,6 +179,7 @@ namespace WorkProject.Controllers.SysInfo
                 };
 
                 string json = InsertPayment(p);
+                
                 json = JsonConvert.SerializeObject(json);
                 return HttpResponseMessageToJson.ToJson(json);
             }
@@ -192,6 +198,7 @@ namespace WorkProject.Controllers.SysInfo
                 {
                     db.Payment.InsertOnSubmit(p);
                     db.SubmitChanges();
+                    LogHelper.Monitor(p.Worker.WorkName + p.WageAmount + "工资支付");
                     return "ok";
                 }
                 else
@@ -246,6 +253,7 @@ namespace WorkProject.Controllers.SysInfo
                     //modifyAtt.WorkMore = att.WorkMore;
                     modifyAtt.Remark = att.RecordTime + "+"+ att.WorkTime + "+" + att.WorkMore + "+" + att.WorkQuality;
                     db.SubmitChanges();
+                    LogHelper.Monitor(modifyAtt.Worker.WorkName +"+"+ modifyAtt.Remark + "修改工人工时");
                     json = "ok";
                 }
                 else
@@ -262,7 +270,7 @@ namespace WorkProject.Controllers.SysInfo
 
 
         /// <summary>
-        /// 导入数据稽核表格数据请求
+        /// 数据稽核表格数据请求
         /// </summary>
         /// <param name="limit">页面大小</param>
         /// <param name="offset">偏移量</param>
@@ -330,17 +338,20 @@ namespace WorkProject.Controllers.SysInfo
         /// <param name="js"></param>
         /// <returns></returns>
         [HttpGet]
+        [WebApiTracker]
         public HttpResponseMessage InsertWorker(string workName, int sex, string workType,
-        string cardId, string phone, string ccb, string js)
+        string cardId, string phone, string ccb, string workId,string aff)
         {
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
                 Worker w = new Worker
                 {
-                    WorkId = cardId,WorkName = workName,
+                    WorkId = workId,
+                    WorkName = workName,
                     Sex = sex,WorkType = workType,
                     Phone = phone, CCBPayCard = ccb,
-                    JSPayCard = js
+                    IC = cardId,
+                    Affiliation=aff
                 };
                 int wCnt = db.Worker.Where(n => n.WorkId == w.WorkId).Count();
                 string json;
@@ -348,6 +359,7 @@ namespace WorkProject.Controllers.SysInfo
                 {
                     db.Worker.InsertOnSubmit(w);
                     db.SubmitChanges();
+                    LogHelper.Monitor(w.WorkName + "信息录入");
                     json = "ok";
                 }
                 else
@@ -361,7 +373,7 @@ namespace WorkProject.Controllers.SysInfo
 
 
         }
-        [HttpGet]
+        [HttpGet] [WebApiTracker]
         public HttpResponseMessage InsertWorkSite(int workSiteId, string workSiteName,
                 string com, string comBoss, string workManage, string remark)
         {
@@ -379,6 +391,7 @@ namespace WorkProject.Controllers.SysInfo
                 {
                     db.WorkSite.InsertOnSubmit(wt);
                     db.SubmitChanges();
+                    LogHelper.Monitor(wt.WorkSiteName + "工地信息录入");
                     json = "ok";
                 }
                 else

@@ -9,9 +9,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using WorkProject.Models;
 
 namespace WorkProject.Controllers.Export
 {
+
     public class CostExportController : ApiController
     {
         //导出excel功能控制器
@@ -199,9 +201,9 @@ namespace WorkProject.Controllers.Export
             rowHeader.CreateCell(6).SetCellValue("总工日（月）");
             rowHeader.CreateCell(7).SetCellValue("人工费");
             rowHeader.CreateCell(8).SetCellValue("工地");
-            rowHeader.CreateCell(9).SetCellValue("管理员");
+            rowHeader.CreateCell(9).SetCellValue("隶属");
 
-            
+
             bool siteEffect = false; bool workerEffect = false; bool monEffect = false; 
             if (workSite == "all") siteEffect = true;
             if (worker == "all") workerEffect = true;
@@ -231,7 +233,8 @@ namespace WorkProject.Controllers.Export
                                //使用前提数据里面只含大、小工两者类型 做了类似映射 用WorkType1里面没有管理
                                spend = (s.Worker.WorkType1 == "小工" ? (s.WorkTimeMon + s.WorkMoreMon) * swage : (s.WorkTimeMon + s.WorkMoreMon) * bwage),
                                s.WorkSite.WorkManage,
-                               s.WorkSite.WorkSiteName
+                               s.WorkSite.WorkSiteName,
+                               s.Worker.Affiliation
                            };
               
                 var rowIndex = 1;
@@ -248,12 +251,11 @@ namespace WorkProject.Controllers.Export
                     r.CreateCell(6).SetCellValue((double)oo.totalWork);
                     r.CreateCell(7).SetCellValue((double)oo.spend);
                     r.CreateCell(8).SetCellValue(oo.WorkSiteName);
-                    r.CreateCell(9).SetCellValue(oo.WorkManage);
+                    r.CreateCell(9).SetCellValue(oo.Affiliation);
                     rowIndex++;
                 }
 
-
-
+                LogHelper.Monitor("\r\n预测数据导出" + "\r\nIP:" + new WebApiMonitorLog().GetIP() + "\r\nControllerName:CostExportController");
 
                 MemoryStream file = new MemoryStream();
                 hssfworkbook.Write(file);

@@ -68,6 +68,56 @@ namespace WorkProject.Models
         }
 
         /// <summary>
+        /// 获取监控指标日志，去除请求头参数
+        /// </summary>
+        /// <param name="mtype"></param>
+        /// <returns></returns>
+        public string GetLoginfoNew()
+        {
+            string Msg = @"
+            ActionMonitor：
+            ControllerName：{0}Controller
+            ActionName:{1}
+            StartTime：{2}
+            EndTime：{3}
+            Total：{4}秒
+            ActionParams：{5},           
+            ClientIP：{6},
+            HttpMethod:{7}
+                    ";
+            return string.Format(Msg,
+                ControllerName,
+                ActionName,
+                ExecuteStartTime,
+                ExecuteEndTime,
+                (ExecuteEndTime - ExecuteStartTime).TotalSeconds,
+                GetCollections(ActionParams),             
+                IP,
+                HttpMethod);
+        }
+
+        /// <summary>
+        /// 对数据库DML操作记录
+        /// </summary>
+        /// <returns></returns>
+        public string GetLogDMLinfo()
+        {
+            string Msg = @"       
+            ControllerName：{0}Controller
+            ActionName:{1},          
+            Total：{2}秒           
+            ClientIP：{3},
+            HttpMethod:{4}
+                    ";
+            return string.Format(Msg,             
+                ControllerName,
+                ActionName,
+                (ExecuteEndTime - ExecuteStartTime).TotalSeconds,
+                GetIP(),
+                HttpMethod);
+          
+        }
+        /// <summary>
         /// 获取Action 参数
         /// </summary>
         /// <param name="Collections"></param>

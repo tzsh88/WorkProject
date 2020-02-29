@@ -32,7 +32,6 @@ namespace WorkProject.Controllers.BasicInfo
                 using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
                 {
 
-               
                   List<Worker> workers = new List<Worker>();
                   workers.Add(db.Worker.Where(n => n.WorkName == sesName).First());
 
@@ -47,11 +46,12 @@ namespace WorkProject.Controllers.BasicInfo
         }
 
         /// <summary>
-        /// 用Session保存user信息
+        /// 个人信息修改
         /// </summary>
         /// <param name="form">表单数据集合</param>
         /// <returns></returns>
         [HttpPost]
+        [WebApiTracker]
         public void PostSessionUserName(FormDataCollection form)
         {
             //记得去除前后空格
@@ -71,7 +71,8 @@ namespace WorkProject.Controllers.BasicInfo
                     Worker woker = db.Worker.Where(n => n.WorkName == name).First();
                     woker.Remark = name + "+" + sex + "+" + phone + "+" + card + "+" + workType;
                     db.SubmitChanges();
-
+                    
+                    LogHelper.Monitor(name + "更新信息保存在Remark");
                 }
             }
 

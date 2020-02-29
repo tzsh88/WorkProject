@@ -19,8 +19,9 @@ namespace WorkProject
             log4net.Config.XmlConfigurator.Configure(
                new System.IO.FileInfo(AppDomain.CurrentDomain.BaseDirectory + "\\Config\\log4net.config")
             );
-           //log4net 全局启用
-            GlobalConfiguration.Configuration.Filters.Add(new WebApiTrackerAttribute());          
+
+            ////WebApiTrackerAttribute  全局启用
+            //GlobalConfiguration.Configuration.Filters.Add(new WebApiTrackerAttribute());          
            
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

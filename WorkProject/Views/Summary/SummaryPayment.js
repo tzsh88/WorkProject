@@ -98,6 +98,12 @@ let TableInit = function () {
 
                 },
                 
+                {
+                    field: 'Affiliation',
+                    title: '工人归属',
+                    sortable: true,
+
+                },
                 
                 {
                     field: 'Remark',

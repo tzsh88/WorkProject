@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -83,7 +84,7 @@
                 <br>
                 <div style="margin-right:20%; text-align: center ">
                     <button type="button" class="btn-primary" onclick="workDataUpdate()">考勤数据修改</button>&nbsp; &nbsp;&nbsp; &nbsp;
-                    <button type="button" class="btn-primary" onclick="urlSkip()">修改二次确认</button>
+
                 </div>
 
 
@@ -176,13 +177,13 @@
         }
 
 
-    function urlSkip() {
+        function urlSkip() {
 
 
             let unid = "ModifySec";
             let url = 'ImportData/ModifySecConfirm.html'
             let title = '考勤修改二次确认';
-            parent.addTab(unid, title, url);
+            parent.addTabWithParams(unid, title, url);
 
             //let param = [];
             //param.push(rname + "_" + dire);
@@ -199,4 +200,3 @@
 </body>
 
 </html>
-

@@ -9,6 +9,7 @@ using WorkProject.Models;
 
 namespace WorkProject.Controllers.Prediction
 {
+ 
     public class MonDataGenerationController : ApiController
     {
         /// <summary>
@@ -18,6 +19,7 @@ namespace WorkProject.Controllers.Prediction
         /// <param name="mon"></param>
         /// <returns></returns>
         [HttpGet]
+        
         public HttpResponseMessage MonGenerate(string year, string mon)
         {
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
@@ -96,7 +98,7 @@ namespace WorkProject.Controllers.Prediction
         }
 
         /// <summary>
-        /// 生成月度工人月度总工日的数据
+        /// 生成删除月度工人月度总工日的数据
         /// </summary>
         /// <param name="year"></param>
         /// <param name="mon"></param>
@@ -113,6 +115,8 @@ namespace WorkProject.Controllers.Prediction
                 if (c > 0)
                 {
                     json = "ok";
+                    LogHelper.Monitor("\r\n"+year + mon + "月度数据删除" + "\r\nIP:" + new WebApiMonitorLog().GetIP() + "\r\nControllerName:MonDataGenerationController");
+           
                 }
                 else
                 {
@@ -141,9 +145,10 @@ namespace WorkProject.Controllers.Prediction
                 {
                     db.PredictionWages.InsertOnSubmit(pw);
                     db.SubmitChanges();
-
+                    LogHelper.Monitor("\r\n"+pw.WorkYear + pw.WorkMon + "月度数据生成" + "\r\nIP:" + new WebApiMonitorLog().GetIP() + "\r\nControllerName:MonDataGenerationController");
                 }
-
+              
+             
             }
         }
 

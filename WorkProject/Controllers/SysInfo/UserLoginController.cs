@@ -39,7 +39,7 @@ namespace WorkProject.Controllers
         /// </summary>
         /// <param name="form">表单数据集合</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost] [WebApiTracker]
         public HttpResponseMessage PostSessionUserName(FormDataCollection form)
         {
             string json = "[\"用户名或密码不正确\"]";
@@ -54,6 +54,10 @@ namespace WorkProject.Controllers
                     //session赋值
                     context.Session["userName"] = name;
                     json = "验证成功";
+
+                    
+                    LogHelper.Monitor(name + "登录成功");
+
                     HttpResponseMessage resp = new HttpResponseMessage(HttpStatusCode.Moved);
                     string server_ip = ConfigSetting.GetIP();
                     string server_port = ConfigSetting.GetIpPort();

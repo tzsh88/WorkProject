@@ -389,6 +389,9 @@
     <Content Include="Views\ImportData\ModifyData.html">
       <BrowseToURL>Views/ImportData/ModifyData.html</BrowseToURL>
     </Content>
+    <Content Include="Views\ImportData\ModifySecConfirm.html">
+      <BrowseToURL>Views/ImportData/ModifySecConfirm.html</BrowseToURL>
+    </Content>
     <Content Include="Views\ImportData\NewBasicData.html">
       <BrowseToURL>Views/ImportData/NewBasicData.html</BrowseToURL>
     </Content>

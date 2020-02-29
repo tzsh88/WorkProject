@@ -8,11 +8,9 @@ namespace WorkProject.Models
     public class LogHelper
     {
 
-
         /// <summary>
         /// 输出日志到Log4Net
-        /// </summary>
-     
+        /// </summary>    
         private static readonly log4net.ILog loginfo = log4net.LogManager.GetLogger("loginfo");
         private static readonly log4net.ILog logerror = log4net.LogManager.GetLogger("logerror");
         private static readonly log4net.ILog logmonitor = log4net.LogManager.GetLogger("logmonitor");

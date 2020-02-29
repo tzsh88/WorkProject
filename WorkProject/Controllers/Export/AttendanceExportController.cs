@@ -9,15 +9,14 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using WorkProject.Models;
 
 namespace WorkProject.Controllers.Export
 {
 
- 
+  
     public class AttendanceExportController : ApiController
     {
-
-
 
         //导出excel功能控制器
         
@@ -59,7 +58,7 @@ namespace WorkProject.Controllers.Export
             rowHeader.CreateCell(7).SetCellValue("总工时（天）");
             rowHeader.CreateCell(8).SetCellValue("工作日志");
             rowHeader.CreateCell(9).SetCellValue("工地");
-            rowHeader.CreateCell(10).SetCellValue("管理员");
+            rowHeader.CreateCell(10).SetCellValue("隶属");
 
             //string worker = HttpContext.Current.Request["worker"].Trim();
             //string workSiteName = HttpContext.Current.Request["workSite"].Trim();
@@ -92,7 +91,8 @@ namespace WorkProject.Controllers.Export
                                s.Weather,s.Worker.WorkType,s.WorkTime,
                                s.WorkMore,totalWork = s.WorkTime + s.WorkMore,
                                s.WorkQuality,s.WorkSite.WorkManage,
-                               s.WorkSite.WorkSiteName
+                               s.WorkSite.WorkSiteName,
+                               s.Worker.Affiliation
                            };
                 var rowIndex = 1;
 
@@ -109,12 +109,12 @@ namespace WorkProject.Controllers.Export
                     r.CreateCell(7).SetCellValue((double)oo.totalWork);
                     r.CreateCell(8).SetCellValue(oo.WorkQuality);
                     r.CreateCell(9).SetCellValue(oo.WorkSiteName);
-                    r.CreateCell(10).SetCellValue(oo.WorkManage);
+                    r.CreateCell(10).SetCellValue(oo.Affiliation);
                     rowIndex++;
                 }
 
-
-
+               
+                LogHelper.Monitor("\r\n出勤数据导出"+"\r\nIP:"+new  WebApiMonitorLog().GetIP()+ "\r\nControllerName:AttendanceExportController");
 
                 MemoryStream file = new MemoryStream();
                 hssfworkbook.Write(file);

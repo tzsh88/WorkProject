@@ -41,7 +41,7 @@ var TableInit = function () {
             detailView: false,//是否显示父子表
             columns: [
                 {
-                    field: 'WorkId',
+                    field: 'IC',
                     title: '身份证',
                     sortable: true,
 
@@ -73,6 +73,12 @@ var TableInit = function () {
                 {
                     field: 'CCBPayCard',
                     title: '建行卡号',
+                    sortable: true,
+
+                }, 
+                {
+                    field: 'Affiliation',
+                    title: '工人归属',
                     sortable: true,
 
                 }

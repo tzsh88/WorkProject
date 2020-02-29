@@ -12,6 +12,7 @@ namespace WorkProject.Controllers.SysInfo
 {
     public class CheckImportController : ApiController
     {
+        [WebApiTracker]
         /// <summary>
         /// 稽核数据导入
         /// </summary>
@@ -30,11 +31,12 @@ namespace WorkProject.Controllers.SysInfo
                 };
           
                 string json = InsertCheckWork(cw);
+                           
                 json = JsonConvert.SerializeObject(json);
                 return HttpResponseMessageToJson.ToJson(json);
             }
         }
-
+        [WebApiTracker]
         /// <summary>
         /// 稽核数据导入
         /// </summary>
@@ -53,7 +55,7 @@ namespace WorkProject.Controllers.SysInfo
                     CheckResult = 0,
                     Remark = "有数据需二次稽核"
                 };
-
+              
                 string json = InsertCheckWork(cw);
                 json = JsonConvert.SerializeObject(json);
                 return HttpResponseMessageToJson.ToJson(json);
@@ -70,6 +72,7 @@ namespace WorkProject.Controllers.SysInfo
                 {
                     db.CheckWork.InsertOnSubmit(p);
                     db.SubmitChanges();
+                    LogHelper.Monitor(p.Remark);
                     return "ok";
                 }
                 else

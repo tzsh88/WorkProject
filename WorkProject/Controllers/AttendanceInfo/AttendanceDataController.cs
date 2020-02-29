@@ -10,7 +10,7 @@ using WorkProject.Models;
 using Newtonsoft.Json;
 namespace WorkProject.Controllers.AttendanceInfo
 {
-   // [WebApiTracker]
+    
     public class AttendanceDataController : ApiController
     {
         /// <summary>
@@ -57,7 +57,8 @@ namespace WorkProject.Controllers.AttendanceInfo
                                totalWork= s.WorkTime+ s.WorkMore,
                                s.WorkQuality,
                                s.WorkSite.WorkManage,
-                               s.WorkSite.WorkSiteName
+                               s.WorkSite.WorkSiteName,
+                               s.Worker.Affiliation
                            };
 
                 //sortName排序的名称 sortType排序类型 （desc asc）
@@ -130,7 +131,8 @@ namespace WorkProject.Controllers.AttendanceInfo
                                spend = (s.Worker.WorkType1=="小工"?(s.WorkTime + s.WorkMore)*swage: (s.WorkTime + s.WorkMore) * bwage),
                                s.WorkQuality,
                                s.WorkSite.WorkManage,
-                               s.WorkSite.WorkSiteName
+                               s.WorkSite.WorkSiteName,
+                               s.Worker.Affiliation
                            };
 
                 //sortName排序的名称 sortType排序类型 （desc asc）
@@ -198,7 +200,8 @@ namespace WorkProject.Controllers.AttendanceInfo
                                //使用前提数据里面只含大、小工两者类型 做了类似映射 用WorkType1里面没有管理
                                spend = (s.Worker.WorkType1 == "小工" ? (s.WorkTimeMon + s.WorkMoreMon) * swage : (s.WorkTimeMon + s.WorkMoreMon) * bwage),
                                s.WorkSite.WorkManage,
-                               s.WorkSite.WorkSiteName
+                               s.WorkSite.WorkSiteName,
+                               s.Worker.Affiliation
                            };
 
                 //sortName排序的名称 sortType排序类型 （desc asc）

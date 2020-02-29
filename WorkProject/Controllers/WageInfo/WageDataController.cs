@@ -51,6 +51,7 @@ namespace WorkProject.Controllers.WageInfo
                                s.WorkSite.WorkSiteName,
                                s.Worker.WorkName,
                                s.Worker.Sex,
+                               s.Worker.Affiliation,
                                payDate = Convert.ToString(s.WagePaymentDate.Value),
                                s.Worker.WorkType,
                                s.WageAmount,

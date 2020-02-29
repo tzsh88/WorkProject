@@ -39,7 +39,8 @@ namespace WorkProject.Controllers.BasicInfo
                 var data = from s in db.Worker
                            where (workEffect || s.WorkName == worker)
                            select new { 
-                            s.WorkId,s.WorkName,s.Sex,s.Phone,s.WorkType,s.CCBPayCard 
+                            s.WorkId,s.WorkName,s.Sex,s.Phone,s.WorkType,s.CCBPayCard,s.IC,
+                            s.Affiliation
                            };
 
 

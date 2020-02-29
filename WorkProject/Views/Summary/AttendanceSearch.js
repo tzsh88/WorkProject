@@ -46,13 +46,7 @@ let TableInit = function () {
                     title: '工地',
                     sortable: true,
 
-                },
-                {
-                    field: 'WorkManage',
-                    title: '管理员',
-                    sortable: true,
-
-                },
+                },              
                 {
                     field: 'WorkName',
                     title: '姓名',
@@ -105,6 +99,12 @@ let TableInit = function () {
                 {
                     field: 'WorkQuality',
                     title: '工作日志',
+                    sortable: true,
+
+                },
+                {
+                    field: 'Affiliation',
+                    title: '工人归属',
                     sortable: true,
 
                 }

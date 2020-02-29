@@ -117,9 +117,9 @@ let TableInit = function () {
                     sortable: true,
 
                 },
-				{
-                    field: 'WorkManage',
-                    title: '管理员',
+                {
+                    field: 'Affiliation',
+                    title: '工人归属',
                     sortable: true,
 
                 }
