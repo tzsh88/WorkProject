@@ -73,7 +73,7 @@ namespace WorkProject.Controllers.Prediction
                                 WorkMon = mon,
                                 WorkYear = year,                               
                                 WholePart = 1,
-                                WorkSiteId = 4,//整体月度汇总
+                                WorkSiteId = -1,//整体月度汇总
                                 WorkMoreMon = Math.Round((double)limitData.Where(n => n.WorkId == workers[i]).Sum(n => n.WorkMore), 4),
                                 WorkTimeMon = Math.Round((double)limitData.Where(n => n.WorkId == workers[i]).Sum(n => n.WorkTime), 4)
                             };

@@ -1,5 +1,4 @@
 ﻿const tableUrl = "/api/AttendanceData/GetAttendancs";
-
 let initPageSize = 16;
 $.ajaxSettings.async = false;
 $(function () {
@@ -7,6 +6,7 @@ $(function () {
     let oTable = new TableInit();
     oTable.Init();
 });
+
 let TableInit = function () {
     let oTableInit = new Object();
     //初始化Table
@@ -24,7 +24,7 @@ let TableInit = function () {
             sidePagination: "server",//分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,//初始化加载第一页，默认第一页
             pageSize: initPageSize,//每页的记录行数（*）
-            pageList: [13, 16, 20],//可供选择的每页的行数（*）
+            pageList: [12, 16, 20],//可供选择的每页的行数（*）
             search: false,//是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
             showColumns: false,//是否显示所有的列
             showRefresh: false,//是否显示刷新按钮
@@ -36,22 +36,26 @@ let TableInit = function () {
             cardView: false,//是否显示详细视图
             detailView: false,//是否显示父子表
             columns: [
-			    {
-				    title : '序号',		
-					formatter: ordersFormatter
-					
-				},
+                {
+                    title: '序号',
+                    formatter: ordersFormatter
+
+                },
                 {
                     field: 'WorkSiteName',
                     title: '工地',
                     sortable: true,
 
                 },
-              
+
                 {
                     field: 'WorkName',
                     title: '姓名',
                     sortable: true,
+                    formatter: function (value, row, index) {
+                        return "<span id=" + " wn" + index + " > " + value + "</span >"
+                    }
+
 
                 },
                 {
@@ -78,7 +82,7 @@ let TableInit = function () {
                     sortable: true,
 
                 },
-                
+
                 {
                     field: 'WorkTime',
                     title: '工日',
@@ -102,21 +106,49 @@ let TableInit = function () {
                     title: '工作日志',
                     sortable: true,
 
-                },               
+                },
                 {
                     field: 'Affiliation',
                     title: '工人归属',
                     sortable: true,
 
                 }
-                
-            ]
+
+            ],           
+            onLoadSuccess: function (data) {//数据成功加载完成触发的方法
+
+                //前后两行数据人名一致标红
+                ChangeSameNameColor(data.rows);
+
+            },
 
         });
     };
 
     return oTableInit;
 };
+
+//function operateFormatter(value, row, index) {//赋予的参数
+//    return "<a href='javascript:void(0)'  onclick=\"ChangeSameNameColor('" + row.RouteName + "','" + row.Direcition + "','" + index + "')\" > <span id=" + "sp" + index + "> " + value + "</span ></a>"
+
+//}
+
+//前后两行数据人名一致标红,同时保证页面最大数为偶数，不然下面代码有bug
+function ChangeSameNameColor(rows) {//赋予的参数
+
+    for (let index = 0; index < rows.length - 1; index++) {
+        if (index % 2 == 0) {    //获取序号为i的数据
+            if (rows[index].WorkName == rows[index + 1].WorkName)
+                $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变
+        }
+
+        if (index % 2 != 0) {    //获取序号为i的数据
+            if (rows[index].WorkName == rows[index - 1].WorkName)
+                $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变
+        }
+    }
+}
+
 function operateFormatter(value, row, index) {
 
     if (value == 1) {
@@ -127,14 +159,17 @@ function operateFormatter(value, row, index) {
 }
 
 function ordersFormatter(value, row, index) {
-
-   //获取每页显示的数量
-	let pageSize=$('#table').bootstrapTable('getOptions').pageSize; 
-	//获取当前是第几页
-	let pageNumber=$('#table').bootstrapTable('getOptions').pageNumber;
-	//返回序号，注意index是从0开始的，所以要加上1
-	let res=pageSize *(pageNumber - 1) + index + 1;
-	return res;
+    $.ajaxSettings.async = false;
+    //获取每页显示的数量,第一次加载无法获取
+    let pageSize = $('#table').bootstrapTable('getOptions').pageSize;
+    if (pageSize == undefined) {
+        return index + 1;
+    }
+    //获取当前是第几页
+    let pageNumber = $('#table').bootstrapTable('getOptions').pageNumber;
+    //返回序号，注意index是从0开始的，所以要加上1
+    let res = pageSize * (pageNumber - 1) + index + 1;
+    return res;
 }
 //得到查询的参数
 function queryParams(params) {
@@ -202,21 +237,21 @@ function workerInfo() {
 
 //按钮excelExport click事件函数
 function excelExport() {
-   
+
     let worker = $("#selectName").val();
     let workSite = $("#selectWorkSite").val();
     let year = $("#selectYear").val();
     let mon = $("#selectMon").val(); let day = $("#selectDay").val();
-    let excelUrl = "/api/AttendanceExport/GetExportData?worker=" + worker + "&workSite=" + workSite+"&year="+year+"&mon="+mon+"&day="+day;
+    let excelUrl = "/api/AttendanceExport/GetExportData?worker=" + worker + "&workSite=" + workSite + "&year=" + year + "&mon=" + mon + "&day=" + day;
     var oReq = new XMLHttpRequest();
     oReq.open("Get", excelUrl, true);
     oReq.responseType = "blob";
-    send_data = {'worker': worker, 'workSite': workSite, 'year': year, 'mon': mon, 'day': day };
- 
+    send_data = { 'worker': worker, 'workSite': workSite, 'year': year, 'mon': mon, 'day': day };
+
     oReq.onload = function (oEvent) {
         var content = oReq.response;
         var elink = document.createElement('a');
-        var fileName ="工日_"+ workSite + `_${new Date().toLocaleDateString()}.xls`; // 保存的文件名
+        var fileName = "工日_" + workSite + `_${new Date().toLocaleDateString()}.xls`; // 保存的文件名
         elink.download = fileName;
         elink.style.display = 'none';
 

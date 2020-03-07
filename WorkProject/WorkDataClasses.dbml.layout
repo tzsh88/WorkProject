@@ -38,7 +38,7 @@
         <elementListCompartment Id="33c1aa75-6c8a-4da7-ae2a-0d20b494f80f" absoluteBounds="2.765, 5.46, 1.9700000000000002, 1.901275634765625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.09375 : 7.46127563476563); (3.09375 : 9.21875); (3.97916666666667 : 9.21875 : JumpStart); (4.14583333333333 : 9.21875 : JumpEnd); (6.44791666666667 : 9.21875 : JumpStart); (6.61458333333333 : 9.21875 : JumpEnd); (7.375 : 9.21875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(3.09375 : 7.46127563476563); (3.09375 : 9.21875); (3.97916666666667 : 9.21875 : JumpStart); (4.14583333333333 : 9.21875 : JumpEnd); (6.38541666666667 : 9.21875 : JumpStart); (6.55208333333333 : 9.21875 : JumpEnd); (7.375 : 9.21875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/WorkDataClassesDataContext/WorkSite/WorkSite_User" />
       <nodes>
         <classShapeMoniker Id="c8ddc059-a4e6-4c71-b440-86b12e327440" />
@@ -72,30 +72,30 @@
         <classShapeMoniker Id="228a4494-23e0-4904-a43a-38fb5bea3ad9" />
       </nodes>
     </associationConnector>
-    <classShape Id="8220b515-cdee-4411-bc36-2737a45214ad" absoluteBounds="5.75, 4.5, 2, 3.3852461751302081">
+    <classShape Id="b4a7b357-5247-4b97-8702-693c83f44ca8" absoluteBounds="5.625, 4.375, 2, 3.5700402832031246">
       <DataClassMoniker Name="/WorkDataClassesDataContext/Worker" />
       <nestedChildShapes>
-        <elementListCompartment Id="1517b22f-1348-4bf5-b3e8-d7a111cb9d84" absoluteBounds="5.765, 4.96, 1.9700000000000002, 2.825246175130208" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="46aa4496-5710-486f-922f-dbda4ee2d64e" absoluteBounds="5.64, 4.835, 1.9700000000000002, 3.010040283203125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.4375 : 4.5); (6.4375 : 3.33086385091146)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.375 : 4.375); (6.375 : 3.33086385091146)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/WorkDataClassesDataContext/Worker/Worker_Payment" />
       <nodes>
-        <classShapeMoniker Id="8220b515-cdee-4411-bc36-2737a45214ad" />
+        <classShapeMoniker Id="b4a7b357-5247-4b97-8702-693c83f44ca8" />
         <classShapeMoniker Id="f7cffefa-5a6d-4e8c-bdf3-aef268efe0a7" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.46875 : 4.5); (7.46875 : 3.582216796875); (6.52083333333333 : 3.582216796875 : JumpStart); (6.35416666666667 : 3.582216796875 : JumpEnd); (3.92708333333333 : 3.582216796875 : JumpStart); (3.76041666666667 : 3.582216796875 : JumpEnd); (3.41145633333333 : 3.582216796875 : JumpStart); (3.24478966666667 : 3.582216796875 : JumpEnd); (2.875 : 3.582216796875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.40625 : 4.375); (7.40625 : 3.582216796875); (6.45833333333333 : 3.582216796875 : JumpStart); (6.29166666666667 : 3.582216796875 : JumpEnd); (3.92708333333333 : 3.582216796875 : JumpStart); (3.76041666666667 : 3.582216796875 : JumpEnd); (3.41145633333333 : 3.582216796875 : JumpStart); (3.24478966666667 : 3.582216796875 : JumpEnd); (2.875 : 3.582216796875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/WorkDataClassesDataContext/Worker/Worker_Attendance" />
       <nodes>
-        <classShapeMoniker Id="8220b515-cdee-4411-bc36-2737a45214ad" />
+        <classShapeMoniker Id="b4a7b357-5247-4b97-8702-693c83f44ca8" />
         <classShapeMoniker Id="709496f5-19d5-4386-b6c2-17f363e02136" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.53125 : 7.88524617513021); (6.53125 : 12.0224226888021); (5.375 : 12.0224226888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.46875 : 7.94504028320312); (6.46875 : 12.0224226888021); (5.375 : 12.0224226888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/WorkDataClassesDataContext/Worker/Worker_PredictionWages" />
       <nodes>
-        <classShapeMoniker Id="8220b515-cdee-4411-bc36-2737a45214ad" />
+        <classShapeMoniker Id="b4a7b357-5247-4b97-8702-693c83f44ca8" />
         <classShapeMoniker Id="228a4494-23e0-4904-a43a-38fb5bea3ad9" />
       </nodes>
     </associationConnector>

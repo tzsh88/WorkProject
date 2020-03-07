@@ -152,13 +152,13 @@
             let workType = $('#workType').val();
             let cardId = $('#cardId').val();
             let phone = $('#phone').val();
-            let ccb = $('#ccb').val();let workId = $('#workId').val();
+            let ccb = $('#ccb').val();let workId = $('#workId').val();let aff = $('#aff').val();
             $.ajax({
                 url: workerUrl, //所需要的列表接口地址
                 type: "get",
                 data: {
                     'workName': workName, 'sex': sex, 'workType': workType,'cardId': cardId,
-                    'phone': phone, 'ccb': ccb, 'workId': workId
+                    'phone': phone, 'ccb': ccb, 'workId': workId,'aff':aff
                 },//发送到服务器的数据，key/value形式
                 dataType: "json",
                 success: function (data) {
@@ -168,7 +168,7 @@
                         //删除Select选中value
                         //$("#selectName option[value="+selectName+"]").remove();
                     } else if (data == 'error') {
-                        alert('请勿重复导入，请检查数据');
+                        alert('请勿重复导入，请检ID或人名数据');
                     }
 
                 },
@@ -201,7 +201,7 @@
                         //删除Select选中value
                         //$("#selectName option[value="+selectName+"]").remove();
                     } else if (data == 'error') {
-                        alert('请勿重复导入,请跟换编号ID');
+                        alert('请勿重复导入,请更换编号ID');
                     }
 
                 },

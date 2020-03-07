@@ -348,14 +348,16 @@ namespace WorkProject.Controllers.SysInfo
                 {
                     WorkId = workId,
                     WorkName = workName,
-                    Sex = sex,WorkType = workType,
+                    Sex = sex,WorkType = workType,WorkType1=workType,
+                    Visual=1,
                     Phone = phone, CCBPayCard = ccb,
                     IC = cardId,
                     Affiliation=aff
                 };
                 int wCnt = db.Worker.Where(n => n.WorkId == w.WorkId).Count();
+                int nameCnt = db.Worker.Where(n => n.WorkName == w.WorkName).Count();
                 string json;
-                if (wCnt == 0)
+                if (wCnt == 0 &&nameCnt==0)
                 {
                     db.Worker.InsertOnSubmit(w);
                     db.SubmitChanges();
@@ -364,7 +366,7 @@ namespace WorkProject.Controllers.SysInfo
                 }
                 else
                 {
-                    json = "error";
+                    json = "error ";
                 }
 
                 json = JsonConvert.SerializeObject(json);

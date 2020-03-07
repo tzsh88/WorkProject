@@ -106,16 +106,17 @@
     <Type Name="Worker">
       <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="WorkName" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="IC" Type="System.String" DbType="VarChar(18)" CanBeNull="true" />
       <Column Name="Sex" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Phone" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
       <Column Name="WorkType" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
       <Column Name="WorkType1" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="IC" Type="System.String" DbType="VarChar(18)" CanBeNull="true" />
       <Column Name="Affiliation" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
       <Column Name="CCBPayCard" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
       <Column Name="JSPayCard" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="AccidentInsurance" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Address" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Column Name="Visual" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AccidentInsurance" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="InsuranceDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
       <Association Name="Worker_Payment" Member="Payment" ThisKey="WorkId" OtherKey="WorkId" Type="Payment" />

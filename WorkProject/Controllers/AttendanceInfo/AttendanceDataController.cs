@@ -33,13 +33,13 @@ namespace WorkProject.Controllers.AttendanceInfo
             if (workSiteName == "all") siteEffect = true;
             if (worker == "all")       workerEffect = true; 
 
-            if (mon == "all") { monEffect = true; mon = "01"; }
+            if (mon == "all") { monEffect = true; mon = "13"; }
 
-            if (day == "all") { dayEffect = true; day = "01"; }
+            if (day == "all") { dayEffect = true; day = "32"; }
 
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
-               
+
                 var data = from s in db.Attendance
                            where (siteEffect || s.WorkSite.WorkSiteName == workSiteName)
                                  && (workerEffect || s.Worker.WorkName == worker)
@@ -50,27 +50,53 @@ namespace WorkProject.Controllers.AttendanceInfo
                            {
                                s.Worker.WorkName,
                                s.Worker.Sex,
-                               WorkDate=Convert.ToString( s.WorkDate.Value),
-                               s.Worker.WorkType,s.Weather,
+                               WorkDate = Convert.ToString(s.WorkDate.Value),
+                               s.Worker.WorkType, s.Weather,
                                s.WorkTime,
                                s.WorkMore,
-                               totalWork= s.WorkTime+ s.WorkMore,
+                               totalWork = s.WorkTime + s.WorkMore,
                                s.WorkQuality,
                                s.WorkSite.WorkManage,
                                s.WorkSite.WorkSiteName,
-                               s.Worker.Affiliation
+                               s.Worker.Affiliation,
+                               Cnt = (from g in db.Attendance
+                                      where (siteEffect || g.WorkSite.WorkSiteName == workSiteName)
+                                            && (workerEffect || g.Worker.WorkName == worker)
+                                            && g.WorkDate.Value.Year == Convert.ToInt32(year)
+                                            && (monEffect || g.WorkDate.Value.Month == Convert.ToInt32(mon))
+                                            && (dayEffect || g.WorkDate.Value.Day == Convert.ToInt32(day))
+                                            && g.WorkId == s.WorkId
+                                      select g).Count()
+                                       
                            };
 
-                //sortName排序的名称 sortType排序类型 （desc asc）
-                var orderExpression = string.Format("{0} {1}", sort, sortOrder);
-                //此处应从数据库中取得数据：
-                string json = "{ \"total\":";
-                var total = data.Count();
-                json += total + ",\"rows\":";
-                var rows = data.OrderBy(orderExpression).Skip(offset).Take(limit).ToList();
-                json += JsonConvert.SerializeObject(rows);
-                json += "}";
-                return HttpResponseMessageToJson.ToJson(json);
+                if(sort== "WorkName")
+                {
+                    var dataNew = data.OrderByDescending(n =>n.Cnt).ThenBy(c => c.WorkName).ThenBy(x=>x.WorkSiteName);              
+                    //此处应从数据库中取得数据：
+                    string json = "{ \"total\":";
+                    var total = data.Count();
+                    json += total + ",\"rows\":";
+                    var rows = dataNew.Skip(offset).Take(limit).ToList();
+                    json += JsonConvert.SerializeObject(rows);
+                    json += "}";
+                    return HttpResponseMessageToJson.ToJson(json);
+                }
+                else
+                {
+                    //sortName排序的名称 sortType排序类型 （desc asc）
+                    var orderExpression = string.Format("{0} {1}", sort, sortOrder);
+
+                    //此处应从数据库中取得数据：
+                    string json = "{ \"total\":";
+                    var total = data.Count();
+                    json += total + ",\"rows\":";
+                    var rows = data.OrderBy(orderExpression).Skip(offset).Take(limit).ToList();
+                    json += JsonConvert.SerializeObject(rows);
+                    json += "}";
+                    return HttpResponseMessageToJson.ToJson(json);
+                }
+               
             }
 
 

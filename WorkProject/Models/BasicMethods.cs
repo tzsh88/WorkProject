@@ -15,7 +15,7 @@ namespace WorkProject.Models
         {
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
-                return db.Worker.OrderBy(n=>n.WorkName).Select(n => n.WorkName).ToList();
+                return db.Worker.Where(n=>n.Visual==1).OrderBy(n=>n.WorkName).Select(n => n.WorkName).ToList();
             }
         }
 

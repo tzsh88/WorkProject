@@ -2338,8 +2338,6 @@ namespace WorkProject
 		
 		private string _WorkName;
 		
-		private string _IC;
-		
 		private System.Nullable<int> _Sex;
 		
 		private string _Phone;
@@ -2348,15 +2346,19 @@ namespace WorkProject
 		
 		private string _WorkType1;
 		
+		private string _IC;
+		
 		private string _Affiliation;
 		
 		private string _CCBPayCard;
 		
 		private string _JSPayCard;
 		
-		private System.Nullable<int> _AccidentInsurance;
-		
 		private string _Address;
+		
+		private System.Nullable<int> _Visual;
+		
+		private System.Nullable<int> _AccidentInsurance;
 		
 		private System.Nullable<System.DateTime> _InsuranceDate;
 		
@@ -2376,8 +2378,6 @@ namespace WorkProject
     partial void OnWorkIdChanged();
     partial void OnWorkNameChanging(string value);
     partial void OnWorkNameChanged();
-    partial void OnICChanging(string value);
-    partial void OnICChanged();
     partial void OnSexChanging(System.Nullable<int> value);
     partial void OnSexChanged();
     partial void OnPhoneChanging(string value);
@@ -2386,16 +2386,20 @@ namespace WorkProject
     partial void OnWorkTypeChanged();
     partial void OnWorkType1Changing(string value);
     partial void OnWorkType1Changed();
+    partial void OnICChanging(string value);
+    partial void OnICChanged();
     partial void OnAffiliationChanging(string value);
     partial void OnAffiliationChanged();
     partial void OnCCBPayCardChanging(string value);
     partial void OnCCBPayCardChanged();
     partial void OnJSPayCardChanging(string value);
     partial void OnJSPayCardChanged();
-    partial void OnAccidentInsuranceChanging(System.Nullable<int> value);
-    partial void OnAccidentInsuranceChanged();
     partial void OnAddressChanging(string value);
     partial void OnAddressChanged();
+    partial void OnVisualChanging(System.Nullable<int> value);
+    partial void OnVisualChanged();
+    partial void OnAccidentInsuranceChanging(System.Nullable<int> value);
+    partial void OnAccidentInsuranceChanged();
     partial void OnInsuranceDateChanging(System.Nullable<System.DateTime> value);
     partial void OnInsuranceDateChanged();
     partial void OnRemarkChanging(string value);
@@ -2446,26 +2450,6 @@ namespace WorkProject
 					this._WorkName = value;
 					this.SendPropertyChanged("WorkName");
 					this.OnWorkNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IC", DbType="VarChar(18)")]
-		public string IC
-		{
-			get
-			{
-				return this._IC;
-			}
-			set
-			{
-				if ((this._IC != value))
-				{
-					this.OnICChanging(value);
-					this.SendPropertyChanging();
-					this._IC = value;
-					this.SendPropertyChanged("IC");
-					this.OnICChanged();
 				}
 			}
 		}
@@ -2550,6 +2534,26 @@ namespace WorkProject
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IC", DbType="VarChar(18)")]
+		public string IC
+		{
+			get
+			{
+				return this._IC;
+			}
+			set
+			{
+				if ((this._IC != value))
+				{
+					this.OnICChanging(value);
+					this.SendPropertyChanging();
+					this._IC = value;
+					this.SendPropertyChanged("IC");
+					this.OnICChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Affiliation", DbType="VarChar(20)")]
 		public string Affiliation
 		{
@@ -2610,26 +2614,6 @@ namespace WorkProject
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccidentInsurance", DbType="Int")]
-		public System.Nullable<int> AccidentInsurance
-		{
-			get
-			{
-				return this._AccidentInsurance;
-			}
-			set
-			{
-				if ((this._AccidentInsurance != value))
-				{
-					this.OnAccidentInsuranceChanging(value);
-					this.SendPropertyChanging();
-					this._AccidentInsurance = value;
-					this.SendPropertyChanged("AccidentInsurance");
-					this.OnAccidentInsuranceChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="VarChar(128)")]
 		public string Address
 		{
@@ -2646,6 +2630,46 @@ namespace WorkProject
 					this._Address = value;
 					this.SendPropertyChanged("Address");
 					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Visual", DbType="Int")]
+		public System.Nullable<int> Visual
+		{
+			get
+			{
+				return this._Visual;
+			}
+			set
+			{
+				if ((this._Visual != value))
+				{
+					this.OnVisualChanging(value);
+					this.SendPropertyChanging();
+					this._Visual = value;
+					this.SendPropertyChanged("Visual");
+					this.OnVisualChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccidentInsurance", DbType="Int")]
+		public System.Nullable<int> AccidentInsurance
+		{
+			get
+			{
+				return this._AccidentInsurance;
+			}
+			set
+			{
+				if ((this._AccidentInsurance != value))
+				{
+					this.OnAccidentInsuranceChanging(value);
+					this.SendPropertyChanging();
+					this._AccidentInsurance = value;
+					this.SendPropertyChanged("AccidentInsurance");
+					this.OnAccidentInsuranceChanged();
 				}
 			}
 		}

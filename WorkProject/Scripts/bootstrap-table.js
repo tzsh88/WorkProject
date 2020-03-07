@@ -4,7 +4,7 @@
  * https://github.com/wenzhixin/bootstrap-table/
  */
 //针对得到返回的数据记性url跳转，解决iframe下的父页面跳转问题
-var topUrl = "http://localhost:65363/Views/login.html";
+var topUrl = "http://localhost:44349/Views/login.html";
 var flagInfo = "login information is useless";
 (function ($) {
     'use strict';
@@ -261,6 +261,7 @@ var flagInfo = "login information is useless";
         }
         return escape ? escapeHTML(value) : value;
     };
+   
 
     var isIEBrowser = function () {
         return !!(navigator.userAgent.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./));
@@ -3218,7 +3219,43 @@ var flagInfo = "login information is useless";
         this.initPagination();
         this.initBody();
     };
+    BootstrapTable.prototype.getRowByIndex = function (index) {
 
+        if ((index * 1 + 1) > this.options.data.length) {
+
+            throw new Error("Unknown method: 没有当前序号!");
+
+        }
+
+        return this.options.data[index * 1];
+
+    };
+
+    BootstrapTable.prototype.removeByIndex = function (index) {
+
+        var len = this.options.data.length,
+
+            row = this.getRowByIndex(index);
+
+        if (row) {
+
+            this.options.data.splice(this.options.data.indexOf(row), 1);
+
+        }
+
+        if (len === this.options.data.length) {
+
+            return;
+
+        }
+
+        this.initSearch();
+
+        this.initPagination();
+
+        this.initBody(true);
+
+    };
     // BOOTSTRAP TABLE PLUGIN DEFINITION
     // =======================
 
@@ -3248,7 +3285,7 @@ var flagInfo = "login information is useless";
         'refreshOptions',
         'resetSearch',
         'expandRow', 'collapseRow', 'expandAllRows', 'collapseAllRows',
-        'updateFormatText', 'updateCellById'
+        'updateFormatText', 'updateCellById','getRowByIndex', 'removeByIndex'
     ];
 
     $.fn.bootstrapTable = function (option) {
