@@ -41,6 +41,21 @@ var TableInit = function () {
             detailView: false,//是否显示父子表
             columns: [
                 {
+                    title: '序号',
+                    formatter: function (value, row, index) {
+                        //获取每页显示的数量,第一次加载无法获取
+                        let pageSize = $('#table').bootstrapTable('getOptions').pageSize;
+                        if (pageSize == undefined) {
+                            return index + 1;
+                        }
+                        //获取当前是第几页
+                        let pageNumber = $('#table').bootstrapTable('getOptions').pageNumber;
+                        //返回序号，注意index是从0开始的，所以要加上1
+                        let res = pageSize * (pageNumber - 1) + index + 1;
+                        return res;
+                    }
+                },
+                {
                     field: 'IC',
                     title: '身份证',
                     sortable: true,
@@ -50,7 +65,7 @@ var TableInit = function () {
                     field: 'WorkName',
                     title: '姓名',
                     sortable: true,
-                   
+
                 },
                 {
                     field: 'Sex',
@@ -75,14 +90,14 @@ var TableInit = function () {
                     title: '建行卡号',
                     sortable: true,
 
-                }, 
+                },
                 {
                     field: 'Affiliation',
-                    title: '工人归属',
+                    title: '归属',
                     sortable: true,
 
                 }
-                
+
             ]
 
         });
@@ -91,7 +106,7 @@ var TableInit = function () {
     return oTableInit;
 };
 function operateFormatter(value, row, index) {
-   
+
     if (value == 1) {
         return "<span title='" + value + "'>" + '男' + "</span>"
     } else if (value == 0) {
@@ -102,7 +117,7 @@ function operateFormatter(value, row, index) {
 //得到查询的参数
 function queryParams(params) {
 
- 
+
     let worker = $("#selectName").val();
     temp = {//这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         limit: params.limit,                         //页面大小
@@ -177,7 +192,7 @@ var TableInit1 = function () {
                     sortable: true,
 
                 }
-                
+
             ]
 
         });
@@ -217,7 +232,7 @@ function workerInfo() {
 //按钮click事件函数,分工地情况
 function workSiteInfo() {
 
-   
+
     let workSite = $("#selectWorkSite").val();
     let opt = {
         url: table1Url,

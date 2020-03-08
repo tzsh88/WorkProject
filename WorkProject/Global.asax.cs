@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Timers;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.SessionState;
-using WorkProject.Models;
 
 namespace WorkProject
 {
@@ -21,14 +19,24 @@ namespace WorkProject
             );
 
             ////WebApiTrackerAttribute  全局启用
-            //GlobalConfiguration.Configuration.Filters.Add(new WebApiTrackerAttribute());          
-           
+            //GlobalConfiguration.Configuration.Filters.Add(new WebApiTrackerAttribute());                     
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //定时器
+            Timer myTimer = new Timer();
+            myTimer.Elapsed += new ElapsedEventHandler(TimerHelp.MyTimer_Elapsed);
+            // 设置引发时间的时间间隔　此处设置为１秒（１０００毫秒）,必须设置不然会出现触发次数的问题
+            myTimer.Interval = 1000;
+            myTimer.Enabled = true;
+            myTimer.AutoReset = true;
         }
+
+
+
         /// <summary>
         ///  开启Session功能
         /// </summary>

@@ -38,15 +38,18 @@ let TableInit = function () {
             columns: [
 			   {
 					title : '序号',									
-					formatter:function (value, row, index) {
-					   //获取每页显示的数量
-						let pageSize=$('#table').bootstrapTable('getOptions').pageSize; 
-						//获取当前是第几页
-						let pageNumber=$('#table').bootstrapTable('getOptions').pageNumber;
-						//返回序号，注意index是从0开始的，所以要加上1
-						let res=pageSize *(pageNumber - 1) + index + 1;
-						return res;
-					}
+                    formatter: function (value, row, index) {
+                        //获取每页显示的数量,第一次加载无法获取
+                        let pageSize = $('#table').bootstrapTable('getOptions').pageSize;
+                        if (pageSize == undefined) {
+                            return index + 1;
+                        }
+                        //获取当前是第几页
+                        let pageNumber = $('#table').bootstrapTable('getOptions').pageNumber;
+                        //返回序号，注意index是从0开始的，所以要加上1
+                        let res = pageSize * (pageNumber - 1) + index + 1;
+                        return res;
+                    }
 			    },
                 {
                     field: 'WorkSiteName',

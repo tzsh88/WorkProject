@@ -242,6 +242,7 @@
     <Compile Include="Models\HttpResponseMessageToJson.cs" />
     <Compile Include="Models\ActionFilters\LogHelper.cs" />
     <Compile Include="Models\StringHandle.cs" />
+    <Compile Include="Models\TimerHelp.cs" />
     <Compile Include="Models\TreeItem.cs" />
     <Compile Include="Models\UrlRewriterFilter.cs" />
     <Compile Include="Models\UserSessionInfo.cs" />
@@ -366,6 +367,15 @@
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\layer_v3.1.1\3.1.1\layer.js" />
+    <Content Include="Scripts\layer_v3.1.1\3.1.1\mobile\layer.js" />
+    <Content Include="Scripts\layer_v3.1.1\3.1.1\mobile\need\layer.css" />
+    <Content Include="Scripts\layer_v3.1.1\3.1.1\theme\default\icon-ext.png" />
+    <Content Include="Scripts\layer_v3.1.1\3.1.1\theme\default\icon.png" />
+    <Content Include="Scripts\layer_v3.1.1\3.1.1\theme\default\layer.css" />
+    <Content Include="Scripts\layer_v3.1.1\3.1.1\theme\default\loading-0.gif" />
+    <Content Include="Scripts\layer_v3.1.1\3.1.1\theme\default\loading-1.gif" />
+    <Content Include="Scripts\layer_v3.1.1\3.1.1\theme\default\loading-2.gif" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\DataGeneration\MonDataGeneration.html">
       <BrowseToURL>Views/DataGeneration/MonDataGeneration.html</BrowseToURL>
@@ -421,6 +431,7 @@
       <BrowseToURL>Views/Summary/SummaryPayment.html</BrowseToURL>
     </Content>
     <Content Include="Views\Summary\SummaryPayment.js" />
+    <Content Include="Views\Table Test\EditTable.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

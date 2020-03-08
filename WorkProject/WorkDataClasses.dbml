@@ -59,7 +59,7 @@
       <Column Name="RecordTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="WorkSiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
-      <Column Name="WorkDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="WorkDate" Type="System.DateTimeOffset" DbType="Date" CanBeNull="true" />
       <Column Name="WorkTime" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="WorkMore" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="WorkQuality" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
@@ -84,6 +84,7 @@
       <Association Name="WorkSite_Payment" Member="Payment" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="Payment" />
       <Association Name="WorkSite_Attendance" Member="Attendance" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="Attendance" />
       <Association Name="WorkSite_PredictionWages" Member="PredictionWages" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="PredictionWages" />
+      <Association Name="WorkSite_ModifyAttendanceRecord" Member="ModifyAttendanceRecord" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="ModifyAttendanceRecord" />
     </Type>
   </Table>
   <Table Name="dbo.PredictionWages" Member="PredictionWages">
@@ -122,6 +123,35 @@
       <Association Name="Worker_Payment" Member="Payment" ThisKey="WorkId" OtherKey="WorkId" Type="Payment" />
       <Association Name="Worker_Attendance" Member="Attendance" ThisKey="WorkId" OtherKey="WorkId" Type="Attendance" />
       <Association Name="Worker_PredictionWages" Member="PredictionWages" ThisKey="WorkId" OtherKey="WorkerId" Type="PredictionWages" />
+      <Association Name="Worker_WorkersRelation" Member="WorkersRelation" ThisKey="WorkId" OtherKey="WorkId" Type="WorkersRelation" />
+      <Association Name="Worker_WorkersRelation1" Member="WorkersRelation1" ThisKey="WorkId" OtherKey="WorkIdMain" Type="WorkersRelation" />
+      <Association Name="Worker_ModifyAttendanceRecord" Member="ModifyAttendanceRecord" ThisKey="WorkId" OtherKey="WorkId" Type="ModifyAttendanceRecord" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WorkersRelation" Member="WorkersRelation">
+    <Type Name="WorkersRelation">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WorkIdMain" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
+      <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
+      <Column Name="Relation" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Effect" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Worker_WorkersRelation" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
+      <Association Name="Worker_WorkersRelation1" Member="Worker1" ThisKey="WorkIdMain" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ModifyAttendanceRecord" Member="ModifyAttendanceRecord">
+    <Type Name="ModifyAttendanceRecord">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ModifyType" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="ModifyTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
+      <Column Name="WorkSiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WorkDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="WorkTime" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WorkMore" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WorkQuality" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="Worker_ModifyAttendanceRecord" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
+      <Association Name="WorkSite_ModifyAttendanceRecord" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

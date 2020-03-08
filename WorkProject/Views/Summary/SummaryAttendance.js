@@ -55,8 +55,6 @@ let TableInit = function () {
                     formatter: function (value, row, index) {
                         return "<span id=" + " wn" + index + " > " + value + "</span >"
                     }
-
-
                 },
                 {
                     field: 'Sex',
@@ -91,13 +89,13 @@ let TableInit = function () {
                 },
                 {
                     field: 'WorkMore',
-                    title: '加班工时',
+                    title: '加班',
                     sortable: true,
 
                 },
                 {
                     field: 'totalWork',
-                    title: '总工时（天）',
+                    title: '总工时',
                     sortable: true,
 
                 },
@@ -112,9 +110,13 @@ let TableInit = function () {
                     title: '工人归属',
                     sortable: true,
 
+                },
+                {
+                    title: '操作',
+                    field: 'WorkName',                 
+                    formatter: option
                 }
-
-            ],           
+            ],
             onLoadSuccess: function (data) {//数据成功加载完成触发的方法
 
                 //前后两行数据人名一致标红
@@ -128,23 +130,94 @@ let TableInit = function () {
     return oTableInit;
 };
 
-//function operateFormatter(value, row, index) {//赋予的参数
-//    return "<a href='javascript:void(0)'  onclick=\"ChangeSameNameColor('" + row.RouteName + "','" + row.Direcition + "','" + index + "')\" > <span id=" + "sp" + index + "> " + value + "</span ></a>"
+//操作栏的格式化
+// onclick=\"ChangeSameNameColor('" + row.RouteName + "','" + row.Direcition + "','" + index + "')\"
+// 定义删除、更新操作
+function option(value, row, index) {
+    var htm = "<button id='delUser' userId='" + row.id + "' onclick='delUser(this)'>删除</button> " +
+        " <button id ='dupUser' onclick =\"updUser('"+ value +"','"+ row.WorkSiteName + "','"+ row.WorkDate +"','"+row.Weather+"','"+row.WorkTime +"','"+ row.WorkMore+"','"+ row.WorkQuality +"')\">修改</button>";
+    return htm;
+}
 
-//}
+// 删除用户
+function delUser(dom) {
+
+    var mymessage = confirm("确认删除嘛？");
+    if (mymessage == true) {
+        $.ajax({
+            url: path + '/user/' + $(dom).attr("userId"),
+            type: 'delete',
+            success: function (data) {
+                $(dom).parent().parent().hide();
+            },
+            error: function (data) {
+                alert("服务器繁忙")
+            }
+        });
+    }
+}
+
+// 编辑用户
+function updUser(name,site, date, weather, work,more,detail) {
+    //页面层
+    layer.open({
+        type: 1,
+        title: ['数据修改', 'text-align:center;font-size:1.5em;font-weight:600'],
+        skin: 'layui-layer-rim', //加上边框
+        area: ['420px', '240px'], //宽高
+        content: '<div class="form-group" style="margin:2% 30%; ">' +
+                    '<div class="form-inline" style="margin-bottom:2%" ' +
+                    '<span style="font-size:1em;">姓&nbsp;&nbsp;&nbsp;&nbsp;名：'+name + '</span>' +         
+                    '</div>' +
+                    '<div class="form-inline" style="margin-bottom:2%" >' +
+                    '<span style="font-size:1em;">工&nbsp;&nbsp;&nbsp;&nbsp;地：'+site + '</span>' +         
+                    '</div>' +
+                    '<div class="form-inline" style="margin-bottom:2%" ' +
+                    '<span style="font-size:1em;">日&nbsp;&nbsp;&nbsp;&nbsp;期：'+ date + '</span>' +         
+                    '</div>' +
+           
+                    '<div class="form-inline" style="margin-bottom:2%" ' +
+                    '<span style="font-size:1em;">工&nbsp;&nbsp;&nbsp;&nbsp;日：</span>' +
+                    '<input type="text" id="work" class="form-control" value="'+ work+'" style="width:5em;height:2em; ">' +
+                    '</div>' +
+
+                    '<div class="form-inline" style="margin-bottom:2%" >' +
+                    '<span style="font-size:1em;">加&nbsp;&nbsp;&nbsp;&nbsp;班：</span>' +
+                    '<input type="text" id="more" class="form-control" value="'+ more+'" style="width:5em;height:2em; ">' +
+                    '</div>' +
+
+                    '<div class="form-inline" style="margin-bottom:2%" >' +
+                    '<span style="font-size:1em;">日&nbsp;&nbsp;&nbsp;&nbsp;志：</span>' +
+                    '<textarea type="text" id="detail" class="form-control" style="width:10em;"  rows="3">' + detail + '</textarea>'+            
+                    '</div>' +
+
+                    '<div class="form-inline"style="margin-top:5%;margin-bottom:2%;margin-left:20%" >' +
+                    '<button type="button" class="btn" style=" background: #1caf9a;color: #FFFFFF;border: none;" onclick="workerInsert()">数据提交</button>' +
+                    '</div>' +
+            '</div>'
+    });
+}
 
 //前后两行数据人名一致标红,同时保证页面最大数为偶数，不然下面代码有bug
 function ChangeSameNameColor(rows) {//赋予的参数
+    if (rows.length > 1) {
+        for (let index = 0; index < rows.length; index++) {
+            if (index % 2 == 0) {    //获取序号为i的数据
+                if (index + 1 < rows.length && rows[index].WorkName == rows[index + 1].WorkName) {
+                    $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变
+                  
+                }
+                if (index != 0 && rows[index].WorkName == rows[index - 1].WorkName) {                   
+                    $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变
+                }
+            }         
+            if (index % 2 != 0) {    //获取序号为i的数据
+                if (rows[index].WorkName == rows[index - 1].WorkName)
+                    $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变
+                if (index + 1 < rows.length &&rows[index].WorkName == rows[index + 1].WorkName )
+                    $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变  
 
-    for (let index = 0; index < rows.length - 1; index++) {
-        if (index % 2 == 0) {    //获取序号为i的数据
-            if (rows[index].WorkName == rows[index + 1].WorkName)
-                $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变
-        }
-
-        if (index % 2 != 0) {    //获取序号为i的数据
-            if (rows[index].WorkName == rows[index - 1].WorkName)
-                $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变
+            }
         }
     }
 }
@@ -159,7 +232,7 @@ function operateFormatter(value, row, index) {
 }
 
 function ordersFormatter(value, row, index) {
-    $.ajaxSettings.async = false;
+  
     //获取每页显示的数量,第一次加载无法获取
     let pageSize = $('#table').bootstrapTable('getOptions').pageSize;
     if (pageSize == undefined) {

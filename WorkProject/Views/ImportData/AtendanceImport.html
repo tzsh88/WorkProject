@@ -115,15 +115,15 @@
                     &nbsp; &nbsp;
                     <span style="font-size:1em;">方式：</span>
                     <select class="selectpicker" style="" id="payType">
-                        <option value="转账"> 转账</option>
+                       	<option value="微信"> 微信</option>
+						 <option value="转账"> 转账</option>
                         <option value="现金"> 现金</option>
-						<option value="微信"> 微信</option>
                     </select>&nbsp; &nbsp;
                     <span style="font-size:1em;">银行：</span>
-                    <select class="selectpicker" style="" id="wageCard">
-                        <option value="CCB"> 建设银行</option>
-                        <option value="JS">  江苏银行</option>
+                    <select class="selectpicker" style="" id="wageCard">                        
                         <option value="Cas">现金选项</option>
+						<option value="CCB"> 建设银行</option>
+                        <option value="JS">  江苏银行</option>
 						
                     </select>&nbsp; &nbsp;
                     <span style="font-size:1em;">备注：</span>
@@ -254,6 +254,9 @@
                     console.log(e.responseText);
                 }
             });
+			  $("#pay").val("");  
+			  $("#payRemark").val("");
+			
         }
     </script>
 

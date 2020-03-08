@@ -40,13 +40,16 @@ var TableInit = function () {
 			{
 					title : '序号',									
 					formatter:function (value, row, index) {
-					   //获取每页显示的数量
-						let pageSize=$('#table').bootstrapTable('getOptions').pageSize; 
-						//获取当前是第几页
-						let pageNumber=$('#table').bootstrapTable('getOptions').pageNumber;
-						//返回序号，注意index是从0开始的，所以要加上1
-						let res=pageSize *(pageNumber - 1) + index + 1;
-						return res;
+                        //获取每页显示的数量,第一次加载无法获取
+                        let pageSize = $('#table').bootstrapTable('getOptions').pageSize;
+                        if (pageSize == undefined) {
+                            return index + 1;
+                        }
+                        //获取当前是第几页
+                        let pageNumber = $('#table').bootstrapTable('getOptions').pageNumber;
+                        //返回序号，注意index是从0开始的，所以要加上1
+                        let res = pageSize * (pageNumber - 1) + index + 1;
+                        return res;
 					}
 			    },
                 {
@@ -56,11 +59,14 @@ var TableInit = function () {
 
                     //formatter: operateFormatter //自定义方法，添加操作按钮
                 },
+            
                 {
                     field: 'wName',
                     title: '姓名',
                     sortable: true,
-
+                    formatter: function (value, row, index) {
+                        return "<span id=" + " wn" + index + " > " + value + "</span >"
+                    }
                 },
                 {
                     field: 'wDate',
@@ -92,7 +98,13 @@ var TableInit = function () {
                     sortable: true,
 
                 }
-            ]
+            ],
+            onLoadSuccess: function (data) {//数据成功加载完成触发的方法
+
+                //前后两行数据人名一致标红
+                ChangeSameNameColor(data.rows);
+
+            },
 
         });
     };
@@ -135,7 +147,32 @@ function workSiteInfo() {
     $("#table").bootstrapTable('refresh', opt);
 }
 
+//前后两行数据人名一致标红,同时保证页面最大数为偶数，不然下面代码有bug
+function ChangeSameNameColor(rows) {//赋予的参数
 
+ 
+    if (rows.length > 1) {
+        for (let index = 0; index < rows.length; index++) {
+            if (index % 2 == 0) {    //获取序号为i的数据
+                if (index + 1 < rows.length && rows[index].wName == rows[index + 1].wName) {
+                    $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变
+
+
+                }
+                if (index != 0 && rows[index].wName == rows[index - 1].wName) {
+                    $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变
+                }
+            }
+            if (index % 2 != 0) {    //获取序号为i的数据
+                if (rows[index].wName == rows[index - 1].wName)
+                    $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变
+                if (index + 1 < rows.length && rows[index].wName == rows[index + 1].wName)
+                    $("#wn" + index + "").css("color", "#ef4f4f");//点击过的名字颜色改变  
+
+            }          
+        }
+    }
+}
 function checkAllRight() {
 
     if (confirm("确认后，无法更改请核实") == true) {

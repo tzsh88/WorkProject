@@ -305,19 +305,39 @@ namespace WorkProject.Controllers.SysInfo
                                work = s.WorkTime,
                                workMore = s.WorkMore,
                                workQua = s.WorkQuality,
-                               s.Weather
+                               s.Weather,
+                               cnt= (from g in db.Attendance
+                                     where g.WorkDate == Convert.ToDateTime(date) && (siteEffect || g.WorkSiteId == workSiteId)
+                                            && g.WorkId == s.WorkId
+                                     select g).Count()
                            };
 
-                //sortName排序的名称 sortType排序类型 （desc asc）
-                var orderExpression = string.Format("{0} {1}", sort, sortOrder);
-                //此处应从数据库中取得数据：
-                string json = "{ \"total\":";
-                var total = data.Count();
-                json += total + ",\"rows\":";
-                var rows = data.OrderBy(orderExpression).Skip(offset).Take(limit).ToList();
-                json += JsonConvert.SerializeObject(rows);
-                json += "}";
-                return HttpResponseMessageToJson.ToJson(json);
+                if (sort == "wName")
+                {
+                    var dataNew = data.OrderByDescending(n => n.cnt).ThenBy(c => c.wName).ThenBy(x => x.wSiteName);
+                    //此处应从数据库中取得数据：
+                    string json = "{ \"total\":";
+                    var total = data.Count();
+                    json += total + ",\"rows\":";
+                    var rows = dataNew.Skip(offset).Take(limit).ToList();
+                    json += JsonConvert.SerializeObject(rows);
+                    json += "}";
+                    return HttpResponseMessageToJson.ToJson(json);
+                }
+                else
+                {
+                    //sortName排序的名称 sortType排序类型 （desc asc）
+                    var orderExpression = string.Format("{0} {1}", sort, sortOrder);
+
+                    //此处应从数据库中取得数据：
+                    string json = "{ \"total\":";
+                    var total = data.Count();
+                    json += total + ",\"rows\":";
+                    var rows = data.OrderBy(orderExpression).Skip(offset).Take(limit).ToList();
+                    json += JsonConvert.SerializeObject(rows);
+                    json += "}";
+                    return HttpResponseMessageToJson.ToJson(json);
+                }
             }
 
 
@@ -366,7 +386,7 @@ namespace WorkProject.Controllers.SysInfo
                 }
                 else
                 {
-                    json = "error ";
+                    json = "error";
                 }
 
                 json = JsonConvert.SerializeObject(json);
