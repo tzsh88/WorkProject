@@ -123,7 +123,7 @@ namespace WorkProject.Controllers.SysInfo
         {
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
-                int eleCnt = db.Attendance.Where(n => n.WorkDate == attendance.WorkDate
+                int eleCnt = db.Attendance.Where(n => n.WorkDate.Value.Year == attendance.WorkDate.Value.Year&& n.WorkDate.Value.Month == attendance.WorkDate.Value.Month && n.WorkDate.Value.Day == attendance.WorkDate.Value.Day
                                   && n.WorkId == attendance.WorkId && n.WorkSiteId == attendance.WorkSiteId).Count();
                 if (eleCnt == 0)
                 {
@@ -192,7 +192,7 @@ namespace WorkProject.Controllers.SysInfo
         {
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
-                int eleCnt = db.Payment.Where(n => n.WagePaymentDate == p.WagePaymentDate
+                int eleCnt = db.Payment.Where(n => n.WagePaymentDate.Value.Year == p.WagePaymentDate.Value.Year && n.WagePaymentDate.Value.Month == p.WagePaymentDate.Value.Month && n.WagePaymentDate.Value.Day == p.WagePaymentDate.Value.Day
                                   && n.WorkId == p.WorkId && n.WorkSiteId == p.WorkSiteId && n.WageAmount == p.WageAmount).Count();
                 if (eleCnt == 0)
                 {
@@ -292,11 +292,12 @@ namespace WorkProject.Controllers.SysInfo
             {
                 workSiteId = BasicMethods.GetWorkerSiteId(workSite);
             }
-
+            DateTime dt = Convert.ToDateTime(date);
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
                 var data = from s in db.Attendance
-                           where s.WorkDate == Convert.ToDateTime(date) && (siteEffect || s.WorkSiteId == workSiteId)
+                           where s.WorkDate.Value.Year == dt.Year && s.WorkDate.Value.Month == dt.Month && s.WorkDate.Value.Day == dt.Day
+                           && (siteEffect || s.WorkSiteId == workSiteId)
                            select new
                            {
                                wSiteName = s.WorkSite.WorkSiteName,
@@ -307,7 +308,8 @@ namespace WorkProject.Controllers.SysInfo
                                workQua = s.WorkQuality,
                                s.Weather,
                                cnt= (from g in db.Attendance
-                                     where g.WorkDate == Convert.ToDateTime(date) && (siteEffect || g.WorkSiteId == workSiteId)
+                                     where g.WorkDate.Value.Year == dt.Year && g.WorkDate.Value.Month == dt.Month && g.WorkDate.Value.Day == dt.Day
+                                           && (siteEffect || g.WorkSiteId == workSiteId)
                                             && g.WorkId == s.WorkId
                                      select g).Count()
                            };

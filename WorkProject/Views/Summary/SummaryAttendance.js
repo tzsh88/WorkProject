@@ -47,7 +47,6 @@ let TableInit = function () {
                     sortable: true,
 
                 },
-
                 {
                     field: 'WorkName',
                     title: '姓名',
@@ -112,8 +111,7 @@ let TableInit = function () {
 
                 },
                 {
-                    title: '操作',
-                    field: 'WorkName',                 
+                    title: '操作',               
                     formatter: option
                 }
             ],
@@ -134,67 +132,128 @@ let TableInit = function () {
 // onclick=\"ChangeSameNameColor('" + row.RouteName + "','" + row.Direcition + "','" + index + "')\"
 // 定义删除、更新操作
 function option(value, row, index) {
-    var htm = "<button id='delUser' userId='" + row.id + "' onclick='delUser(this)'>删除</button> " +
-        " <button id ='dupUser' onclick =\"updUser('"+ value +"','"+ row.WorkSiteName + "','"+ row.WorkDate +"','"+row.Weather+"','"+row.WorkTime +"','"+ row.WorkMore+"','"+ row.WorkQuality +"')\">修改</button>";
+    var htm = "<button id='delUser' onclick=\"delUser('" + row.WorkName + "','" + row.WorkSiteName + "','" + row.WorkDate +"')\">删除</button> " +
+        " <button id ='dupUser' onclick =\"updUser('" + row.WorkName +"','"+ row.WorkSiteName + "','"+ row.WorkDate +"','"+row.Weather+"','"+row.WorkTime +"','"+ row.WorkMore+"','"+ row.WorkQuality +"')\">修改</button>";
     return htm;
 }
 
-// 删除用户
-function delUser(dom) {
+const deleteUrl = "/api/ModifyAttendance/DeleteWork";
+const updateUrl = "/api/ModifyAttendance/UpdateWork";
 
+// 删除用户
+function delUser(name,site,date) {
+    let worker = $("#selectName").val();
+    let workSite = $("#selectWorkSite").val();
+    let year = $("#selectYear").val();
+    let mon = $("#selectMon").val(); let day = $("#selectDay").val();
     var mymessage = confirm("确认删除嘛？");
     if (mymessage == true) {
         $.ajax({
-            url: path + '/user/' + $(dom).attr("userId"),
-            type: 'delete',
+            type: "get",
+            url: deleteUrl,
+            data: { 'name': name, 'site': site, 'date': date},
+            dataType: "json",
             success: function (data) {
-                $(dom).parent().parent().hide();
+                if (data == "ok") {
+                    alert(date + " " + name + " 在" +site+"出勤数据删除成功");
+                    let opt = {
+                        url: tableUrl,
+                        query: {
+                            worker: worker,
+                            workSite: workSite,
+                            year: year,
+                            mon: mon,
+                            day: day
+                        }
+                    };
+
+                    //删除成功后，刷新表格
+                    $("#table").bootstrapTable('refresh', opt);
+                }
+              
             },
             error: function (data) {
-                alert("服务器繁忙")
+                alert("服务器繁忙,暂时无法删除")
             }
         });
     }
 }
+function workerUpdate(name, site, date) {
+    let work = $("#work").val(); let more = $("#more").val(); let detail = $("#detail").val();
+    let worker = $("#selectName").val();
+    let workSite = $("#selectWorkSite").val();
+    let year = $("#selectYear").val();
+    let mon = $("#selectMon").val(); let day = $("#selectDay").val();
+    $.ajax({
+        type: "get",
+        url: updateUrl,
+        data: { 'name': name, 'site': site, 'date': date, 'work': work, 'more': more, 'detail': detail },
+        dataType: "json",
+        success: function (data) {
+            if (data == "ok") {
+                alert(date + " " + name + " 在" + site + "出勤数据修改成功");
+                let opt = {
+                    url: tableUrl,
+                    query: {
+                        worker: worker,
+                        workSite: workSite,
+                        year: year,
+                        mon: mon,
+                        day: day
+                    }
+                };
+
+                //删除成功后，刷新表格
+                $("#table").bootstrapTable('refresh', opt);
+            }
+
+        },
+        error: function (data) {
+            alert("服务器繁忙,暂时无法更新")
+        }
+    });
+}
 
 // 编辑用户
-function updUser(name,site, date, weather, work,more,detail) {
+function updUser(name, site, date, weather, work, more, detail) {
+
+  
     //页面层
     layer.open({
         type: 1,
         title: ['数据修改', 'text-align:center;font-size:1.5em;font-weight:600'],
         skin: 'layui-layer-rim', //加上边框
         area: ['420px', '240px'], //宽高
-        content: '<div class="form-group" style="margin:2% 30%; ">' +
-                    '<div class="form-inline" style="margin-bottom:2%" ' +
-                    '<span style="font-size:1em;">姓&nbsp;&nbsp;&nbsp;&nbsp;名：'+name + '</span>' +         
-                    '</div>' +
-                    '<div class="form-inline" style="margin-bottom:2%" >' +
-                    '<span style="font-size:1em;">工&nbsp;&nbsp;&nbsp;&nbsp;地：'+site + '</span>' +         
-                    '</div>' +
-                    '<div class="form-inline" style="margin-bottom:2%" ' +
-                    '<span style="font-size:1em;">日&nbsp;&nbsp;&nbsp;&nbsp;期：'+ date + '</span>' +         
-                    '</div>' +
-           
-                    '<div class="form-inline" style="margin-bottom:2%" ' +
-                    '<span style="font-size:1em;">工&nbsp;&nbsp;&nbsp;&nbsp;日：</span>' +
-                    '<input type="text" id="work" class="form-control" value="'+ work+'" style="width:5em;height:2em; ">' +
-                    '</div>' +
+        content: "<div class='form-group' style='margin:2% 30%;'>" +
+                    "<div class='form-inline' style='margin-bottom:2%'>"  +
+                    "<span style='font-size: 1em;' id='name'>姓&nbsp;&nbsp;&nbsp;&nbsp;名："+name +"</span>"  +         
+                    "</div>" +
+                    "<div class='form-inline' style='margin-bottom:2%'>"  +
+                    "<span style='font-size: 1em;' id = 'site'>工&nbsp;&nbsp;&nbsp;&nbsp;地："+site+" </span>"  +         
+                    "</div>" +
+                    "<div class='form-inline' style='margin-bottom:2% '>"  +
+                    "<span style='font-size: 1em;' id = 'date' > 日 &nbsp;&nbsp;&nbsp;&nbsp;期："+ date +"</span >"  +         
+                    "</div>" +
+                    "<div class='form-inline' style='margin-bottom:2%'>" +
+                    "<span style='font-size: 1em;' id = 'weather' > 天 &nbsp;&nbsp;&nbsp;&nbsp;气：" + weather +"</span >"   +
+                    "</div>" +
+                    "<div class='form-inline' style='margin-bottom:2%'>" +
+                    "<span style=’font-size: 1em;'>工&nbsp;&nbsp;&nbsp;&nbsp;日：</span>"  +
+                    "<input type='text'id='work' class='form-control' value='"+ work+"' style='width:5em; height: 2em;'>"  +
+                    "</div>"  +
+                    "<div class='form-inline' style='margin-bottom:2%'>" +
+                    "<span style='font-size: 1em; '>加&nbsp;&nbsp;&nbsp;&nbsp;班：</span>"  +
+                    "<input type='text' id='more' class='form-control' value='"+ more+"' style='width: 5em; height: 2em;'>"  +
+                    "</div>" +
+                    "<div class='form-inline' style='margin-bottom:2%'>" +
+                          "<span style='font-size:1em;'>日&nbsp;&nbsp;&nbsp;&nbsp;志：</span>" +
+                           "<textarea type='text' id='detail' class='form-control' style='width:10em;'  rows='3'>" + detail +"</textarea>"+            
+                     "</div>" +
 
-                    '<div class="form-inline" style="margin-bottom:2%" >' +
-                    '<span style="font-size:1em;">加&nbsp;&nbsp;&nbsp;&nbsp;班：</span>' +
-                    '<input type="text" id="more" class="form-control" value="'+ more+'" style="width:5em;height:2em; ">' +
-                    '</div>' +
-
-                    '<div class="form-inline" style="margin-bottom:2%" >' +
-                    '<span style="font-size:1em;">日&nbsp;&nbsp;&nbsp;&nbsp;志：</span>' +
-                    '<textarea type="text" id="detail" class="form-control" style="width:10em;"  rows="3">' + detail + '</textarea>'+            
-                    '</div>' +
-
-                    '<div class="form-inline"style="margin-top:5%;margin-bottom:2%;margin-left:20%" >' +
-                    '<button type="button" class="btn" style=" background: #1caf9a;color: #FFFFFF;border: none;" onclick="workerInsert()">数据提交</button>' +
-                    '</div>' +
-            '</div>'
+                    "<div class='form-inline' style='margin-top:5%;margin-bottom:2%;margin-left:20%' >" +
+            "<button type='button' class='btn' style='background: #1caf9a; color: #FFFFFF; border: none; '  onclick =\"workerUpdate('" + name + "','" + site + "','" + date + "')\">数据提交</button>" +
+                     "</div>" +
+                     "</div>"
     });
 }
 
@@ -286,27 +345,7 @@ function workerInfo() {
 
     $("#table").bootstrapTable('refresh', opt);
 }
-//按钮click事件函数
-function workerInfo() {
 
-    let worker = $("#selectName").val();
-    let workSite = $("#selectWorkSite").val();
-    let year = $("#selectYear").val();
-    let mon = $("#selectMon").val(); let day = $("#selectDay").val();
-
-    let opt = {
-        url: tableUrl,
-        query: {
-            worker: worker,
-            workSite: workSite,
-            year: year,
-            mon: mon,
-            day: day
-        }
-    };
-
-    $("#table").bootstrapTable('refresh', opt);
-}
 
 //按钮excelExport click事件函数
 function excelExport() {

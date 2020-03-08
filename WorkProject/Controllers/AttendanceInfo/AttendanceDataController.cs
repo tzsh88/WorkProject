@@ -33,9 +33,9 @@ namespace WorkProject.Controllers.AttendanceInfo
             if (workSiteName == "all") siteEffect = true;
             if (worker == "all")       workerEffect = true; 
 
-            if (mon == "all") { monEffect = true; mon = "13"; }
+            if (mon == "all") { monEffect = true; mon = "01"; }
 
-            if (day == "all") { dayEffect = true; day = "32"; }
+            if (day == "all") { dayEffect = true; day = "01"; }
 
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {

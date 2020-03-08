@@ -220,6 +220,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AttendanceInfo\AttendanceDataController.cs" />
+    <Compile Include="Controllers\AttendanceInfo\ModifyAttendanceController.cs" />
     <Compile Include="Controllers\BasicInfo\BasicInfoDataController.cs" />
     <Compile Include="Controllers\BasicInfo\ModifyPersonInfoController.cs" />
     <Compile Include="Controllers\Export\AttendanceExportController.cs" />
