@@ -33,7 +33,16 @@
                     <span style="font-size:1em;">工地：</span>
                     <select class="selectpicker" id="selectWorkSite">
                         <option value="all">全部数据</option>
-                    </select>&nbsp; &nbsp;
+                    </select>&nbsp; 
+                    <span style="font-size:1em;">方式：</span>
+                    <select class="selectpicker" style="" id="payType">
+                        <option value="all"> 全部数据</option>
+                        <option value="微信"> 微信</option>
+                        <option value="转账"> 转账</option>
+                        <option value="现金"> 现金</option>
+                        <option value="伙食"> 伙食</option>
+                        <option value="罚款"> 罚款</option>
+                    </select>&nbsp; 
                     <span style="font-size:1em;">年份：</span>
                     <select class="selectpicker" id="selectYear">
                         <option value="2020">2020</option>
@@ -42,7 +51,7 @@
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
                         <option value="2025">2025</option>
-                    </select>&nbsp; &nbsp;
+                    </select>&nbsp;
                     <span style="font-size:1em;">月份：</span>
                     <select class="selectpicker" id="selectMon">
                         <option value="all">全部数据</option>
@@ -58,7 +67,7 @@
                         <option value="10">10</option>
                         <option value="11">11</option>
                         <option value="12">12</option>
-                    </select>&nbsp; &nbsp;
+                    </select>&nbsp;
                     <span style="font-size:1em;">日期：</span>
                     <select class="selectpicker" id="selectDay">
                         <option value="all">全部数据</option>
@@ -94,14 +103,14 @@
                         <option value="30">30</option>
                         <option value="31">31</option>
 
-                    </select>&nbsp; &nbsp;
+                    </select>&nbsp;
                     <span style="font-size:1em;">人员：</span>
                     <select class="selectpicker" id="selectName">
                         <option value="all">全部数据</option>
 
-                    </select>&nbsp; &nbsp;
-                    <button type="button" class="btn btn-default" onclick="workerInfo()">信息查询</button>&nbsp; &nbsp;
-                    <button type="button" class="btn btn-primary" onclick="excelExport()">Excel导出</button>&nbsp; &nbsp;
+                    </select>&nbsp;
+                    <button type="button" class="btn btn-default" onclick="workerInfo()">信息查询</button>&nbsp; 
+                    <button type="button" class="btn btn-primary" onclick="excelExport()">Excel导出</button>&nbsp; 
                 </div>
 
                 <div class="table-responsive">

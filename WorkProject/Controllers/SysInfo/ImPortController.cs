@@ -30,6 +30,23 @@ namespace WorkProject.Controllers.SysInfo
 
 
         }
+        /// <summary>
+        /// 获取基础信息工人名字，以及工地信息
+        /// </summary>
+        /// <returns></returns>
+        public HttpResponseMessage GetBasicInfo(string selectBelong)
+        {
+            List<List<string>> list = new List<List<string>>();
+            using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
+            {
+                list.Add(BasicMethods.GetWorkName(selectBelong));
+                list.Add(BasicMethods.GetWorkSite());
+                string json = JsonConvert.SerializeObject(list);
+                return HttpResponseMessageToJson.ToJson(json);
+            }
+
+
+        }
 
         /// <summary>
         /// 获取管理与系统人员名下所属的工人名字，以及工地信息

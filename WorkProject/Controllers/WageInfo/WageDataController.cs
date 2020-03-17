@@ -28,7 +28,9 @@ namespace WorkProject.Controllers.WageInfo
             string year = HttpContext.Current.Request["year"].Trim();
             string mon = HttpContext.Current.Request["mon"].Trim();
             string day = HttpContext.Current.Request["day"].Trim();
-            bool siteEffect = false; bool workerEffect = false; bool monEffect = false; bool dayEffect = false;
+            string type = HttpContext.Current.Request["type"].Trim();
+            bool siteEffect = false; bool workerEffect = false; bool monEffect = false; 
+            bool dayEffect = false;  bool typeEffect = false;
 
             if (workSiteName == "all") siteEffect = true;
             if (worker == "all") workerEffect = true;
@@ -36,6 +38,7 @@ namespace WorkProject.Controllers.WageInfo
             if (mon == "all") { monEffect = true; mon = "01"; }
 
             if (day == "all") { dayEffect = true; day = "01"; }
+            if (type == "all") typeEffect = true;
 
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
@@ -46,6 +49,7 @@ namespace WorkProject.Controllers.WageInfo
                                  && s.WagePaymentDate.Value.Year == Convert.ToInt32(year)
                                  && (monEffect || s.WagePaymentDate.Value.Month == Convert.ToInt32(mon))
                                  && (dayEffect || s.WagePaymentDate.Value.Day == Convert.ToInt32(day))
+                                 && (typeEffect || s.PaymentType == type)
                            select new
                            {
                                s.WorkSite.WorkSiteName,

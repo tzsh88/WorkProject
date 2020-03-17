@@ -36,9 +36,6 @@ namespace WorkProject
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
-    partial void InsertPayment(Payment instance);
-    partial void UpdatePayment(Payment instance);
-    partial void DeletePayment(Payment instance);
     partial void InsertCheckWork(CheckWork instance);
     partial void UpdateCheckWork(CheckWork instance);
     partial void DeleteCheckWork(CheckWork instance);
@@ -60,6 +57,9 @@ namespace WorkProject
     partial void InsertModifyAttendanceRecord(ModifyAttendanceRecord instance);
     partial void UpdateModifyAttendanceRecord(ModifyAttendanceRecord instance);
     partial void DeleteModifyAttendanceRecord(ModifyAttendanceRecord instance);
+    partial void InsertPayment(Payment instance);
+    partial void UpdatePayment(Payment instance);
+    partial void DeletePayment(Payment instance);
     #endregion
 		
 		public WorkDataClassesDataContext() : 
@@ -105,14 +105,6 @@ namespace WorkProject
 			get
 			{
 				return this.GetTable<User>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Payment> Payment
-		{
-			get
-			{
-				return this.GetTable<Payment>();
 			}
 		}
 		
@@ -169,6 +161,14 @@ namespace WorkProject
 			get
 			{
 				return this.GetTable<ModifyAttendanceRecord>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Payment> Payment
+		{
+			get
+			{
+				return this.GetTable<Payment>();
 			}
 		}
 	}
@@ -673,390 +673,6 @@ namespace WorkProject
 						this._WorkSiteId = default(int);
 					}
 					this.SendPropertyChanged("WorkSite");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Payment")]
-	public partial class Payment : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private int _WorkSiteId;
-		
-		private string _WorkId;
-		
-		private System.Nullable<System.DateTime> _RecordTime;
-		
-		private System.Nullable<System.DateTime> _WagePaymentDate;
-		
-		private System.Nullable<int> _WageAmount;
-		
-		private string _WageCard;
-		
-		private string _PaymentType;
-		
-		private string _Company;
-		
-		private string _CompanyBoss;
-		
-		private string _Remark;
-		
-		private EntityRef<WorkSite> _WorkSite;
-		
-		private EntityRef<Worker> _Worker;
-		
-    #region 可扩展性方法定义
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnWorkSiteIdChanging(int value);
-    partial void OnWorkSiteIdChanged();
-    partial void OnWorkIdChanging(string value);
-    partial void OnWorkIdChanged();
-    partial void OnRecordTimeChanging(System.Nullable<System.DateTime> value);
-    partial void OnRecordTimeChanged();
-    partial void OnWagePaymentDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnWagePaymentDateChanged();
-    partial void OnWageAmountChanging(System.Nullable<int> value);
-    partial void OnWageAmountChanged();
-    partial void OnWageCardChanging(string value);
-    partial void OnWageCardChanged();
-    partial void OnPaymentTypeChanging(string value);
-    partial void OnPaymentTypeChanged();
-    partial void OnCompanyChanging(string value);
-    partial void OnCompanyChanged();
-    partial void OnCompanyBossChanging(string value);
-    partial void OnCompanyBossChanged();
-    partial void OnRemarkChanging(string value);
-    partial void OnRemarkChanged();
-    #endregion
-		
-		public Payment()
-		{
-			this._WorkSite = default(EntityRef<WorkSite>);
-			this._Worker = default(EntityRef<Worker>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkSiteId", DbType="Int NOT NULL")]
-		public int WorkSiteId
-		{
-			get
-			{
-				return this._WorkSiteId;
-			}
-			set
-			{
-				if ((this._WorkSiteId != value))
-				{
-					if (this._WorkSite.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnWorkSiteIdChanging(value);
-					this.SendPropertyChanging();
-					this._WorkSiteId = value;
-					this.SendPropertyChanged("WorkSiteId");
-					this.OnWorkSiteIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkId", DbType="VarChar(18) NOT NULL", CanBeNull=false)]
-		public string WorkId
-		{
-			get
-			{
-				return this._WorkId;
-			}
-			set
-			{
-				if ((this._WorkId != value))
-				{
-					if (this._Worker.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnWorkIdChanging(value);
-					this.SendPropertyChanging();
-					this._WorkId = value;
-					this.SendPropertyChanged("WorkId");
-					this.OnWorkIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecordTime", DbType="DateTime")]
-		public System.Nullable<System.DateTime> RecordTime
-		{
-			get
-			{
-				return this._RecordTime;
-			}
-			set
-			{
-				if ((this._RecordTime != value))
-				{
-					this.OnRecordTimeChanging(value);
-					this.SendPropertyChanging();
-					this._RecordTime = value;
-					this.SendPropertyChanged("RecordTime");
-					this.OnRecordTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WagePaymentDate", DbType="Date")]
-		public System.Nullable<System.DateTime> WagePaymentDate
-		{
-			get
-			{
-				return this._WagePaymentDate;
-			}
-			set
-			{
-				if ((this._WagePaymentDate != value))
-				{
-					this.OnWagePaymentDateChanging(value);
-					this.SendPropertyChanging();
-					this._WagePaymentDate = value;
-					this.SendPropertyChanged("WagePaymentDate");
-					this.OnWagePaymentDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WageAmount", DbType="Int")]
-		public System.Nullable<int> WageAmount
-		{
-			get
-			{
-				return this._WageAmount;
-			}
-			set
-			{
-				if ((this._WageAmount != value))
-				{
-					this.OnWageAmountChanging(value);
-					this.SendPropertyChanging();
-					this._WageAmount = value;
-					this.SendPropertyChanged("WageAmount");
-					this.OnWageAmountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WageCard", DbType="VarChar(3)")]
-		public string WageCard
-		{
-			get
-			{
-				return this._WageCard;
-			}
-			set
-			{
-				if ((this._WageCard != value))
-				{
-					this.OnWageCardChanging(value);
-					this.SendPropertyChanging();
-					this._WageCard = value;
-					this.SendPropertyChanged("WageCard");
-					this.OnWageCardChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentType", DbType="VarChar(20)")]
-		public string PaymentType
-		{
-			get
-			{
-				return this._PaymentType;
-			}
-			set
-			{
-				if ((this._PaymentType != value))
-				{
-					this.OnPaymentTypeChanging(value);
-					this.SendPropertyChanging();
-					this._PaymentType = value;
-					this.SendPropertyChanged("PaymentType");
-					this.OnPaymentTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Company", DbType="VarChar(50)")]
-		public string Company
-		{
-			get
-			{
-				return this._Company;
-			}
-			set
-			{
-				if ((this._Company != value))
-				{
-					this.OnCompanyChanging(value);
-					this.SendPropertyChanging();
-					this._Company = value;
-					this.SendPropertyChanged("Company");
-					this.OnCompanyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyBoss", DbType="VarChar(20)")]
-		public string CompanyBoss
-		{
-			get
-			{
-				return this._CompanyBoss;
-			}
-			set
-			{
-				if ((this._CompanyBoss != value))
-				{
-					this.OnCompanyBossChanging(value);
-					this.SendPropertyChanging();
-					this._CompanyBoss = value;
-					this.SendPropertyChanged("CompanyBoss");
-					this.OnCompanyBossChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(128)")]
-		public string Remark
-		{
-			get
-			{
-				return this._Remark;
-			}
-			set
-			{
-				if ((this._Remark != value))
-				{
-					this.OnRemarkChanging(value);
-					this.SendPropertyChanging();
-					this._Remark = value;
-					this.SendPropertyChanged("Remark");
-					this.OnRemarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WorkSite_Payment", Storage="_WorkSite", ThisKey="WorkSiteId", OtherKey="WorkSiteId", IsForeignKey=true)]
-		public WorkSite WorkSite
-		{
-			get
-			{
-				return this._WorkSite.Entity;
-			}
-			set
-			{
-				WorkSite previousValue = this._WorkSite.Entity;
-				if (((previousValue != value) 
-							|| (this._WorkSite.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._WorkSite.Entity = null;
-						previousValue.Payment.Remove(this);
-					}
-					this._WorkSite.Entity = value;
-					if ((value != null))
-					{
-						value.Payment.Add(this);
-						this._WorkSiteId = value.WorkSiteId;
-					}
-					else
-					{
-						this._WorkSiteId = default(int);
-					}
-					this.SendPropertyChanged("WorkSite");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Payment", Storage="_Worker", ThisKey="WorkId", OtherKey="WorkId", IsForeignKey=true)]
-		public Worker Worker
-		{
-			get
-			{
-				return this._Worker.Entity;
-			}
-			set
-			{
-				Worker previousValue = this._Worker.Entity;
-				if (((previousValue != value) 
-							|| (this._Worker.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Worker.Entity = null;
-						previousValue.Payment.Remove(this);
-					}
-					this._Worker.Entity = value;
-					if ((value != null))
-					{
-						value.Payment.Add(this);
-						this._WorkId = value.WorkId;
-					}
-					else
-					{
-						this._WorkId = default(string);
-					}
-					this.SendPropertyChanged("Worker");
 				}
 			}
 		}
@@ -1650,13 +1266,13 @@ namespace WorkProject
 		
 		private EntitySet<User> _User;
 		
-		private EntitySet<Payment> _Payment;
-		
 		private EntitySet<Attendance> _Attendance;
 		
 		private EntitySet<PredictionWages> _PredictionWages;
 		
 		private EntitySet<ModifyAttendanceRecord> _ModifyAttendanceRecord;
+		
+		private EntitySet<Payment> _Payment;
 		
     #region 可扩展性方法定义
     partial void OnLoaded();
@@ -1685,10 +1301,10 @@ namespace WorkProject
 		public WorkSite()
 		{
 			this._User = new EntitySet<User>(new Action<User>(this.attach_User), new Action<User>(this.detach_User));
-			this._Payment = new EntitySet<Payment>(new Action<Payment>(this.attach_Payment), new Action<Payment>(this.detach_Payment));
 			this._Attendance = new EntitySet<Attendance>(new Action<Attendance>(this.attach_Attendance), new Action<Attendance>(this.detach_Attendance));
 			this._PredictionWages = new EntitySet<PredictionWages>(new Action<PredictionWages>(this.attach_PredictionWages), new Action<PredictionWages>(this.detach_PredictionWages));
 			this._ModifyAttendanceRecord = new EntitySet<ModifyAttendanceRecord>(new Action<ModifyAttendanceRecord>(this.attach_ModifyAttendanceRecord), new Action<ModifyAttendanceRecord>(this.detach_ModifyAttendanceRecord));
+			this._Payment = new EntitySet<Payment>(new Action<Payment>(this.attach_Payment), new Action<Payment>(this.detach_Payment));
 			OnCreated();
 		}
 		
@@ -1885,19 +1501,6 @@ namespace WorkProject
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WorkSite_Payment", Storage="_Payment", ThisKey="WorkSiteId", OtherKey="WorkSiteId")]
-		public EntitySet<Payment> Payment
-		{
-			get
-			{
-				return this._Payment;
-			}
-			set
-			{
-				this._Payment.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WorkSite_Attendance", Storage="_Attendance", ThisKey="WorkSiteId", OtherKey="WorkSiteId")]
 		public EntitySet<Attendance> Attendance
 		{
@@ -1937,6 +1540,19 @@ namespace WorkProject
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WorkSite_Payment", Storage="_Payment", ThisKey="WorkSiteId", OtherKey="WorkSiteId")]
+		public EntitySet<Payment> Payment
+		{
+			get
+			{
+				return this._Payment;
+			}
+			set
+			{
+				this._Payment.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1964,18 +1580,6 @@ namespace WorkProject
 		}
 		
 		private void detach_User(User entity)
-		{
-			this.SendPropertyChanging();
-			entity.WorkSite = null;
-		}
-		
-		private void attach_Payment(Payment entity)
-		{
-			this.SendPropertyChanging();
-			entity.WorkSite = this;
-		}
-		
-		private void detach_Payment(Payment entity)
 		{
 			this.SendPropertyChanging();
 			entity.WorkSite = null;
@@ -2012,6 +1616,18 @@ namespace WorkProject
 		}
 		
 		private void detach_ModifyAttendanceRecord(ModifyAttendanceRecord entity)
+		{
+			this.SendPropertyChanging();
+			entity.WorkSite = null;
+		}
+		
+		private void attach_Payment(Payment entity)
+		{
+			this.SendPropertyChanging();
+			entity.WorkSite = this;
+		}
+		
+		private void detach_Payment(Payment entity)
 		{
 			this.SendPropertyChanging();
 			entity.WorkSite = null;
@@ -2414,8 +2030,6 @@ namespace WorkProject
 		
 		private string _Remark;
 		
-		private EntitySet<Payment> _Payment;
-		
 		private EntitySet<Attendance> _Attendance;
 		
 		private EntitySet<PredictionWages> _PredictionWages;
@@ -2425,6 +2039,8 @@ namespace WorkProject
 		private EntitySet<WorkersRelation> _WorkersRelation1;
 		
 		private EntitySet<ModifyAttendanceRecord> _ModifyAttendanceRecord;
+		
+		private EntitySet<Payment> _Payment;
 		
     #region 可扩展性方法定义
     partial void OnLoaded();
@@ -2464,12 +2080,12 @@ namespace WorkProject
 		
 		public Worker()
 		{
-			this._Payment = new EntitySet<Payment>(new Action<Payment>(this.attach_Payment), new Action<Payment>(this.detach_Payment));
 			this._Attendance = new EntitySet<Attendance>(new Action<Attendance>(this.attach_Attendance), new Action<Attendance>(this.detach_Attendance));
 			this._PredictionWages = new EntitySet<PredictionWages>(new Action<PredictionWages>(this.attach_PredictionWages), new Action<PredictionWages>(this.detach_PredictionWages));
 			this._WorkersRelation = new EntitySet<WorkersRelation>(new Action<WorkersRelation>(this.attach_WorkersRelation), new Action<WorkersRelation>(this.detach_WorkersRelation));
 			this._WorkersRelation1 = new EntitySet<WorkersRelation>(new Action<WorkersRelation>(this.attach_WorkersRelation1), new Action<WorkersRelation>(this.detach_WorkersRelation1));
 			this._ModifyAttendanceRecord = new EntitySet<ModifyAttendanceRecord>(new Action<ModifyAttendanceRecord>(this.attach_ModifyAttendanceRecord), new Action<ModifyAttendanceRecord>(this.detach_ModifyAttendanceRecord));
+			this._Payment = new EntitySet<Payment>(new Action<Payment>(this.attach_Payment), new Action<Payment>(this.detach_Payment));
 			OnCreated();
 		}
 		
@@ -2773,19 +2389,6 @@ namespace WorkProject
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Payment", Storage="_Payment", ThisKey="WorkId", OtherKey="WorkId")]
-		public EntitySet<Payment> Payment
-		{
-			get
-			{
-				return this._Payment;
-			}
-			set
-			{
-				this._Payment.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Attendance", Storage="_Attendance", ThisKey="WorkId", OtherKey="WorkId")]
 		public EntitySet<Attendance> Attendance
 		{
@@ -2851,6 +2454,19 @@ namespace WorkProject
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Payment", Storage="_Payment", ThisKey="WorkId", OtherKey="WorkId")]
+		public EntitySet<Payment> Payment
+		{
+			get
+			{
+				return this._Payment;
+			}
+			set
+			{
+				this._Payment.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2869,18 +2485,6 @@ namespace WorkProject
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Payment(Payment entity)
-		{
-			this.SendPropertyChanging();
-			entity.Worker = this;
-		}
-		
-		private void detach_Payment(Payment entity)
-		{
-			this.SendPropertyChanging();
-			entity.Worker = null;
 		}
 		
 		private void attach_Attendance(Attendance entity)
@@ -2938,6 +2542,18 @@ namespace WorkProject
 		}
 		
 		private void detach_ModifyAttendanceRecord(ModifyAttendanceRecord entity)
+		{
+			this.SendPropertyChanging();
+			entity.Worker = null;
+		}
+		
+		private void attach_Payment(Payment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Worker = this;
+		}
+		
+		private void detach_Payment(Payment entity)
 		{
 			this.SendPropertyChanging();
 			entity.Worker = null;
@@ -3488,6 +3104,390 @@ namespace WorkProject
 					if ((value != null))
 					{
 						value.ModifyAttendanceRecord.Add(this);
+						this._WorkSiteId = value.WorkSiteId;
+					}
+					else
+					{
+						this._WorkSiteId = default(int);
+					}
+					this.SendPropertyChanged("WorkSite");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Payment")]
+	public partial class Payment : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _WorkSiteId;
+		
+		private string _WorkId;
+		
+		private System.Nullable<System.DateTime> _RecordTime;
+		
+		private System.Nullable<System.DateTime> _WagePaymentDate;
+		
+		private System.Nullable<int> _WageAmount;
+		
+		private string _WageCard;
+		
+		private string _PaymentType;
+		
+		private string _Company;
+		
+		private string _CompanyBoss;
+		
+		private string _Remark;
+		
+		private EntityRef<Worker> _Worker;
+		
+		private EntityRef<WorkSite> _WorkSite;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnWorkSiteIdChanging(int value);
+    partial void OnWorkSiteIdChanged();
+    partial void OnWorkIdChanging(string value);
+    partial void OnWorkIdChanged();
+    partial void OnRecordTimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnRecordTimeChanged();
+    partial void OnWagePaymentDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnWagePaymentDateChanged();
+    partial void OnWageAmountChanging(System.Nullable<int> value);
+    partial void OnWageAmountChanged();
+    partial void OnWageCardChanging(string value);
+    partial void OnWageCardChanged();
+    partial void OnPaymentTypeChanging(string value);
+    partial void OnPaymentTypeChanged();
+    partial void OnCompanyChanging(string value);
+    partial void OnCompanyChanged();
+    partial void OnCompanyBossChanging(string value);
+    partial void OnCompanyBossChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    #endregion
+		
+		public Payment()
+		{
+			this._Worker = default(EntityRef<Worker>);
+			this._WorkSite = default(EntityRef<WorkSite>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkSiteId", DbType="Int NOT NULL")]
+		public int WorkSiteId
+		{
+			get
+			{
+				return this._WorkSiteId;
+			}
+			set
+			{
+				if ((this._WorkSiteId != value))
+				{
+					if (this._WorkSite.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnWorkSiteIdChanging(value);
+					this.SendPropertyChanging();
+					this._WorkSiteId = value;
+					this.SendPropertyChanged("WorkSiteId");
+					this.OnWorkSiteIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkId", DbType="VarChar(18) NOT NULL", CanBeNull=false)]
+		public string WorkId
+		{
+			get
+			{
+				return this._WorkId;
+			}
+			set
+			{
+				if ((this._WorkId != value))
+				{
+					if (this._Worker.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnWorkIdChanging(value);
+					this.SendPropertyChanging();
+					this._WorkId = value;
+					this.SendPropertyChanged("WorkId");
+					this.OnWorkIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecordTime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> RecordTime
+		{
+			get
+			{
+				return this._RecordTime;
+			}
+			set
+			{
+				if ((this._RecordTime != value))
+				{
+					this.OnRecordTimeChanging(value);
+					this.SendPropertyChanging();
+					this._RecordTime = value;
+					this.SendPropertyChanged("RecordTime");
+					this.OnRecordTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WagePaymentDate", DbType="Date")]
+		public System.Nullable<System.DateTime> WagePaymentDate
+		{
+			get
+			{
+				return this._WagePaymentDate;
+			}
+			set
+			{
+				if ((this._WagePaymentDate != value))
+				{
+					this.OnWagePaymentDateChanging(value);
+					this.SendPropertyChanging();
+					this._WagePaymentDate = value;
+					this.SendPropertyChanged("WagePaymentDate");
+					this.OnWagePaymentDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WageAmount", DbType="Int")]
+		public System.Nullable<int> WageAmount
+		{
+			get
+			{
+				return this._WageAmount;
+			}
+			set
+			{
+				if ((this._WageAmount != value))
+				{
+					this.OnWageAmountChanging(value);
+					this.SendPropertyChanging();
+					this._WageAmount = value;
+					this.SendPropertyChanged("WageAmount");
+					this.OnWageAmountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WageCard", DbType="VarChar(20)")]
+		public string WageCard
+		{
+			get
+			{
+				return this._WageCard;
+			}
+			set
+			{
+				if ((this._WageCard != value))
+				{
+					this.OnWageCardChanging(value);
+					this.SendPropertyChanging();
+					this._WageCard = value;
+					this.SendPropertyChanged("WageCard");
+					this.OnWageCardChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentType", DbType="VarChar(20)")]
+		public string PaymentType
+		{
+			get
+			{
+				return this._PaymentType;
+			}
+			set
+			{
+				if ((this._PaymentType != value))
+				{
+					this.OnPaymentTypeChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentType = value;
+					this.SendPropertyChanged("PaymentType");
+					this.OnPaymentTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Company", DbType="VarChar(50)")]
+		public string Company
+		{
+			get
+			{
+				return this._Company;
+			}
+			set
+			{
+				if ((this._Company != value))
+				{
+					this.OnCompanyChanging(value);
+					this.SendPropertyChanging();
+					this._Company = value;
+					this.SendPropertyChanged("Company");
+					this.OnCompanyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyBoss", DbType="VarChar(20)")]
+		public string CompanyBoss
+		{
+			get
+			{
+				return this._CompanyBoss;
+			}
+			set
+			{
+				if ((this._CompanyBoss != value))
+				{
+					this.OnCompanyBossChanging(value);
+					this.SendPropertyChanging();
+					this._CompanyBoss = value;
+					this.SendPropertyChanged("CompanyBoss");
+					this.OnCompanyBossChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(128)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_Payment", Storage="_Worker", ThisKey="WorkId", OtherKey="WorkId", IsForeignKey=true)]
+		public Worker Worker
+		{
+			get
+			{
+				return this._Worker.Entity;
+			}
+			set
+			{
+				Worker previousValue = this._Worker.Entity;
+				if (((previousValue != value) 
+							|| (this._Worker.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Worker.Entity = null;
+						previousValue.Payment.Remove(this);
+					}
+					this._Worker.Entity = value;
+					if ((value != null))
+					{
+						value.Payment.Add(this);
+						this._WorkId = value.WorkId;
+					}
+					else
+					{
+						this._WorkId = default(string);
+					}
+					this.SendPropertyChanged("Worker");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WorkSite_Payment", Storage="_WorkSite", ThisKey="WorkSiteId", OtherKey="WorkSiteId", IsForeignKey=true)]
+		public WorkSite WorkSite
+		{
+			get
+			{
+				return this._WorkSite.Entity;
+			}
+			set
+			{
+				WorkSite previousValue = this._WorkSite.Entity;
+				if (((previousValue != value) 
+							|| (this._WorkSite.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WorkSite.Entity = null;
+						previousValue.Payment.Remove(this);
+					}
+					this._WorkSite.Entity = value;
+					if ((value != null))
+					{
+						value.Payment.Add(this);
 						this._WorkSiteId = value.WorkSiteId;
 					}
 					else

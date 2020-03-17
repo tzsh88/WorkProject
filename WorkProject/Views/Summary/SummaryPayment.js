@@ -90,20 +90,20 @@ let TableInit = function () {
                 },
                 {
                     field: 'Card',
-                    title: '银行',
+                    title: '交易方式',
                     sortable: true,
 
                 },
                 {
                     field: 'PayType',
-                    title: '支付方式',
+                    title: '形式',
                     sortable: true,
 
                 },
                 
                 {
                     field: 'Affiliation',
-                    title: '工人归属',
+                    title: '归属',
                     sortable: true,
 
                 },
@@ -137,11 +137,13 @@ function queryParams(params) {
     let workSite = $("#selectWorkSite").val();
     let year = $("#selectYear").val();
     let mon = $("#selectMon").val(); let day = $("#selectDay").val();
+    let type = $("#payType").val();
     temp = {//这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
         limit: params.limit,                         //页面大小
         offset: params.offset,
         worker: worker,
         workSite: workSite,
+        type: type,
         year: year,
         mon: mon,
         day: day,
@@ -159,12 +161,13 @@ function workerInfo() {
     let workSite = $("#selectWorkSite").val();
     let year = $("#selectYear").val();
     let mon = $("#selectMon").val(); let day = $("#selectDay").val();
-
+    let type = $("#payType").val();
     let opt = {
         url: tableUrl,
         query: {
             worker: worker,
             workSite: workSite,
+            type: type,
             year: year,
             mon: mon,
             day: day
@@ -173,27 +176,7 @@ function workerInfo() {
 
     $("#table").bootstrapTable('refresh', opt);
 }
-//按钮click事件函数
-function workerInfo() {
 
-    let worker = $("#selectName").val();
-    let workSite = $("#selectWorkSite").val();
-    let year = $("#selectYear").val();
-    let mon = $("#selectMon").val(); let day = $("#selectDay").val();
-
-    let opt = {
-        url: tableUrl,
-        query: {
-            worker: worker,
-            workSite: workSite,
-            year: year,
-            mon: mon,
-            day: day
-        }
-    };
-
-    $("#table").bootstrapTable('refresh', opt);
-}
 
 //按钮excelExport click事件函数
 function excelExport() {

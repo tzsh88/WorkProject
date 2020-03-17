@@ -26,23 +26,6 @@
       <Association Name="WorkSite_User" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Payment" Member="Payment">
-    <Type Name="Payment">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="WorkSiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
-      <Column Name="RecordTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="WagePaymentDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="WageAmount" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="WageCard" Type="System.String" DbType="VarChar(3)" CanBeNull="true" />
-      <Column Name="PaymentType" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="Company" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="CompanyBoss" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
-      <Association Name="WorkSite_Payment" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
-      <Association Name="Worker_Payment" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.CheckWork" Member="CheckWork">
     <Type Name="CheckWork">
       <Column Name="CheckDate" Type="System.DateTime" DbType="Date NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -81,10 +64,10 @@
       <Column Name="WorkSiteFinished" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
       <Association Name="WorkSite_User" Member="User" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="User" />
-      <Association Name="WorkSite_Payment" Member="Payment" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="Payment" />
       <Association Name="WorkSite_Attendance" Member="Attendance" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="Attendance" />
       <Association Name="WorkSite_PredictionWages" Member="PredictionWages" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="PredictionWages" />
       <Association Name="WorkSite_ModifyAttendanceRecord" Member="ModifyAttendanceRecord" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="ModifyAttendanceRecord" />
+      <Association Name="WorkSite_Payment" Member="Payment" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="Payment" />
     </Type>
   </Table>
   <Table Name="dbo.PredictionWages" Member="PredictionWages">
@@ -120,12 +103,12 @@
       <Column Name="AccidentInsurance" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="InsuranceDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
-      <Association Name="Worker_Payment" Member="Payment" ThisKey="WorkId" OtherKey="WorkId" Type="Payment" />
       <Association Name="Worker_Attendance" Member="Attendance" ThisKey="WorkId" OtherKey="WorkId" Type="Attendance" />
       <Association Name="Worker_PredictionWages" Member="PredictionWages" ThisKey="WorkId" OtherKey="WorkerId" Type="PredictionWages" />
       <Association Name="Worker_WorkersRelation" Member="WorkersRelation" ThisKey="WorkId" OtherKey="WorkId" Type="WorkersRelation" />
       <Association Name="Worker_WorkersRelation1" Member="WorkersRelation1" ThisKey="WorkId" OtherKey="WorkIdMain" Type="WorkersRelation" />
       <Association Name="Worker_ModifyAttendanceRecord" Member="ModifyAttendanceRecord" ThisKey="WorkId" OtherKey="WorkId" Type="ModifyAttendanceRecord" />
+      <Association Name="Worker_Payment" Member="Payment" ThisKey="WorkId" OtherKey="WorkId" Type="Payment" />
     </Type>
   </Table>
   <Table Name="dbo.WorkersRelation" Member="WorkersRelation">
@@ -152,6 +135,23 @@
       <Column Name="WorkQuality" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="Worker_ModifyAttendanceRecord" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
       <Association Name="WorkSite_ModifyAttendanceRecord" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Payment" Member="Payment">
+    <Type Name="Payment">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WorkSiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
+      <Column Name="RecordTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WagePaymentDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="WageAmount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WageCard" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="PaymentType" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Company" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CompanyBoss" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="Worker_Payment" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
+      <Association Name="WorkSite_Payment" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

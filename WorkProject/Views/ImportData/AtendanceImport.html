@@ -8,6 +8,7 @@
     <link href="../../Content/datetimepicker.css" rel="stylesheet" />
     <script src="../../../Scripts/bootstrap.min.js"></script>
     <script src="../../../Scripts/bootstrap-select.min.js"></script>
+    <script src="../../Scripts/layer_v3.1.1/3.1.1/layer.js"></script>
     <script src="../../Scripts/datetimepicker/moment.js"></script>
     <script src="../../Scripts/datetimepicker/bootstrap-datetimepicker.js"></script>
     <title>考勤、支付信息导入</title>
@@ -30,38 +31,38 @@
                 <button type="button" class="addOn"></button>
             </div>
             <script>
-               /*
-			   if ($(".iDate.date").length > 0) {
+                /*
+                if ($(".iDate.date").length > 0) {
+                     $(".iDate.date").datetimepicker({
+                         locale: "zh-cn",
+                         format: "YYYY-MM-DD",
+                         dayViewHeaderFormat: "YYYY年 MMDD"
+                     });
+                 };
+                 let time = new Date().getTime() - 24 * 60 * 60 * 1000;
+                 let yesday = new Date(time);
+                 let month = yesday.getMonth();//0-11
+                 if (month < 9) {
+                     month = '0' + (month + 1);
+                 }
+                 else {
+                     month = month + 1;
+                 }
+                 let day = yesday.getDate();//1-31
+                 if (day < 9) {
+                     day = '0' + day;
+                 }
+                 yesday = yesday.getFullYear() + '-' + month + '-' + day;
+                 $("#date").val(yesday);
+                 */
+                if ($(".iDate.date").length > 0) {
                     $(".iDate.date").datetimepicker({
                         locale: "zh-cn",
                         format: "YYYY-MM-DD",
                         dayViewHeaderFormat: "YYYY年 MMDD"
                     });
                 };
-                let time = new Date().getTime() - 24 * 60 * 60 * 1000;
-                let yesday = new Date(time);
-                let month = yesday.getMonth();//0-11
-                if (month < 9) {
-                    month = '0' + (month + 1);
-                }
-                else {
-                    month = month + 1;
-                }
-                let day = yesday.getDate();//1-31
-                if (day < 9) {
-                    day = '0' + day;
-                }
-                yesday = yesday.getFullYear() + '-' + month + '-' + day;
-                $("#date").val(yesday); 
-				*/
-				 if ($(".iDate.date").length > 0) {
-                    $(".iDate.date").datetimepicker({
-                        locale: "zh-cn",
-                        format: "YYYY-MM-DD",
-                        dayViewHeaderFormat: "YYYY年 MMDD"
-                    });
-                };
-				
+
             </script>
             &nbsp; &nbsp;
             <span style="font-size:1em;">天气：</span>
@@ -71,13 +72,18 @@
                 <option value="上午雨雪">上午雨雪</option>
                 <option value="下午雨雪">下午雨雪</option>
             </select>&nbsp; &nbsp;
+            <span style="font-size:1em;">归属：</span>
+            <select class="selectpicker" id="selectBelong">
+                <option value="自有">自有</option>
+                <option value="徐龙生">徐龙生</option>
+                <option value="杨三">杨三</option>              
+            </select> &nbsp; &nbsp;
             <span style="font-size:1em;">姓名：</span>
             <select class="selectpicker" id="selectName">
             </select> &nbsp; &nbsp;
             <span style="font-size:1em;">工地：</span>
             <select class="selectpicker" id="selectWorkSite">
             </select>&nbsp; &nbsp;
-
             <div class="row" style="margin-top:2%;margin-bottom:1%;">
                 <div style="margin-right:20%; text-align: center;margin-bottom:2% ">
                     <span style="font-size:1em;color:red;">录入结束后要查看下，</span>
@@ -115,16 +121,18 @@
                     &nbsp; &nbsp;
                     <span style="font-size:1em;">方式：</span>
                     <select class="selectpicker" style="" id="payType">
-                       	<option value="微信"> 微信</option>
-						 <option value="转账"> 转账</option>
+                        <option value="微信"> 微信</option>
+                        <option value="转账"> 转账</option>
                         <option value="现金"> 现金</option>
+                        <option value="伙食"> 伙食</option>
+                        <option value="罚款"> 罚款</option>
                     </select>&nbsp; &nbsp;
                     <span style="font-size:1em;">银行：</span>
-                    <select class="selectpicker" style="" id="wageCard">                        
+                    <select class="selectpicker" style="" id="wageCard">
                         <option value="Cas">现金选项</option>
-						<option value="CCB"> 建设银行</option>
+                        <option value="CCB"> 建设银行</option>
                         <option value="JS">  江苏银行</option>
-						
+                        <option value="NoPay">未支付</option>
                     </select>&nbsp; &nbsp;
                     <span style="font-size:1em;">备注：</span>
                     <textarea type="text" id="payRemark" class="form-control" style="width: 20em;" placeholder="支付缘由（分包付款也可以导入,支付不考虑天气因素）" rows="3"></textarea>
@@ -155,14 +163,25 @@
                 }
             }
         }
+        $("#selectBelong").change(function(e){
+							
+             loadWork();
+        });
+
         //加载人员和工地
         function loadWork() {
+
+             let selectBelong = $('#selectBelong').selectpicker('val');
             $.ajax({
                 url: optoinUrl, //所需要的列表接口地址
                 type: "get",
                 dataType: "json",
+                data:{
+                    'selectBelong': selectBelong
+                },
                 success: function (data) {
-
+                    document.getElementById("selectName").options.length = 0;
+                     document.getElementById("selectWorkSite").options.length = 0;
                     let listNames = "";
                     for (let i = 0; i < data[0].length; i++) {
                         listNames += "<option value='" + data[0][i] + "'>" + data[0][i] + "</option>";
@@ -197,22 +216,24 @@
             let selectWorkSite = $('#selectWorkSite').val();
             let work = $('#work').val();
             let workMore = $('#workMore').val();
-            let remark =$('#remark').val();
+            let remark = $('#remark').val();
+            remark = remark.replaceAll("\n", "");
+            remark = remark.replaceAll("\r", "");
             $.ajax({
                 url: dataUrl, //所需要的列表接口地址
                 type: "get",
                 data: {
-                    'selectWeather': selectWeather,'selectName': selectName, 'date': date, 'selectWorkSite': selectWorkSite,
-                    'work': work, 'workMore': workMore,'remark': remark
+                    'selectWeather': selectWeather, 'selectName': selectName, 'date': date, 'selectWorkSite': selectWorkSite,
+                    'work': work, 'workMore': workMore, 'remark': remark
                 },//发送到服务器的数据，key/value形式
                 dataType: "json",
                 success: function (data) {
 
                     if (data == 'ok') {
                         alert('数据已经导入');
-                         //删除Select选中value
-                        //$("#selectName option[value="+selectName+"]").remove(); 
-                    } else if (data== 'repeate') {
+                        //删除Select选中value
+                        //$("#selectName option[value="+selectName+"]").remove();
+                    } else if (data == 'repeate') {
                         alert('请勿重复导入');
                     }
 
@@ -227,25 +248,25 @@
         function workerPayUpdate() {
             let selectName = $('#selectName').selectpicker('val');
             let date = $('#date').val();
-            let selectWorkSite = $('#selectWorkSite').val(); 
+            let selectWorkSite = $('#selectWorkSite').val();
             let wageCard = $('#wageCard').val();
             let pay = $('#pay').val();
             let payType = $('#payType').val();
-            let remark =$('#payRemark').val();
+            let remark = $('#payRemark').val();
             $.ajax({
                 url: dataPayUrl, //所需要的列表接口地址
                 type: "get",
                 data: {
                     'selectName': selectName, 'date': date, 'selectWorkSite': selectWorkSite,
-                    'wageCard': wageCard,'pay': pay,'payType': payType,'remark': remark
+                    'wageCard': wageCard, 'pay': pay, 'payType': payType, 'remark': remark
                 },//发送到服务器的数据，key/value形式
                 dataType: "json",
                 success: function (data) {
 
                     if (data == 'ok') {
-                       alert('支付数据已经导入');
-                      
-                    } else if (data== 'repeate') {
+                        alert('支付数据已经导入');
+
+                    } else if (data == 'repeate') {
                         alert('请勿重复导入');
                     }
 
@@ -254,10 +275,77 @@
                     console.log(e.responseText);
                 }
             });
-			  $("#pay").val("");  
-			  $("#payRemark").val("");
-			
+            $("#pay").val("");
+            $("#payRemark").val("");
+
         }
+        ////进入页面设置初始值
+        //function setOriginDateValue() {
+        //    let setDate = $("#date1").val();
+        //    $("#date").val(setDate);
+        //    //模拟点击，关闭弹窗
+        //    var layer_close = document.getElementsByClassName("layui-layer-ico layui-layer-close layui-layer-close1");
+        //    layer_close[0].click();
+        //}
+
+        String.prototype.replaceAll = function (s1, s2) {
+            return this.replace(new RegExp(s1, "gm"), s2);
+        }
+
+        //页面加载完成
+        window.onload = function () {
+
+
+            //页面层
+            layer.open({
+                type: 1,
+                title: ['&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录入日期设定', 'text-align:center;font-size:1.5em;font-weight:600;'],
+                skin: 'layui-layer-rim', //加上边框
+                area: ['280px', '150px'], //宽高
+                offset: '250px',//坐标
+                shadeClose:true,//点击阴影区弹窗自动关闭
+                content: "<div class='form-group' style='margin:10% 25%;'>" +
+
+                    "<div class='form-inline' style='margin-top:5%;margin-bottom:2%;' >" +
+                    "<div id='idate1' class='iDate date' style='width:8em'>" +
+                    "<input id='date1' type='text'>" +
+                    "<button type='button' id='originBtn' class='addOn'></button>" +
+                    "</div>" +
+                    //"<button type='button' class='btn' onclick=\'setOriginDateValue()\'; style='background: #1caf9a; color: #FFFFFF; border: none;margin-left:5% ' >确定</button>" +
+                    "</div>" +
+                    "</div>"
+            });
+
+            if ($("#idate1").length > 0) {
+                $("#idate1").datetimepicker({
+                    locale: "zh-cn",
+                    format: "YYYY-MM-DD",
+                    dayViewHeaderFormat: "YYYY年 MMDD"
+                });
+            };
+            $("#originBtn").click(function () {
+                let zIndex = $("#layui-layer1").css("z-index");
+                $(".dtPicker").css("z-index", zIndex + 1);
+                //s事件控件 获取到第二个a 标签
+                var lista = document.querySelectorAll(".picker-switch a")[1];
+
+                //为a标签 添加click 事件
+                lista.addEventListener("click", function () {
+                    //模拟点击，关闭弹窗
+                    var layer_close = document.getElementsByClassName("layui-layer-ico layui-layer-close layui-layer-close1");
+                    layer_close[0].click();
+                    let setDate = $("#date1").val();
+                    $("#date").val(setDate);
+                    //event.stopPropagation();    //  阻止事件冒泡
+                });
+
+            });
+
+
+
+
+
+        };
     </script>
 
 </body>

@@ -18,7 +18,17 @@ namespace WorkProject.Models
                 return db.Worker.Where(n=>n.Visual==1).OrderBy(n=>n.WorkName).Select(n => n.WorkName).ToList();
             }
         }
-
+        /// <summary>
+        /// 所有工人的姓名，后期如果太多可以在做筛选
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetWorkName(string belong)
+        {
+            using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
+            {
+                return db.Worker.Where(n => n.Visual == 1 && n.Affiliation==belong).OrderBy(n => n.WorkName).Select(n => n.WorkName).ToList();
+            }
+        }
         /// <summary>
         /// 所有未结束的工地
         /// </summary>
