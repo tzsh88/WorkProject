@@ -109,6 +109,7 @@
       <Association Name="Worker_WorkersRelation1" Member="WorkersRelation1" ThisKey="WorkId" OtherKey="WorkIdMain" Type="WorkersRelation" />
       <Association Name="Worker_ModifyAttendanceRecord" Member="ModifyAttendanceRecord" ThisKey="WorkId" OtherKey="WorkId" Type="ModifyAttendanceRecord" />
       <Association Name="Worker_Payment" Member="Payment" ThisKey="WorkId" OtherKey="WorkId" Type="Payment" />
+      <Association Name="Worker_AttendanceException" Member="AttendanceException" ThisKey="WorkId" OtherKey="WorkId" Type="AttendanceException" />
     </Type>
   </Table>
   <Table Name="dbo.WorkersRelation" Member="WorkersRelation">
@@ -152,6 +153,20 @@
       <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
       <Association Name="Worker_Payment" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
       <Association Name="WorkSite_Payment" Member="WorkSite" ThisKey="WorkSiteId" OtherKey="WorkSiteId" Type="WorkSite" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AttendanceException" Member="AttendanceException">
+    <Type Name="AttendanceException">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RecordTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="WorkId" Type="System.String" DbType="VarChar(18) NOT NULL" CanBeNull="false" />
+      <Column Name="WorkDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="WorkTime" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WorkMore" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WorkSiteCnt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Handled" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="Worker_AttendanceException" Member="Worker" ThisKey="WorkId" OtherKey="WorkId" Type="Worker" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

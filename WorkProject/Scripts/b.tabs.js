@@ -108,10 +108,18 @@
 		var $tabs = this.$container;
 		//高度计算
 		var mainHeight = $($tabs).innerHeight();
-		var tabBarHeight = $('ul.nav-tabs',$tabs).outerHeight(true);
-		$('div.tab-content',$tabs).height(mainHeight - tabBarHeight);
+		var tabBarHeight = $('ul.nav-tabs', $tabs).outerHeight(true);
+
+		$('div.tab-content', $tabs).height(mainHeight - tabBarHeight);
 	};
 
+	// 计算页面的实际高度，iframe自适应会用到
+	function calcPageHeight(doc) {
+		var cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight);
+		var sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+		var height = Math.max(cHeight, sHeight);
+		return height;
+	}
     /**
 	 * 新增一个tab，但如果是已存在的tab则只是激活它，而不再新增.
 	 * 同时传参
@@ -149,12 +157,17 @@
 		//切换到新增加的tab上
 		$('ul.nav-tabs li:last a',$tabs).tab('show');
         openTabs.push(tabId);
-       
+
+		
+
 		//打开iframe页面
 	    $(content).append('<iframe frameborder="0" scrolling="no" style="width:100%;height:100%;border:0px;margin:0";padding:0; src="'+url+'"></iframe>');
+		//根据ID获取iframe对象
+
 		
 		
 	};
+	
 
     /**
     * 新增一个tab，但如果是已存在的tab则只是激活它，而不再新增
@@ -190,8 +203,28 @@
         openTabs.push(tabId);
 
         var openIframe = function () {
-            $(content).append('<iframe frameborder="0" scrolling="no" style="width:100%;height:100%;border:0px;margin:0";padding:0; src="' + url + '"></iframe>');
-        };
+			$(content).append('<iframe frameborder="0" scrolling="no" id="ifr_' + tabId +'"  style="width:100%;height:100%;min-height:600px;border:0;margin:0";padding:0; src="' + url + '"></iframe>');
+			
+			//var ss = document.getElementsByClassName("tab-pane active");
+			var ifr_id = 'ifr_' + $(".tab-pane.active").attr("id");
+			var ifr = document.getElementById(ifr_id);
+			ifr.onload = function () {
+				//解决打开高度太高的页面后再打开高度较小页面滚动条不收缩
+				ifr.style.height = '0px';
+				var iDoc = ifr.contentDocument || ifr.document
+				var height = calcPageHeight(iDoc)
+				if (height < 850) {
+					height = 850;
+				}
+				ifr.style.height = height + 'px';
+				$('div.tab-content', $tabs).height(ifr.style.height);
+				var $tabs = this.$container;
+				//高度计算
+				var tabBarHeight = $('ul.nav-tabs', $tabs).outerHeight(true);
+				$('#mainFrameTabs').height(height + tabBarHeight+'px');
+				
+			}
+		};
         //进行登录验证
         if (loginCheck && $.isFunction(loginCheck)) {
             if (loginCheck()) openIframe();

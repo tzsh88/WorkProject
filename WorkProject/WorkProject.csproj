@@ -220,6 +220,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AttendanceInfo\AttendanceDataController.cs" />
+    <Compile Include="Controllers\AttendanceInfo\AttendceExceptionController.cs" />
     <Compile Include="Controllers\AttendanceInfo\ModifyAttendanceController.cs" />
     <Compile Include="Controllers\BasicInfo\BasicInfoDataController.cs" />
     <Compile Include="Controllers\BasicInfo\ModifyPersonInfoController.cs" />
@@ -277,16 +278,29 @@
     <Content Include="Content\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="Content\fontawesome-all.min.css" />
     <Content Include="Content\img\blue.png" />
     <Content Include="Content\img\figureHead.jpg" />
     <Content Include="Content\ionicons.css" />
     <Content Include="Content\ionicons.min.css" />
-    <Content Include="Content\TimeLine.css" />
+    <Content Include="Content\tooplate-style.css" />
     <Content Include="Content\_all-skins.css" />
     <Content Include="Content\_all-skins.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="img\img-140-01.jpg" />
+    <Content Include="img\img-140-02.jpg" />
+    <Content Include="img\img-140-03.jpg" />
+    <Content Include="img\img-140-04.jpg" />
+    <Content Include="img\img-140-05.jpg" />
+    <Content Include="img\slopa-bottom-line.png" />
+    <Content Include="img\slopa-pic-01.jpg" />
+    <Content Include="img\slopa-pic-02.jpg" />
+    <Content Include="img\slopa-pic-03.jpg" />
+    <Content Include="img\slopa-top-left.png" />
+    <Content Include="img\slopa-top-right.png" />
+    <Content Include="img\timeline-connect.png" />
     <Content Include="Scripts\adminlte.min.js" />
     <Content Include="Scripts\b.tabs.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
@@ -385,6 +399,10 @@
     <Content Include="Views\ImportData\AtendanceImport.html">
       <BrowseToURL>Views/ImportData/AtendanceImport.html</BrowseToURL>
     </Content>
+    <Content Include="Views\ImportData\AttendceException.html">
+      <BrowseToURL>Views/ImportData/AttendceException.html</BrowseToURL>
+    </Content>
+    <Content Include="Views\ImportData\AttendceException.js" />
     <Content Include="Views\ImportData\BasicInfo.html">
       <BrowseToURL>Views/ImportData/BasicInfo.html</BrowseToURL>
     </Content>
@@ -433,6 +451,10 @@
     </Content>
     <Content Include="Views\Summary\SummaryPayment.js" />
     <Content Include="Views\Table Test\EditTable.html" />
+    <Content Include="Views\VersionLog\bootstrap.min.css" />
+    <Content Include="Views\VersionLog\VersionLog.html">
+      <BrowseToURL>Views/VersionLog/VersionLog.html</BrowseToURL>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

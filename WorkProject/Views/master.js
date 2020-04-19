@@ -11,11 +11,17 @@ $('a', $('#menuSideBar')).on('click', function (e) {
     if (menuId != undefined) {
         var url = $(li).attr('funurl');
         var title = $(this).text();
-
+            
         $('#mainFrameTabs').bTabsAdd(menuId, title, url);
+
     }
 
+
+
 });
+
+
+
 //删除
 $('button', $('.navTabsCloseBtn')).on('click', function (e) {
 

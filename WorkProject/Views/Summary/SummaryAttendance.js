@@ -178,6 +178,7 @@ function delUser(name,site,date) {
         });
     }
 }
+
 function workerUpdate(name, site, date) {
     let work = $("#work").val(); let more = $("#more").val(); let detail = $("#detail").val();
     let worker = $("#selectName").val();

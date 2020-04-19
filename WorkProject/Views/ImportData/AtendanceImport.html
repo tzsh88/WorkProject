@@ -14,8 +14,11 @@
     <title>考勤、支付信息导入</title>
     <style>
         .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
-            width: 7em;
+            width: 6.5em;
         }
+        button[data-id="selectWorkSite"]{
+	    color: red;
+       }
     </style>
 </head>
 <body>
@@ -72,18 +75,22 @@
                 <option value="上午雨雪">上午雨雪</option>
                 <option value="下午雨雪">下午雨雪</option>
             </select>&nbsp; &nbsp;
+
+            <span style="font-size:1em;">工地：</span>
+            <select class="selectpicker" id="selectWorkSite" onChange="changSel('selectWorkSite')">
+            </select>&nbsp; &nbsp;
             <span style="font-size:1em;">归属：</span>
             <select class="selectpicker" id="selectBelong">
                 <option value="自有">自有</option>
                 <option value="徐龙生">徐龙生</option>
-                <option value="杨三">杨三</option>              
+                <option value="李青山">李青山</option>
+                <option value="杨三">杨三</option>
             </select> &nbsp; &nbsp;
+
             <span style="font-size:1em;">姓名：</span>
             <select class="selectpicker" id="selectName">
             </select> &nbsp; &nbsp;
-            <span style="font-size:1em;">工地：</span>
-            <select class="selectpicker" id="selectWorkSite">
-            </select>&nbsp; &nbsp;
+
             <div class="row" style="margin-top:2%;margin-bottom:1%;">
                 <div style="margin-right:20%; text-align: center;margin-bottom:2% ">
                     <span style="font-size:1em;color:red;">录入结束后要查看下，</span>
@@ -117,7 +124,7 @@
                 <div class="form-inline" style="margin:0 auto; margin-left:15%;">
 
                     <span style=" font-size: 1em;">支付工资：</span>
-                    <input type="text" id="pay" class="form-control" onblur="check(this)" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" style="width: 6em;" value="0" placeholder="支付工资">
+                    <input type="text" id="pay" class="form-control" onKeyUp="clearNoNum(event,this)" style="width: 6em;" value="0" placeholder="支付工资">
                     &nbsp; &nbsp;
                     <span style="font-size:1em;">方式：</span>
                     <select class="selectpicker" style="" id="payType">
@@ -148,7 +155,7 @@
     </div>
 
     <script>
-
+     
         const optoinUrl = '/api/ImPort/GetBasicInfo';
         const dataUrl = '/api/ImPort/GetImportWork';
         const dataPayUrl = '/api/ImPort/GetImportPay';
@@ -163,35 +170,50 @@
                 }
             }
         }
-        $("#selectBelong").change(function(e){
-							
-             loadWork();
+
+        //判断只能输入纯数字或者小数点，及负整数
+        function clearNoNum(event, obj) {
+            //响应鼠标事件，允许左右方向键移动
+            event = window.event || event;
+            if (event.keyCode == 37 | event.keyCode == 39) {
+                return;
+            }
+            var t = obj.value.charAt(0);
+            //先把非数字的都替换掉，除了数字和.
+            obj.value = obj.value.replace(/[^\d.]/g, "");
+            //必须保证第一个为数字而不是.
+            obj.value = obj.value.replace(/^\./g, "");
+            //保证只有出现一个.而没有多个.
+            obj.value = obj.value.replace(/\.{2,}/g, ".");
+            //保证.只出现一次，而不能出现两次以上
+            obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+            //如果第一位是负号，则允许添加   如果不允许添加负号 可以把这块注释掉
+            if (t == '-') {
+                obj.value = '-' + obj.value;
+            }
+        }
+
+
+        $("#selectBelong").change(function (e) {
+
+            loadWorker();
         });
 
         //加载人员和工地
-        function loadWork() {
+        function loadWorkSite() {
 
-             let selectBelong = $('#selectBelong').selectpicker('val');
+            let selectBelong = $('#selectBelong').selectpicker('val');
             $.ajax({
                 url: optoinUrl, //所需要的列表接口地址
                 type: "get",
                 dataType: "json",
-                data:{
+                data: {
                     'selectBelong': selectBelong
                 },
                 success: function (data) {
-                    document.getElementById("selectName").options.length = 0;
-                     document.getElementById("selectWorkSite").options.length = 0;
-                    let listNames = "";
-                    for (let i = 0; i < data[0].length; i++) {
-                        listNames += "<option value='" + data[0][i] + "'>" + data[0][i] + "</option>";
 
-                    }
-                    $("#selectName").append(listNames);//append 添加进去并展示
+                    document.getElementById("selectWorkSite").options.length = 0;
 
-                    //不能删下面俩行不然在ie下有问题
-                    $('#selectName').selectpicker('refresh');
-                    $('#selectName').selectpicker('render');
 
                     let listWorkSites = "";
                     for (let i = 0; i < data[1].length; i++) {
@@ -207,7 +229,38 @@
                 }
             });
         }
-        loadWork();
+        function loadWorker() {
+
+            let selectBelong = $('#selectBelong').selectpicker('val');
+            $.ajax({
+                url: optoinUrl, //所需要的列表接口地址
+                type: "get",
+                dataType: "json",
+                data: {
+                    'selectBelong': selectBelong
+                },
+                success: function (data) {
+                    document.getElementById("selectName").options.length = 0;
+
+                    let listNames = "";
+                    for (let i = 0; i < data[0].length; i++) {
+                        listNames += "<option value='" + data[0][i] + "'>" + data[0][i] + "</option>";
+
+                    }
+                    $("#selectName").append(listNames);//append 添加进去并展示
+
+                    //不能删下面俩行不然在ie下有问题
+                    $('#selectName').selectpicker('refresh');
+                    $('#selectName').selectpicker('render');
+
+
+                },
+                error: function (e) {
+                    console.log(e.responseText);
+                }
+            });
+        }
+        loadWorkSite(); loadWorker();
         //工人工作记录导入
         function workUpdate() {
             let selectWeather = $('#weather').selectpicker('val');
@@ -302,8 +355,8 @@
                 title: ['&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录入日期设定', 'text-align:center;font-size:1.5em;font-weight:600;'],
                 skin: 'layui-layer-rim', //加上边框
                 area: ['280px', '150px'], //宽高
-                offset: '250px',//坐标
-                shadeClose:true,//点击阴影区弹窗自动关闭
+                offset: '220px',//坐标
+                shadeClose: true,//点击阴影区弹窗自动关闭
                 content: "<div class='form-group' style='margin:10% 25%;'>" +
 
                     "<div class='form-inline' style='margin-top:5%;margin-bottom:2%;' >" +

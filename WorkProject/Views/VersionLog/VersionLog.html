@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html >
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- load CSS -->
+    <!--bootstrap.min.css 版本与其他页面的不一致  -->
+    <link href="bootstrap.min.css" rel="stylesheet" />
+    <link href="../../Content/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="../../Content/tooplate-style.css" rel="stylesheet" />
+    <title>工地管理项目版本迭代日志</title>
+    <script>
+        var renderPage = true;
+
+        if (navigator.userAgent.indexOf('MSIE') !== -1
+            || navigator.appVersion.indexOf('Trident/') > 0) {
+            /* Microsoft Internet Explorer detected in. */
+            alert("Please view this in a modern browser such as Chrome or Microsoft Edge.");
+            renderPage = false;
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <div class="tm-container ">
+        <div class="tm-container-inner">
+            <!--<section class="tm-first-section">
+                <div class="col-xs-12 tm-bg-black-alpha tm-text-white text-center tm-site-header-box">
+                    <h1 class="mb-4">Sloopa</h1>
+                    <p class="mb-0 tm-site-tagline">Another HTML CSS Layout</p>
+                </div>
+            </section>-->
+            <section class="tm-text-section">
+                <div class="tm-timelines">
+                    <h2 class="tm-text-green mb-4 tm-text-center">欢迎查看开发日志</h2>
+                    <h5 class="tm-text mb-2 tm-text-center  ">
+                        <span style="color:#d66060">数字化工程管理系统(2.0)</span><br><br>
+                    </h5>
+                    <div class="tm-timelines-inner">
+                        <div class="tm-timeline-white-bar"></div>
+                        <div class="tm-timeline-circle"></div>
+                        <!--<div class="tm-timeline mb-4 tm-first-timeline">
+        <div class="media tm-media">
+            <div class="tm-timeline-img-wrap mr-4">
+                <img class="tm-media-img tm-media-img-ml-1" src="/img/img-140-01.jpg" alt="Image 1">
+            </div>
+            <div class="media-body tm-media-body tm-media-body-ml-1">
+                <h5 class="mt-0 tm-text-green">2 August 2018 (Wednesday)</h5>
+                Sloopa HTML Page is provided by <a rel="nofollow" href="#" target="_blank">Tooplate</a>. You can use this layout for any purpose. Vivamus rhoncus erat ac eros consequat, eu efficitur lacus auctor. Duis quis metus quis diam.
+            </div>
+        </div>
+    </div>-->
+
+                        <div class="tm-timeline mb-4 tm-third-timeline">
+                            <div class="media tm-media">
+                                <div class="tm-timeline-img-wrap ">
+                                    <div class="tm-media-img tm-media-img-ml-3"></div>
+                                </div>
+                                <div class="media-body tm-media-body tm-media-body-ml-3">
+                                    <h5 class="mt-0 tm-text-red">20200419  V2.13</h5>
+                                    修复iframe嵌套页面子页面无法完全展示的BUG.(btabs.js)
+                                </div>
+                            </div>
+                        </div>
+                        <!--左侧时间轴范例-->
+                        <div class="tm-timeline">
+                            <div class="tm-timeline-img-lwrap">
+                                <div class="tm-media-img tm-media-img-ml-3 ">
+                                </div>
+                            </div>
+                            <div class=" media-body  tm-media-lbody tm-media-body-ml-3 ">
+                                <h5 class="mt-0 tm-text-red">20200419  V2.12</h5>
+                                新增开发更新日志时间轴，详细介绍每次更新的相关细节与事项。
+                            </div>
+                        </div>
+
+                        <div class="tm-timeline mb-4 tm-first-timeline">
+                            <div class="media tm-media">
+                                <div class="tm-timeline-img-wrap ">
+                                    <div class="tm-media-img tm-media-img-ml-1 "></div>
+                                </div>
+                                <div class="media-body tm-media-body tm-media-body-ml-1">
+                                    <h5 class="mt-0 tm-text-red">20200419 V2.11</h5>
+                                    修复部分页面出勤工地名称错误的BUG。
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--左侧时间轴范例-->
+                        <div class="tm-timeline">
+                            <div class="tm-timeline-img-lwrap">
+                                <div class="tm-media-img tm-media-img-ml-3 "></div>
+                            </div>
+                            <div class=" media-body  tm-media-lbody tm-media-body-ml-3 ">
+                                <h5 class="mt-0 tm-text-red">20200331  V2.10</h5>
+                                新增出勤数据稽核功能，检测出当天在多个工地出勤的人员信息以及当天日工超过1的错误数据。
+                            </div>
+                        </div>
+
+                        <div class="tm-timeline mb-4 tm-third-timeline">
+                            <div class="media tm-media">
+
+                                <div class="tm-timeline-img-wrap mr-0">
+                                    <div class="tm-media-img tm-media-img-ml-3 "></div>
+                                </div>
+                                <div class="media-body  tm-media-body tm-media-body-ml-3 ">
+                                    <h5 class="mt-0 tm-text-red">20200315  V2.01</h5>
+                                    优化工程统计细节，提供<span style="color:indianred">工地出勤信息</span>的数据操作功能（修改、删除）。
+                                </div>
+                            </div>
+                        </div>
+                        <!--左侧时间轴范例-->
+                        <div class="tm-timeline">
+                            <div class="tm-timeline-img-lwrap">
+                                <div class="tm-media-img tm-media-img-ml-3 ">
+                                </div>
+                            </div>
+                            <div class=" media-body  tm-media-lbody tm-media-body-ml-3 ">
+                                <h5 class="mt-0 tm-text-red">20200228  V2.00</h5>
+                                完成数字化工程管理系统增删查改基础功能。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- load JS -->
+
+    <script src="../../Scripts/jquery-3.4.1.slim.min.js"></script>
+    <script>
+
+        /* DOM is ready
+        ------------------------------------------------*/
+        $(function () {
+            if (renderPage) {
+                $('body').addClass('loaded');
+            }
+            $('.tm-current-year').text(new Date().getFullYear());  // Update year in copyright
+        });
+
+    </script>
+
+ 
+</body >
+</html >

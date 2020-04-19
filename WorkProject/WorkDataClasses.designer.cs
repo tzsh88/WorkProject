@@ -60,6 +60,9 @@ namespace WorkProject
     partial void InsertPayment(Payment instance);
     partial void UpdatePayment(Payment instance);
     partial void DeletePayment(Payment instance);
+    partial void InsertAttendanceException(AttendanceException instance);
+    partial void UpdateAttendanceException(AttendanceException instance);
+    partial void DeleteAttendanceException(AttendanceException instance);
     #endregion
 		
 		public WorkDataClassesDataContext() : 
@@ -169,6 +172,14 @@ namespace WorkProject
 			get
 			{
 				return this.GetTable<Payment>();
+			}
+		}
+		
+		public System.Data.Linq.Table<AttendanceException> AttendanceException
+		{
+			get
+			{
+				return this.GetTable<AttendanceException>();
 			}
 		}
 	}
@@ -2042,6 +2053,8 @@ namespace WorkProject
 		
 		private EntitySet<Payment> _Payment;
 		
+		private EntitySet<AttendanceException> _AttendanceException;
+		
     #region 可扩展性方法定义
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2086,6 +2099,7 @@ namespace WorkProject
 			this._WorkersRelation1 = new EntitySet<WorkersRelation>(new Action<WorkersRelation>(this.attach_WorkersRelation1), new Action<WorkersRelation>(this.detach_WorkersRelation1));
 			this._ModifyAttendanceRecord = new EntitySet<ModifyAttendanceRecord>(new Action<ModifyAttendanceRecord>(this.attach_ModifyAttendanceRecord), new Action<ModifyAttendanceRecord>(this.detach_ModifyAttendanceRecord));
 			this._Payment = new EntitySet<Payment>(new Action<Payment>(this.attach_Payment), new Action<Payment>(this.detach_Payment));
+			this._AttendanceException = new EntitySet<AttendanceException>(new Action<AttendanceException>(this.attach_AttendanceException), new Action<AttendanceException>(this.detach_AttendanceException));
 			OnCreated();
 		}
 		
@@ -2467,6 +2481,19 @@ namespace WorkProject
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_AttendanceException", Storage="_AttendanceException", ThisKey="WorkId", OtherKey="WorkId")]
+		public EntitySet<AttendanceException> AttendanceException
+		{
+			get
+			{
+				return this._AttendanceException;
+			}
+			set
+			{
+				this._AttendanceException.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2554,6 +2581,18 @@ namespace WorkProject
 		}
 		
 		private void detach_Payment(Payment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Worker = null;
+		}
+		
+		private void attach_AttendanceException(AttendanceException entity)
+		{
+			this.SendPropertyChanging();
+			entity.Worker = this;
+		}
+		
+		private void detach_AttendanceException(AttendanceException entity)
 		{
 			this.SendPropertyChanging();
 			entity.Worker = null;
@@ -3495,6 +3534,301 @@ namespace WorkProject
 						this._WorkSiteId = default(int);
 					}
 					this.SendPropertyChanged("WorkSite");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AttendanceException")]
+	public partial class AttendanceException : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.DateTime _RecordTime;
+		
+		private string _WorkId;
+		
+		private System.Nullable<System.DateTime> _WorkDate;
+		
+		private System.Nullable<double> _WorkTime;
+		
+		private System.Nullable<double> _WorkMore;
+		
+		private System.Nullable<int> _WorkSiteCnt;
+		
+		private System.Nullable<bool> _Handled;
+		
+		private string _Remark;
+		
+		private EntityRef<Worker> _Worker;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnRecordTimeChanging(System.DateTime value);
+    partial void OnRecordTimeChanged();
+    partial void OnWorkIdChanging(string value);
+    partial void OnWorkIdChanged();
+    partial void OnWorkDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnWorkDateChanged();
+    partial void OnWorkTimeChanging(System.Nullable<double> value);
+    partial void OnWorkTimeChanged();
+    partial void OnWorkMoreChanging(System.Nullable<double> value);
+    partial void OnWorkMoreChanged();
+    partial void OnWorkSiteCntChanging(System.Nullable<int> value);
+    partial void OnWorkSiteCntChanged();
+    partial void OnHandledChanging(System.Nullable<bool> value);
+    partial void OnHandledChanged();
+    partial void OnRemarkChanging(string value);
+    partial void OnRemarkChanged();
+    #endregion
+		
+		public AttendanceException()
+		{
+			this._Worker = default(EntityRef<Worker>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecordTime", DbType="DateTime NOT NULL")]
+		public System.DateTime RecordTime
+		{
+			get
+			{
+				return this._RecordTime;
+			}
+			set
+			{
+				if ((this._RecordTime != value))
+				{
+					this.OnRecordTimeChanging(value);
+					this.SendPropertyChanging();
+					this._RecordTime = value;
+					this.SendPropertyChanged("RecordTime");
+					this.OnRecordTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkId", DbType="VarChar(18) NOT NULL", CanBeNull=false)]
+		public string WorkId
+		{
+			get
+			{
+				return this._WorkId;
+			}
+			set
+			{
+				if ((this._WorkId != value))
+				{
+					if (this._Worker.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnWorkIdChanging(value);
+					this.SendPropertyChanging();
+					this._WorkId = value;
+					this.SendPropertyChanged("WorkId");
+					this.OnWorkIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkDate", DbType="Date")]
+		public System.Nullable<System.DateTime> WorkDate
+		{
+			get
+			{
+				return this._WorkDate;
+			}
+			set
+			{
+				if ((this._WorkDate != value))
+				{
+					this.OnWorkDateChanging(value);
+					this.SendPropertyChanging();
+					this._WorkDate = value;
+					this.SendPropertyChanged("WorkDate");
+					this.OnWorkDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkTime", DbType="Float")]
+		public System.Nullable<double> WorkTime
+		{
+			get
+			{
+				return this._WorkTime;
+			}
+			set
+			{
+				if ((this._WorkTime != value))
+				{
+					this.OnWorkTimeChanging(value);
+					this.SendPropertyChanging();
+					this._WorkTime = value;
+					this.SendPropertyChanged("WorkTime");
+					this.OnWorkTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkMore", DbType="Float")]
+		public System.Nullable<double> WorkMore
+		{
+			get
+			{
+				return this._WorkMore;
+			}
+			set
+			{
+				if ((this._WorkMore != value))
+				{
+					this.OnWorkMoreChanging(value);
+					this.SendPropertyChanging();
+					this._WorkMore = value;
+					this.SendPropertyChanged("WorkMore");
+					this.OnWorkMoreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkSiteCnt", DbType="Int")]
+		public System.Nullable<int> WorkSiteCnt
+		{
+			get
+			{
+				return this._WorkSiteCnt;
+			}
+			set
+			{
+				if ((this._WorkSiteCnt != value))
+				{
+					this.OnWorkSiteCntChanging(value);
+					this.SendPropertyChanging();
+					this._WorkSiteCnt = value;
+					this.SendPropertyChanged("WorkSiteCnt");
+					this.OnWorkSiteCntChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Handled", DbType="Bit")]
+		public System.Nullable<bool> Handled
+		{
+			get
+			{
+				return this._Handled;
+			}
+			set
+			{
+				if ((this._Handled != value))
+				{
+					this.OnHandledChanging(value);
+					this.SendPropertyChanging();
+					this._Handled = value;
+					this.SendPropertyChanged("Handled");
+					this.OnHandledChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Remark", DbType="VarChar(128)")]
+		public string Remark
+		{
+			get
+			{
+				return this._Remark;
+			}
+			set
+			{
+				if ((this._Remark != value))
+				{
+					this.OnRemarkChanging(value);
+					this.SendPropertyChanging();
+					this._Remark = value;
+					this.SendPropertyChanged("Remark");
+					this.OnRemarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Worker_AttendanceException", Storage="_Worker", ThisKey="WorkId", OtherKey="WorkId", IsForeignKey=true)]
+		public Worker Worker
+		{
+			get
+			{
+				return this._Worker.Entity;
+			}
+			set
+			{
+				Worker previousValue = this._Worker.Entity;
+				if (((previousValue != value) 
+							|| (this._Worker.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Worker.Entity = null;
+						previousValue.AttendanceException.Remove(this);
+					}
+					this._Worker.Entity = value;
+					if ((value != null))
+					{
+						value.AttendanceException.Add(this);
+						this._WorkId = value.WorkId;
+					}
+					else
+					{
+						this._WorkId = default(string);
+					}
+					this.SendPropertyChanged("Worker");
 				}
 			}
 		}
