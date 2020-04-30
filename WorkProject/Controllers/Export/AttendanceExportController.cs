@@ -43,6 +43,7 @@ namespace WorkProject.Controllers.Export
 
             HSSFWorkbook hssfworkbook = new HSSFWorkbook();
 
+
             ISheet sheet1 = hssfworkbook.CreateSheet("出勤数据");
 
             IRow rowHeader = sheet1.CreateRow(0);
@@ -55,10 +56,15 @@ namespace WorkProject.Controllers.Export
             rowHeader.CreateCell(4).SetCellValue("天气");
             rowHeader.CreateCell(5).SetCellValue("工日");
             rowHeader.CreateCell(6).SetCellValue("加班工时");
-            rowHeader.CreateCell(7).SetCellValue("总工时（天）");
+            rowHeader.CreateCell(7).SetCellValue("总工时");
             rowHeader.CreateCell(8).SetCellValue("工作日志");
             rowHeader.CreateCell(9).SetCellValue("工地");
             rowHeader.CreateCell(10).SetCellValue("隶属");
+
+            //设置单元格背景色
+            ICellStyle cellStyle = hssfworkbook.CreateCellStyle();
+            cellStyle.FillForegroundColor = NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index;
+            cellStyle.FillPattern = FillPattern.SolidForeground;
 
             //string worker = HttpContext.Current.Request["worker"].Trim();
             //string workSiteName = HttpContext.Current.Request["workSite"].Trim();
@@ -98,7 +104,7 @@ namespace WorkProject.Controllers.Export
 
                 foreach (var oo in data)
                 {
-                    IRow r = sheet1.CreateRow(rowIndex); ;
+                    IRow r = sheet1.CreateRow(rowIndex);                   
                     r.CreateCell(0).SetCellValue(oo.WorkName);
                     r.CreateCell(1).SetCellValue(oo.Sex);
                     r.CreateCell(2).SetCellValue(oo.WorkType);
@@ -111,6 +117,21 @@ namespace WorkProject.Controllers.Export
                     r.CreateCell(9).SetCellValue(oo.WorkSiteName);
                     r.CreateCell(10).SetCellValue(oo.Affiliation);
                     rowIndex++;
+                    if (rowIndex % 2 == 0)
+                    {
+                        r.GetCell(0).CellStyle = cellStyle;
+                        r.GetCell(1).CellStyle = cellStyle;
+                        r.GetCell(2).CellStyle = cellStyle;
+                        r.GetCell(3).CellStyle = cellStyle;
+                        r.GetCell(4).CellStyle = cellStyle;
+                        r.GetCell(5).CellStyle = cellStyle;
+                        r.GetCell(6).CellStyle = cellStyle;
+                        r.GetCell(7).CellStyle = cellStyle;
+                        r.GetCell(8).CellStyle = cellStyle;
+                        r.GetCell(9).CellStyle = cellStyle;
+                        r.GetCell(10).CellStyle = cellStyle;
+                    }
+                    
                 }
 
                

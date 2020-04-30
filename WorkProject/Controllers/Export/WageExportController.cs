@@ -53,6 +53,11 @@ namespace WorkProject.Controllers.Export
             rowHeader.CreateCell(8).SetCellValue("隶属");
             rowHeader.CreateCell(9).SetCellValue("备注");
 
+            //设置单元格背景色
+            ICellStyle cellStyle = hssfworkbook.CreateCellStyle();
+            cellStyle.FillForegroundColor = NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index;
+            cellStyle.FillPattern = FillPattern.SolidForeground;
+
             bool siteEffect = false; bool workerEffect = false; bool monEffect = false; bool dayEffect = false;
             if (workSite == "all") siteEffect = true;
             if (worker == "all") workerEffect = true;
@@ -85,7 +90,11 @@ namespace WorkProject.Controllers.Export
 
                 foreach (var oo in data)
                 {
-                    IRow r = sheet1.CreateRow(rowIndex); ;
+                    IRow r = sheet1.CreateRow(rowIndex);
+                    if (rowIndex % 2 == 0)
+                    {
+                        r.RowStyle.FillBackgroundColor = IndexedColors.Grey25Percent.Index;
+                    }
                     r.CreateCell(0).SetCellValue(oo.WorkSiteName);
                     r.CreateCell(1).SetCellValue(oo.WorkName);
                     r.CreateCell(2).SetCellValue(oo.Sex);
@@ -97,6 +106,21 @@ namespace WorkProject.Controllers.Export
                     r.CreateCell(8).SetCellValue(oo.Affiliation);
                     r.CreateCell(9).SetCellValue(oo.Remark);
                     rowIndex++;
+                    if (rowIndex % 2 == 0)
+                    {
+                        r.GetCell(0).CellStyle = cellStyle;
+                        r.GetCell(1).CellStyle = cellStyle;
+                        r.GetCell(2).CellStyle = cellStyle;
+                        r.GetCell(3).CellStyle = cellStyle;
+                        r.GetCell(4).CellStyle = cellStyle;
+                        r.GetCell(5).CellStyle = cellStyle;
+                        r.GetCell(6).CellStyle = cellStyle;
+                        r.GetCell(7).CellStyle = cellStyle;
+                        r.GetCell(8).CellStyle = cellStyle;
+                        r.GetCell(9).CellStyle = cellStyle;
+                        r.GetCell(10).CellStyle = cellStyle;
+                    }
+               
                 }
 
                 LogHelper.Monitor("\r\n预测工资导出" + "\r\nIP:" + new WebApiMonitorLog().GetIP() + "\r\nControllerName:WageExportController");

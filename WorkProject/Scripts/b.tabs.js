@@ -213,9 +213,7 @@
 				ifr.style.height = '0px';
 				var iDoc = ifr.contentDocument || ifr.document
 				var height = calcPageHeight(iDoc)
-				if (height < 850) {
-					height = 850;
-				}
+				
 				ifr.style.height = height + 'px';
 				$('div.tab-content', $tabs).height(ifr.style.height);
 				var $tabs = this.$container;
