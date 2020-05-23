@@ -13,10 +13,10 @@ namespace WorkProject
     {
         protected void Application_Start()
         {
-            //注册 log4net
-            log4net.Config.XmlConfigurator.Configure(
-               new System.IO.FileInfo(AppDomain.CurrentDomain.BaseDirectory + "\\Config\\log4net.config")
-            );
+            ////注册 log4net
+            //log4net.Config.XmlConfigurator.Configure(
+            //   new System.IO.FileInfo(AppDomain.CurrentDomain.BaseDirectory + "\\Config\\log4net.config")
+            //);
 
             ////WebApiTrackerAttribute  全局启用
             //GlobalConfiguration.Configuration.Filters.Add(new WebApiTrackerAttribute());                     
@@ -26,13 +26,13 @@ namespace WorkProject
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //定时器
-            Timer myTimer = new Timer();
-            myTimer.Elapsed += new ElapsedEventHandler(TimerHelp.MyTimer_Elapsed);
-            // 设置引发时间的时间间隔　此处设置为１秒（１０００毫秒）,必须设置不然会出现触发次数的问题
-            myTimer.Interval = 1000;
-            myTimer.Enabled = true;
-            myTimer.AutoReset = true;
+            ////定时器
+            //Timer myTimer = new Timer();
+            //myTimer.Elapsed += new ElapsedEventHandler(TimerHelp.MyTimer_Elapsed);
+            //// 设置引发时间的时间间隔　此处设置为１秒（１０００毫秒）,必须设置不然会出现触发次数的问题
+            //myTimer.Interval = 1000;
+            //myTimer.Enabled = true;
+            //myTimer.AutoReset = true;
         }
 
 

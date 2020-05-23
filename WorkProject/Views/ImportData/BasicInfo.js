@@ -1,5 +1,7 @@
 ﻿const tableUrl = "/api/BasicInfoData/GetWorkers";
 const table1Url = "/api/BasicInfoData/GetWorkSites";
+const updateWorkerUrl = "/api/BasicInfoData/UpdateWorkerVisual";
+const updateWorkSiteUrl = "/api/BasicInfoData/UpdateWorkSIteFinshish";
 let initPageSize = 16;
 $.ajaxSettings.async = false;
 $(function () {
@@ -55,12 +57,12 @@ var TableInit = function () {
                         return res;
                     }
                 },
-                {
-                    field: 'IC',
-                    title: '身份证',
-                    sortable: true,
+                //{
+                //    field: 'IC',
+                //    title: '身份证',
+                //    sortable: true,
 
-                },
+                //},
                 {
                     field: 'WorkName',
                     title: '姓名',
@@ -96,7 +98,17 @@ var TableInit = function () {
                     title: '归属',
                     sortable: true,
 
-                }
+                }, 
+                {
+                    field: 'Visual',
+                    title: '可见',
+                    sortable: true,
+
+                },
+                {
+                    title: '可见控制',
+                    formatter: workerOption
+                },
 
             ]
 
@@ -113,6 +125,40 @@ function operateFormatter(value, row, index) {
         return "<span title='" + value + "'>" + '女' + "</span>"
     }
 }
+
+//操作栏的格式化
+// onclick=\"ChangeSameNameColor('" + row.RouteName + "','" + row.Direcition + "','" + index + "')\"
+// 定义删除、更新操作
+function workerOption(value, row, index) {
+    var htm =
+        " <button class ='dupUser' onclick =\"updUser('" + row.WorkName + "')\">复位</button> ";
+    return htm;
+}
+
+function updUser(name) {
+    $.ajax({
+        url: updateWorkerUrl, //所需要的列表接口地址
+        type: "get",
+        data: { 'worker': name },
+        dataType: "json",
+        success: function (data) {
+
+            if (data == 'ok') {
+                alert(name + date + "数据可见性已修改");
+            }
+            else if (data == 'error') {
+                alert(year + mon + "数据可见性修改失败");
+            }
+
+        },
+        error: function (e) {
+            console.log(e.responseText);
+        }
+    });
+    workerInfo();
+}
+
+
 
 //得到查询的参数
 function queryParams(params) {
@@ -191,7 +237,17 @@ var TableInit1 = function () {
                     title: '老板',
                     sortable: true,
 
-                }
+                },               
+                {
+                    field: 'WorkSiteFinished',
+                    title: '完工',
+                    sortable: true,
+
+                },
+                {
+                    title: '完工控制',
+                    formatter: workSiteOption
+                },
 
             ]
 
@@ -200,6 +256,36 @@ var TableInit1 = function () {
 
     return oTableInit;
 };
+function workSiteOption(value, row, index) {
+    var htm =
+        " <button class ='dupUser' onclick =\"updWorkSite('" + row.WorkSiteId+"')\">复位</button> ";
+    return htm;
+}
+
+
+function updWorkSite(id) {
+    $.ajax({
+        url: updateWorkSiteUrl, //所需要的列表接口地址
+        type: "get",
+        data: { 'workSiteId': id },
+        dataType: "json",
+        success: function (data) {
+
+            if (data == 'ok') {
+                alert(name + date + "工地可见性已修改");
+            }
+            else if (data == 'error') {
+                alert(year + mon + "工地可见性修改失败");
+            }
+
+        },
+        error: function (e) {
+            console.log(e.responseText);
+        }
+    });
+    workSiteInfo();
+}
+
 //得到查询的参数
 function queryParams1(params) {
     let workSite = $("#selectWorkSite").val();

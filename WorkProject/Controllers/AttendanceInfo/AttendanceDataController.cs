@@ -154,7 +154,7 @@ namespace WorkProject.Controllers.AttendanceInfo
                                s.WorkMore,
                                totalWork = s.WorkTime + s.WorkMore,
                                //使用前提数据里面只含大、小工两者类型 做了类似映射 用WorkType1里面没有管理
-                               spend = (s.Worker.WorkType1=="小工"?(s.WorkTime + s.WorkMore)*swage: (s.WorkTime + s.WorkMore) * bwage),
+                               spend =Convert.ToInt32(s.Worker.WorkType1=="小工"?(s.WorkTime + s.WorkMore)*swage: (s.WorkTime + s.WorkMore) * bwage),
                                s.WorkQuality,
                                s.WorkSite.WorkManage,
                                s.WorkSite.WorkSiteName,
@@ -212,7 +212,7 @@ namespace WorkProject.Controllers.AttendanceInfo
                                  &&(siteEffect || s.WorkSite.WorkSiteName == workSiteName)
                                  && (workerEffect || s.Worker.WorkName == worker)
                                  && s.WorkYear == year
-                                 && (monEffect || s.WorkMon == mon)
+                                 && (monEffect ||Convert.ToInt32(s.WorkMon) == Convert.ToInt32(mon))
                               
                            select new
                            {

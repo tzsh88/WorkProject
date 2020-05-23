@@ -55,7 +55,7 @@ namespace WorkProject.Controllers.Export
 
             HSSFWorkbook hssfworkbook = new HSSFWorkbook();
 
-            ISheet sheet1 = hssfworkbook.CreateSheet("成本明细数据");
+            ISheet sheet1 = hssfworkbook.CreateSheet("月度成本明细数据");
 
             IRow rowHeader = sheet1.CreateRow(0);
 
@@ -67,12 +67,11 @@ namespace WorkProject.Controllers.Export
             rowHeader.CreateCell(4).SetCellValue("天气");
             rowHeader.CreateCell(5).SetCellValue("工日");
             rowHeader.CreateCell(6).SetCellValue("加班工时");
-            rowHeader.CreateCell(7).SetCellValue("总工时（天）");
-            rowHeader.CreateCell(8).SetCellValue("人工费");
-            rowHeader.CreateCell(9).SetCellValue("工作日志");
-            rowHeader.CreateCell(10).SetCellValue("工地");
-            rowHeader.CreateCell(11).SetCellValue("管理员");
-
+            rowHeader.CreateCell(7).SetCellValue("总工时（天）");           
+            rowHeader.CreateCell(8).SetCellValue("工作日志");
+            rowHeader.CreateCell(9).SetCellValue("工地");
+            rowHeader.CreateCell(10).SetCellValue("管理员");
+            rowHeader.CreateCell(11).SetCellValue("归属");
             //string worker = HttpContext.Current.Request["worker"].Trim();
             //string workSiteName = HttpContext.Current.Request["workSite"].Trim();
             //string year = HttpContext.Current.Request["year"].Trim();
@@ -86,10 +85,16 @@ namespace WorkProject.Controllers.Export
 
             if (day == "all") { dayEffect = true; day = "01"; }
 
+            //设置单元格背景色
+            ICellStyle cellStyle = hssfworkbook.CreateCellStyle();
+            cellStyle.FillForegroundColor = NPOI.HSSF.Util.HSSFColor.Grey25Percent.Index;
+            cellStyle.FillPattern = FillPattern.SolidForeground;
+
+
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
 
-                var data = from s in db.Attendance
+                var data =( from s in db.Attendance
                            where //s.Worker.WorkType != "管理" //分包和系统 类别 是不会有工日这个概念的
                                  (siteEffect || s.WorkSite.WorkSiteName == workSite)
                                  && (workerEffect || s.Worker.WorkName == worker)
@@ -108,11 +113,12 @@ namespace WorkProject.Controllers.Export
                                s.WorkMore,
                                totalWork = s.WorkTime + s.WorkMore,
                                //使用前提数据里面只含大、小工两者类型
-                               spend = (s.Worker.WorkType1 == "小工" ? (s.WorkTime + s.WorkMore) * swage : (s.WorkTime + s.WorkMore) * bwage),
+                               spend = Convert.ToInt32(s.Worker.WorkType1 == "小工" ? (s.WorkTime + s.WorkMore) * swage : (s.WorkTime + s.WorkMore) * bwage),
                                s.WorkQuality,
                                s.WorkSite.WorkManage,
-                               s.WorkSite.WorkSiteName
-                           };
+                               s.WorkSite.WorkSiteName,
+                               s.Worker.Affiliation
+                           }).OrderByDescending(n => n.Affiliation).ThenBy(n => n.WorkName);
                 var rowIndex = 1;
 
                 foreach (var oo in data)
@@ -125,12 +131,28 @@ namespace WorkProject.Controllers.Export
                     r.CreateCell(4).SetCellValue(oo.Weather);
                     r.CreateCell(5).SetCellValue((double)oo.WorkTime);
                     r.CreateCell(6).SetCellValue((double)oo.WorkMore);
-                    r.CreateCell(7).SetCellValue((double)oo.totalWork);
-                    r.CreateCell(8).SetCellValue((double)oo.spend);
-                    r.CreateCell(9).SetCellValue(oo.WorkQuality);
-                    r.CreateCell(10).SetCellValue(oo.WorkSiteName);
-                    r.CreateCell(11).SetCellValue(oo.WorkManage);
+                    r.CreateCell(7).SetCellValue((double)oo.totalWork);                
+                    r.CreateCell(8).SetCellValue(oo.WorkQuality);
+                    r.CreateCell(9).SetCellValue(oo.WorkSiteName);
+                    r.CreateCell(10).SetCellValue(oo.WorkManage);
+                    r.CreateCell(11).SetCellValue(oo.Affiliation);
                     rowIndex++;
+                    if (rowIndex % 2 == 0)
+                    {
+                        r.GetCell(0).CellStyle = cellStyle;
+                        r.GetCell(1).CellStyle = cellStyle;
+                        r.GetCell(2).CellStyle = cellStyle;
+                        r.GetCell(3).CellStyle = cellStyle;
+                        r.GetCell(4).CellStyle = cellStyle;
+                        r.GetCell(5).CellStyle = cellStyle;
+                        r.GetCell(6).CellStyle = cellStyle;
+                        r.GetCell(7).CellStyle = cellStyle;
+                        r.GetCell(8).CellStyle = cellStyle;
+                        r.GetCell(9).CellStyle = cellStyle;
+                        r.GetCell(10).CellStyle = cellStyle;
+                        r.GetCell(11).CellStyle = cellStyle;
+
+                    }
                 }
 
 
@@ -199,9 +221,9 @@ namespace WorkProject.Controllers.Export
             rowHeader.CreateCell(4).SetCellValue("工日（月）");
             rowHeader.CreateCell(5).SetCellValue("加班工时（月）");
             rowHeader.CreateCell(6).SetCellValue("总工日（月）");
-            rowHeader.CreateCell(7).SetCellValue("人工费");
-            rowHeader.CreateCell(8).SetCellValue("工地");
-            rowHeader.CreateCell(9).SetCellValue("隶属");
+            //rowHeader.CreateCell(7).SetCellValue("人工费");
+            rowHeader.CreateCell(7).SetCellValue("工地");
+            rowHeader.CreateCell(8).SetCellValue("隶属");
 
 
             //设置单元格背景色
@@ -219,12 +241,12 @@ namespace WorkProject.Controllers.Export
 
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
-                var data = from s in db.PredictionWages
+                var data = (from s in db.PredictionWages
                            where s.WholePart == part 
                                  &&(siteEffect || s.WorkSite.WorkSiteName == workSite)
                                  && (workerEffect || s.Worker.WorkName == worker)
                                  && s.WorkYear == year
-                                 && (monEffect || s.WorkMon == mon)
+                                 && (monEffect || Convert.ToInt32(s.WorkMon) == Convert.ToInt32(mon))
 
                            select new
                            {
@@ -236,11 +258,11 @@ namespace WorkProject.Controllers.Export
                                s.WorkMoreMon,
                                totalWork = s.WorkTimeMon + s.WorkMoreMon,
                                //使用前提数据里面只含大、小工两者类型 做了类似映射 用WorkType1里面没有管理
-                               spend = (s.Worker.WorkType1 == "小工" ? (s.WorkTimeMon + s.WorkMoreMon) * swage : (s.WorkTimeMon + s.WorkMoreMon) * bwage),
+                               //spend = (s.Worker.WorkType1 == "小工" ? (s.WorkTimeMon + s.WorkMoreMon) * swage : (s.WorkTimeMon + s.WorkMoreMon) * bwage),
                                s.WorkSite.WorkManage,
                                s.WorkSite.WorkSiteName,
                                s.Worker.Affiliation
-                           };
+                           }).OrderByDescending(n=>n.Affiliation).ThenBy(n=>n.WorkName);
               
                 var rowIndex = 1;
 
@@ -254,10 +276,9 @@ namespace WorkProject.Controllers.Export
                     r.CreateCell(3).SetCellValue(oo.WorkDate);
                     r.CreateCell(4).SetCellValue((double)oo.WorkTimeMon);
                     r.CreateCell(5).SetCellValue((double)oo.WorkMoreMon);
-                    r.CreateCell(6).SetCellValue((double)oo.totalWork);
-                    r.CreateCell(7).SetCellValue((double)oo.spend);
-                    r.CreateCell(8).SetCellValue(oo.WorkSiteName);
-                    r.CreateCell(9).SetCellValue(oo.Affiliation);
+                    r.CreateCell(6).SetCellValue((double)oo.totalWork);                 
+                    r.CreateCell(7).SetCellValue(oo.WorkSiteName);
+                    r.CreateCell(8).SetCellValue(oo.Affiliation);
                     rowIndex++;
                     if (rowIndex % 2 == 0)
                     {
@@ -269,9 +290,8 @@ namespace WorkProject.Controllers.Export
                         r.GetCell(5).CellStyle = cellStyle;
                         r.GetCell(6).CellStyle = cellStyle;
                         r.GetCell(7).CellStyle = cellStyle;
-                        r.GetCell(8).CellStyle = cellStyle;
-                        r.GetCell(9).CellStyle = cellStyle;
-                        r.GetCell(10).CellStyle = cellStyle;
+                        r.GetCell(8).CellStyle = cellStyle;                      
+                       
                     }
                     
                 }

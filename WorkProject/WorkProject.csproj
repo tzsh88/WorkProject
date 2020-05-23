@@ -369,6 +369,7 @@
     <Content Include="Content\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\font-awesome\scss\_variables.scss" />
     <Content Include="Config\log4net.config" />
+    <Content Include="JsonData\Config\payType.json" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\commonUse\bootstrapTableExtend.js" />
@@ -411,16 +412,8 @@
       <BrowseToURL>Views/ImportData/CheckImportData.html</BrowseToURL>
     </Content>
     <Content Include="Views\ImportData\CheckImportData.js" />
-    <Content Include="Views\ImportData\CheckResult.html">
-      <BrowseToURL>Views/ImportData/CheckResult.html</BrowseToURL>
-    </Content>
+    <Content Include="Views\ImportData\CheckResult.html" />
     <Content Include="Views\ImportData\CheckResult.js" />
-    <Content Include="Views\ImportData\ModifyData.html">
-      <BrowseToURL>Views/ImportData/ModifyData.html</BrowseToURL>
-    </Content>
-    <Content Include="Views\ImportData\ModifySecConfirm.html">
-      <BrowseToURL>Views/ImportData/ModifySecConfirm.html</BrowseToURL>
-    </Content>
     <Content Include="Views\ImportData\NewBasicData.html">
       <BrowseToURL>Views/ImportData/NewBasicData.html</BrowseToURL>
     </Content>
@@ -430,10 +423,6 @@
     <Content Include="Views\PersonData\ModifyPersonInfo.html">
       <BrowseToURL>Views/PersonData/ModifyPersonInfo.html</BrowseToURL>
     </Content>
-    <Content Include="Views\Summary\AttendanceSearch.html">
-      <BrowseToURL>Views/Summary/AttendanceSearch.html</BrowseToURL>
-    </Content>
-    <Content Include="Views\Summary\AttendanceSearch.js" />
     <Content Include="Views\Summary\SummaryAttendance.html">
       <BrowseToURL>Views/Summary/SummaryAttendance.html</BrowseToURL>
     </Content>

@@ -68,7 +68,7 @@ let TableInit = function () {
                     field: 'Sex',
                     title: '性别',
                     sortable: true,
-                    //formatter: operateFormatter //自定义方法，添加操作按钮
+                    formatter: operateFormatter //自定义方法，添加操作按钮
                 },
                 {
                     field: 'WorkType',
@@ -123,7 +123,14 @@ let TableInit = function () {
 
     return oTableInit;
 };
+function operateFormatter(value, row, index) {
 
+    if (value == 1) {
+        return "<span title='" + value + "'>" + '男' + "</span>"
+    } else if (value == 0) {
+        return "<span title='" + value + "'>" + '女' + "</span>"
+    }
+}
 
 //得到查询的参数
 function queryParams(params) {

@@ -17,7 +17,6 @@ $('a', $('#menuSideBar')).on('click', function (e) {
     }
 
 
-
 });
 
 

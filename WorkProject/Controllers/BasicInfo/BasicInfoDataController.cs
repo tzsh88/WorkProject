@@ -39,7 +39,7 @@ namespace WorkProject.Controllers.BasicInfo
                 var data = from s in db.Worker
                            where (workEffect || s.WorkName == worker)
                            select new { 
-                            s.WorkId,s.WorkName,s.Sex,s.Phone,s.WorkType,s.CCBPayCard,s.IC,
+                            s.WorkId,s.WorkName,s.Sex,s.Phone,s.WorkType,s.CCBPayCard,s.IC,s.Visual,
                             s.Affiliation
                            };
 
@@ -79,15 +79,13 @@ namespace WorkProject.Controllers.BasicInfo
 
             }
 
-
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
                 var data = from s in db.WorkSite
-                           where s.WorkSiteId!=0 && s.WorkSiteId != 4
-                           && (siteEffect || s.WorkSiteName == workSiteName)
+                           where  (siteEffect || s.WorkSiteName == workSiteName)
                            select new
                            {
-                               s.WorkSiteId,s.WorkSiteName,s.WorkManage,s.Company,s.CompanyBoss
+                               s.WorkSiteId,s.WorkSiteName,s.WorkManage,s.Company,s.CompanyBoss,s.WorkSiteFinished
                            };
 
                 //sortName排序的名称 sortType排序类型 （desc asc）
@@ -104,5 +102,79 @@ namespace WorkProject.Controllers.BasicInfo
 
 
         }
+
+        /// <summary>
+        /// 更新工人可见状态
+        /// </summary>
+        /// <param name="worker"></param>   
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage UpdateWorkerVisual(string worker)
+        {
+
+            using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
+            {
+                string workId = BasicMethods.GetWorkerId(worker.Trim());
+              
+                Worker w = db.Worker.Where(n => n.WorkId == workId).FirstOrDefault();
+
+                if(w.Visual==1)
+                {
+                    w.Visual = 0;
+                    db.SubmitChanges();
+                }
+                else
+                {
+                    w.Visual = 1;
+                    db.SubmitChanges();
+                }
+
+               //此处应从数据库中取得数据
+                string json = "ok";
+                return HttpResponseMessageToJson.ToJson(json);
+
+
+
+            }
+
+
+        }
+
+        /// <summary>
+        /// 更新工人可见状态
+        /// </summary>
+        /// <param name="worker"></param>   
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage UpdateWorkSIteFinshish(string workSiteId)
+        {
+
+            using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
+            {
+
+                WorkSite w = db.WorkSite.Where(n => n.WorkSiteId ==Convert.ToInt32(workSiteId.Trim())).FirstOrDefault();
+
+                if (w.WorkSiteFinished == 1)
+                {
+                    w.WorkSiteFinished = 0;
+                    db.SubmitChanges();
+                }
+                else
+                {
+                    w.WorkSiteFinished = 1;
+                    db.SubmitChanges();
+                }
+
+                //此处应从数据库中取得数据
+                string json = "ok";
+                return HttpResponseMessageToJson.ToJson(json);
+
+
+
+            }
+
+
+        }
+
     }
 }

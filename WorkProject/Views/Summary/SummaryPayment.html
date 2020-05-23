@@ -12,10 +12,10 @@
     <script src="../../../Scripts/bootstrap-select.min.js"></script>
     <script src="../../Scripts/datetimepicker/moment.js"></script>
     <script src="../../Scripts/datetimepicker/bootstrap-datetimepicker.js"></script>
-    <title>工资支付信息</title>
+    <title>工资支付明细</title>
     <style>
         .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
-            width: 6em;
+            width: 5em;
         }
     </style>
 </head>
@@ -33,16 +33,16 @@
                     <span style="font-size:1em;">工地：</span>
                     <select class="selectpicker" id="selectWorkSite">
                         <option value="all">全部数据</option>
-                    </select>&nbsp; 
+                    </select>&nbsp;
                     <span style="font-size:1em;">方式：</span>
                     <select class="selectpicker" style="" id="payType">
                         <option value="all"> 全部数据</option>
-                        <option value="微信"> 微信</option>
+                        <!--<option value="微信"> 微信</option>
                         <option value="转账"> 转账</option>
                         <option value="现金"> 现金</option>
                         <option value="伙食"> 伙食</option>
-                        <option value="罚款"> 罚款</option>
-                    </select>&nbsp; 
+                        <option value="罚款"> 罚款</option>-->
+                    </select>&nbsp;
                     <span style="font-size:1em;">年份：</span>
                     <select class="selectpicker" id="selectYear">
                         <option value="2020">2020</option>
@@ -109,8 +109,8 @@
                         <option value="all">全部数据</option>
 
                     </select>&nbsp;
-                    <button type="button" class="btn btn-default" onclick="workerInfo()">信息查询</button>&nbsp; 
-                    <button type="button" class="btn btn-primary" onclick="excelExport()">Excel导出</button>&nbsp; 
+                    <button type="button" class="btn btn-default" onclick="workerInfo()">信息查询</button>&nbsp;
+                    <button type="button" class="btn btn-primary" onclick="excelExport()">Excel导出</button>&nbsp;
                 </div>
 
                 <div class="table-responsive">
@@ -163,6 +163,24 @@
             });
         }
         loadWork();
+
+        var uploadedTypeURL = "/JsonData/Config/payType.json";
+
+        $.getJSON(uploadedTypeURL, function (data) {
+            let listPayType = "";
+            for (let i = 0; i < data.length; i++) {
+                listPayType += "<option value='" + data[i] + "'>" + data[i] + "</option>";
+
+            }
+            $("#payType").append(listPayType);//append 添加进去并展示
+
+            //不能删下面俩行不然在ie下有问题
+            $('#payType').selectpicker('refresh');
+            $('#payType').selectpicker('render');
+
+
+        });
+
     </script>
 
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using WorkProject.Models.ExtensionMethod;
 namespace WorkProject.Models
 {
     public class BasicMethods
@@ -16,6 +16,17 @@ namespace WorkProject.Models
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
                 return db.Worker.Where(n=>n.Visual==1).OrderBy(n=>n.WorkName).Select(n => n.WorkName).ToList();
+            }
+        }
+        /// <summary>
+        /// 得到工人的归属
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetWorkerType()
+        {
+            using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
+            {
+                return db.Worker.Where(n => n.Visual == 1).DistinctBy(n=>n.Affiliation).Select(n=>n.Affiliation).ToList();
             }
         }
         /// <summary>
@@ -37,7 +48,7 @@ namespace WorkProject.Models
         {
             using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
             {
-                return db.WorkSite.Where(n=>n.WorkSiteName!="系统"&& n.WorkSiteName != "整体月度月度汇总" && n.WorkSiteFinished==0).OrderBy(n => n.WorkSiteName).Select(n => n.WorkSiteName).ToList();
+                return db.WorkSite.Where(n=>n.WorkSiteName!="系统"&& n.WorkSiteName != "整体月度月度汇总" && n.WorkSiteFinished==0).OrderBy(n => n.WorkSiteId).Select(n => n.WorkSiteName).ToList();
             }
         }
         /// <summary>

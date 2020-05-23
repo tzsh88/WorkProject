@@ -24,6 +24,7 @@ namespace WorkProject.Controllers.SysInfo
             {
                 list.Add(BasicMethods.GetWorkName());
                 list.Add(BasicMethods.GetWorkSite());
+                list.Add(BasicMethods.GetWorkerType());
                 string json = JsonConvert.SerializeObject(list);
                 return HttpResponseMessageToJson.ToJson(json);
             }
@@ -41,6 +42,7 @@ namespace WorkProject.Controllers.SysInfo
             {
                 list.Add(BasicMethods.GetWorkName(selectBelong));
                 list.Add(BasicMethods.GetWorkSite());
+                list.Add(BasicMethods.GetWorkerType());
                 string json = JsonConvert.SerializeObject(list);
                 return HttpResponseMessageToJson.ToJson(json);
             }

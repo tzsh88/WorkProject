@@ -118,7 +118,7 @@ namespace WorkProject.Controllers.Export
                         r.GetCell(7).CellStyle = cellStyle;
                         r.GetCell(8).CellStyle = cellStyle;
                         r.GetCell(9).CellStyle = cellStyle;
-                        r.GetCell(10).CellStyle = cellStyle;
+                        
                     }
                
                 }

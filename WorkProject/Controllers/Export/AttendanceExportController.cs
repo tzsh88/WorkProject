@@ -91,12 +91,16 @@ namespace WorkProject.Controllers.Export
                            orderby s.WorkDate
                            select new
                            {
-                               s.Worker.WorkName, 
-                               Sex=(s.Worker.Sex==0?"女":"男" ),
+                               s.Worker.WorkName,
+                               Sex = (s.Worker.Sex == 0 ? "女" : "男"),
                                WorkDate = Convert.ToString(s.WorkDate.Value),
-                               s.Weather,s.Worker.WorkType,s.WorkTime,
-                               s.WorkMore,totalWork = s.WorkTime + s.WorkMore,
-                               s.WorkQuality,s.WorkSite.WorkManage,
+                               s.Weather,
+                               s.Worker.WorkType,
+                               s.WorkTime,
+                               s.WorkMore,
+                               totalWork = s.WorkTime + s.WorkMore,
+                               s.WorkQuality,
+                               s.WorkSite.WorkManage,
                                s.WorkSite.WorkSiteName,
                                s.Worker.Affiliation
                            };

@@ -1,5 +1,9 @@
 ﻿const tableUrl = "/api/AttendanceData/GetCost";
 
+
+
+
+
 let initPageSize = 16;
 $.ajaxSettings.async = false;
 $(function () {
@@ -134,6 +138,7 @@ let TableInit = function () {
 
     return oTableInit;
 };
+//性别
 function operateFormatter(value, row, index) {
 
     if (value == 1) {
