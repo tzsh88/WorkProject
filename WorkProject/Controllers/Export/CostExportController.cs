@@ -118,7 +118,7 @@ namespace WorkProject.Controllers.Export
                                s.WorkSite.WorkManage,
                                s.WorkSite.WorkSiteName,
                                s.Worker.Affiliation
-                           }).OrderByDescending(n => n.Affiliation).ThenBy(n => n.WorkName);
+                           });
                 var rowIndex = 1;
 
                 foreach (var oo in data)

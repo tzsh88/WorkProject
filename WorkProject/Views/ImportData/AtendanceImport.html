@@ -124,11 +124,11 @@
                     &nbsp; &nbsp;
                     <span style="font-size:1em;">方式：</span>
                     <select class="selectpicker" style="" id="payType">
-                        <option value="微信"> 微信</option>
+                        <!--<option value="微信"> 微信</option>
                         <option value="转账"> 转账</option>
                         <option value="现金"> 现金</option>
                         <option value="伙食"> 伙食</option>
-                        <option value="罚款"> 罚款</option>
+                        <option value="罚款"> 罚款</option>-->
                     </select>&nbsp; &nbsp;
                     <span style="font-size:1em;">银行：</span>
                     <select class="selectpicker" style="" id="wageCard">
@@ -155,6 +155,25 @@
         const optoinUrl = '/api/ImPort/GetBasicInfo';
         const dataUrl = '/api/ImPort/GetImportWork';
         const dataPayUrl = '/api/ImPort/GetImportPay';
+
+        const uploadedTypeURL = "/JsonData/Config/payType.json";
+        $.ajaxSettings.async = false; 
+        $.getJSON(uploadedTypeURL, function (data) {
+            let listPayType = "";
+            for (let i = 0; i < data.length; i++) {
+                listPayType += "<option value='" + data[i] + "'>" + data[i] + "</option>";
+
+            }
+            $("#payType").append(listPayType);//append 添加进去并展示
+
+            //不能删下面俩行不然在ie下有问题
+            $('#payType').selectpicker('refresh');
+            $('#payType').selectpicker('render');
+
+
+        });
+
+
         //验证文本框只能输入数字和小数点
         function check(e) {
             let re = /^\d+(?=\.{0,1}\d+$|$)/

@@ -54,8 +54,8 @@ namespace WorkProject.Controllers.Prediction
                                 WorkYear = year,
                                 WorkSiteId = workSites[j],
                                 WholePart=0,
-                                WorkMoreMon =Math.Round((double)limitData.Where(n => n.WorkSiteId == workSites[j]).Sum(n => n.WorkMore),4),
-                                WorkTimeMon =Math.Round((double)limitData.Where(n => n.WorkSiteId == workSites[j]).Sum(n => n.WorkTime),4)
+                                WorkMoreMon =Math.Round(limitData.Where(n => n.WorkSiteId == workSites[j]).Sum(n => n.WorkMore).Value,4),
+                                WorkTimeMon =Math.Round(limitData.Where(n => n.WorkSiteId == workSites[j]).Sum(n => n.WorkTime).Value,4)
                             };
                             InsertPredictionWages(pw);
                         }
@@ -74,8 +74,8 @@ namespace WorkProject.Controllers.Prediction
                                 WorkYear = year,                               
                                 WholePart = 1,
                                 WorkSiteId = -1,//整体月度汇总
-                                WorkMoreMon = Math.Round((double)limitData.Where(n => n.WorkId == workers[i]).Sum(n => n.WorkMore), 4),
-                                WorkTimeMon = Math.Round((double)limitData.Where(n => n.WorkId == workers[i]).Sum(n => n.WorkTime), 4)
+                                WorkMoreMon = Math.Round(limitData.Where(n => n.WorkId == workers[i]).Sum(n => n.WorkMore).Value, 4),
+                                WorkTimeMon = Math.Round(limitData.Where(n => n.WorkId == workers[i]).Sum(n => n.WorkTime).Value, 4)
                             };
                             InsertPredictionWages(pw);
                        

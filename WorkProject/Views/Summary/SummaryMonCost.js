@@ -82,8 +82,7 @@ let TableInit = function () {
                     title: '出勤月份',
                     sortable: true,
 
-                },
-               
+                },              
                 {
                     field: 'WorkTimeMon',
                     title: '工日（月）',
@@ -98,7 +97,7 @@ let TableInit = function () {
                 },
                 {
                     field: 'totalWork',
-                    title: '总工日（月）',
+                    title: '总工日（月）',                   
                     sortable: true,
 
                 },

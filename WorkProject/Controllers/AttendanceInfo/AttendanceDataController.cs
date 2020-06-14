@@ -41,11 +41,11 @@ namespace WorkProject.Controllers.AttendanceInfo
             {
 
                 var data = from s in db.Attendance
-                           where (siteEffect || s.WorkSite.WorkSiteName == workSiteName)
-                                 && (workerEffect || s.Worker.WorkName == worker)
-                                 && s.WorkDate.Value.Year == Convert.ToInt32(year)
+                           where s.WorkDate.Value.Year == Convert.ToInt32(year)
                                  && (monEffect || s.WorkDate.Value.Month == Convert.ToInt32(mon))
                                  && (dayEffect || s.WorkDate.Value.Day == Convert.ToInt32(day))
+                                 && (siteEffect || s.WorkSite.WorkSiteName == workSiteName)
+                                 && (workerEffect || s.Worker.WorkName == worker)
                            select new
                            {
                                s.Worker.WorkName,
@@ -60,11 +60,11 @@ namespace WorkProject.Controllers.AttendanceInfo
                                s.WorkSite.WorkSiteName,
                                s.Worker.Affiliation,
                                Cnt = (from g in db.Attendance
-                                      where (siteEffect || g.WorkSite.WorkSiteName == workSiteName)
-                                            && (workerEffect || g.Worker.WorkName == worker)
-                                            && g.WorkDate.Value.Year == Convert.ToInt32(year)
+                                      where  g.WorkDate.Value.Year == Convert.ToInt32(year)
                                             && (monEffect || g.WorkDate.Value.Month == Convert.ToInt32(mon))
                                             && (dayEffect || g.WorkDate.Value.Day == Convert.ToInt32(day))
+                                            && (siteEffect || g.WorkSite.WorkSiteName == workSiteName)
+                                            && (workerEffect || g.Worker.WorkName == worker)
                                             && g.WorkId == s.WorkId
                                       select g).Count()
                                        
@@ -222,9 +222,9 @@ namespace WorkProject.Controllers.AttendanceInfo
                                s.Worker.WorkType,                             
                                s.WorkTimeMon,
                                s.WorkMoreMon,
-                               totalWork = s.WorkTimeMon + s.WorkMoreMon,
+                               totalWork = Convert.ToDouble(( s.WorkTimeMon.Value + s.WorkMoreMon.Value).ToString()),
                                //使用前提数据里面只含大、小工两者类型 做了类似映射 用WorkType1里面没有管理
-                               spend = (s.Worker.WorkType1 == "小工" ? (s.WorkTimeMon + s.WorkMoreMon) * swage : (s.WorkTimeMon + s.WorkMoreMon) * bwage),
+                               spend = (s.Worker.WorkType1 == "小工" ? Convert.ToDouble((s.WorkTimeMon.Value + s.WorkMoreMon.Value).ToString()) * swage : Convert.ToDouble((s.WorkTimeMon.Value + s.WorkMoreMon.Value).ToString()) * bwage),
                                s.WorkSite.WorkManage,
                                s.WorkSite.WorkSiteName,
                                s.Worker.Affiliation

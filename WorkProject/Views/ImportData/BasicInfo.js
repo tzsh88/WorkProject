@@ -63,6 +63,12 @@ var TableInit = function () {
                 //    sortable: true,
 
                 //},
+                 {
+                    field: 'WorkId',
+                    title: '工号',
+                    sortable: true,
+
+                },
                 {
                     field: 'WorkName',
                     title: '姓名',
