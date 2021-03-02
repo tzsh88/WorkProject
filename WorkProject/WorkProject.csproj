@@ -51,8 +51,8 @@
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.0.0.999, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.1.0.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.9.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.10\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
@@ -229,6 +229,7 @@
     <Compile Include="Controllers\Export\WageExportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Prediction\MonDataGenerationController.cs" />
+    <Compile Include="Controllers\Prediction\MonSpendController.cs" />
     <Compile Include="Controllers\SysInfo\CheckImportController.cs" />
     <Compile Include="Controllers\SysInfo\ImPortController.cs" />
     <Compile Include="Controllers\SysInfo\TreeItemController.cs" />
@@ -370,9 +371,11 @@
     <Content Include="Content\font-awesome\scss\_variables.scss" />
     <Content Include="Config\log4net.config" />
     <Content Include="JsonData\Config\payType.json" />
+    <Content Include="JsonData\Config\yearsArr.json" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\commonUse\bootstrapTableExtend.js" />
+    <Content Include="Scripts\commonUse\yearsArr.js" />
     <Content Include="Scripts\datetimepicker\bootstrap-datetimepicker.fr.js" />
     <Content Include="Scripts\datetimepicker\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\datetimepicker\bootstrap-datetimepicker.min.js" />
@@ -435,15 +438,21 @@
       <BrowseToURL>Views/Summary/SummaryMonCost.html</BrowseToURL>
     </Content>
     <Content Include="Views\Summary\SummaryMonCost.js" />
+    <Content Include="Views\Summary\SummaryMonSpend.html">
+      <BrowseToURL>Views/Summary/SummaryMonSpend.html</BrowseToURL>
+    </Content>
+    <Content Include="Views\Summary\SummaryMonSpend.js" />
     <Content Include="Views\Summary\SummaryPayment.html">
       <BrowseToURL>Views/Summary/SummaryPayment.html</BrowseToURL>
     </Content>
     <Content Include="Views\Summary\SummaryPayment.js" />
     <Content Include="Views\Table Test\EditTable.html" />
     <Content Include="Views\VersionLog\bootstrap.min.css" />
+    <Content Include="Views\VersionLog\StyleSheet1.css" />
     <Content Include="Views\VersionLog\VersionLog.html">
       <BrowseToURL>Views/VersionLog/VersionLog.html</BrowseToURL>
     </Content>
+    <Content Include="Views\VersionLog\时间轴.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -31,14 +31,16 @@
             <div class="col-lg-9 col-md-9 col-xs-12" style="height:100%;margin-bottom:2%">
                 <div class="form-inline" style="margin:2% 2%;font-size:1.45em;font-weight:500;line-height:1.9em;">
                     <span style="font-size:1em;">年份：</span>
-                    <select class="selectpicker" id="selectYear">
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
+                    <select class="selectpicker" id="selectYear">                    
                     </select>&nbsp;
+               
+                    <script src="../../Scripts/commonUse/yearsArr.js">
+                    </script>
+
+                    <script>
+                        years_append("#selectYear")
+                    </script>
+
                     <span style="font-size:1em;">出勤月份：</span>
                     <select class="selectpicker" id="selectMon">
                         <option value="01">01</option>
@@ -178,10 +180,10 @@
             let monIndex = date.getMonth() + 1; //获取当前月份(0-11,0代表1月)
             if (monIndex < 10) {
                 $('select[id=selectMon]').val('0'+monIndex);
-                $('.selectpicker').selectpicker('refresh')
+                $('.selectpicker[id=selectMon]').selectpicker('refresh')
             } else {
-                 $('select[id=selectMon]').val(monIndex);
-                $('.selectpicker').selectpicker('refresh')
+                $('select[id=selectMon]').val(monIndex);
+                $('.selectpicker[id=selectMon]').selectpicker('refresh')
             }
                
 

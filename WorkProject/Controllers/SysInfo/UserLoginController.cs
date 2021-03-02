@@ -61,7 +61,7 @@ namespace WorkProject.Controllers
                     HttpResponseMessage resp = new HttpResponseMessage(HttpStatusCode.Moved);
                     string server_ip = ConfigSetting.GetIP();
                     string server_port = ConfigSetting.GetIpPort();
-                    resp.Headers.Location = new Uri("https://" + server_ip + ":" + server_port + "/Views/Master.html");
+                    resp.Headers.Location = new Uri("http://" + server_ip + ":" + server_port + "/Views/Master.html");
                     return resp;
 
                 }

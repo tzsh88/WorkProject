@@ -51,6 +51,18 @@ namespace WorkProject.Models
                 return db.WorkSite.Where(n=>n.WorkSiteName!="系统"&& n.WorkSiteName != "整体月度月度汇总" && n.WorkSiteFinished==0).OrderBy(n => n.WorkSiteId).Select(n => n.WorkSiteName).ToList();
             }
         }
+
+        /// <summary>
+        /// 所有工地
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetALLWorkSite()
+        {
+            using (WorkDataClassesDataContext db = new WorkDataClassesDataContext())
+            {
+                return db.WorkSite.Where(n => n.WorkSiteName != "系统"  ).OrderBy(n => n.WorkSiteId).Select(n => n.WorkSiteName).ToList();
+            }
+        }
         /// <summary>
         /// 根据名字检索工人 ID
         /// </summary>

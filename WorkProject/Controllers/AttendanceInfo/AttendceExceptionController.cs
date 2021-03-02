@@ -131,7 +131,7 @@ namespace WorkProject.Controllers.AttendanceInfo
                                           select g).Count()
                                };
 
-                    var dataNew = data.Where(n => n.Cnt > 1 || n.sum_WorkTime > 1).OrderByDescending(n => n.Cnt).ThenBy(c => c.WorkName).ThenBy(x => x.WorkDate);
+                    var dataNew = data.Where(n => n.Cnt > 1 || n.sum_WorkTime > 1|| n.WorkMore>0.9).OrderByDescending(n => n.Cnt).ThenBy(c => c.WorkName).ThenBy(x => x.WorkDate);
 
                     string[] workers = dataNew.Select(n => n.WorkId).Distinct().ToArray();
 

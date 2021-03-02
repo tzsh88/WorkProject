@@ -17,7 +17,7 @@ let TableInit = function () {
             striped: true,//是否显示行间隔色
             cache: false,//是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,//是否显示分页（*）
-            sortName: 'WorkName',//初始化的时候排序的字段
+            sortName: 'payDate',//初始化的时候排序的字段
             sortable: true,//是否启用排序
             sortOrder: "desc",//排序方式
             queryParams: queryParams,//传递参数（*）

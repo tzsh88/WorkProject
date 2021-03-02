@@ -40,13 +40,15 @@
                     </select>&nbsp;
                     <span style="font-size:1em;">年份：</span>
                     <select class="selectpicker" id="selectYear">
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
                     </select>&nbsp;
+
+                    <script src="../../Scripts/commonUse/yearsArr.js">
+                    </script>
+
+                    <script>
+                        years_append("#selectYear")
+                    </script>
+
                     <span style="font-size:1em;">月份：</span>
                     <select class="selectpicker" id="selectMon">
                         <option value="all">全部数据</option>
@@ -76,7 +78,7 @@
                     <button type="button" class="btn btn-default" onclick="workerInfo()">成本查询</button>&nbsp;
                     <button type="button" class="btn btn-primary" onclick="excelExport()">Excel导出</button>
                     <br>
-                    <div >
+                    <div>
                         <span style="font-size:1em;color:red">月度数据数据齐全后，在菜单“数据管理-月度成本生成”生成，才有对应月度数据。  </span>
                     </div>
                 </div>
@@ -149,7 +151,7 @@
 				let date = new Date();
 				let monIndex=date .getMonth(); //获取当前月份(0-11,0代表1月)
 			    $('select[id=selectMon]').val(monIndex);
-                $('.selectpicker').selectpicker('refresh')
+                $('.selectpicker[id=selectMon] ').selectpicker('refresh')
 
         };
     </script>

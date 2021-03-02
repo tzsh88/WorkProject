@@ -49,13 +49,15 @@
             </script>&nbsp;
             <span>稽核日：</span>
             <select class="selectpicker" id="selectYear">
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
             </select>&nbsp;
+
+            <script src="../../Scripts/commonUse/yearsArr.js">
+            </script>
+
+            <script>
+                years_append("#selectYear")
+            </script>
+
             <span style="font-size:1em;">月份：</span>
             <select class="selectpicker" id="selectMon">
                 <option value="all">全部</option>
@@ -117,7 +119,7 @@
             <button type="button" class="btn btn-default" onclick="exceptionGenerate()">数据生成</button>&nbsp;
             <button type="button" class="btn btn-default" onclick="deleteException()">数据删除</button>
 
-            <br>            
+            <br>
             <div>
                 <span style="font-size:1em;color:red">同时，通过工地管理员出勤可以排查是否漏记出勤数据。  </span>
             </div>
@@ -177,7 +179,7 @@
             let date = new Date();
             let monIndex = date.getMonth() + 1; //获取当前月份(0-11,0代表1月)
             $('select[id=selectMon]').val(monIndex);
-            $('.selectpicker').selectpicker('refresh')
+            $('.selectpicker[id=selectMon]').selectpicker('refresh')
 
         };
     </script>
